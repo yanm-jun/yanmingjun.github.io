@@ -611,338 +611,916 @@ h1 em { font-style: italic; color: var(--amber); }
 /* ─── Section 6: Judgment ───────────────────────────────────── */
 #judgment { background: var(--white); }
 .judge-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
 }
 .judge-card {
+  padding: 28px 20px;
   background: var(--cream);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px;
   transition: all var(--transition);
+  cursor: default;
+  position: relative; overflow: hidden;
 }
 .judge-card:hover {
   background: var(--white);
   border-color: var(--amber);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
 }
 .judge-num {
   font-family: var(--font-mono);
-  font-size: 28px; color: var(--amber-light);
-  font-weight: 500;
+  font-size: 28px; font-weight: 500;
+  color: var(--amber); opacity: 0.3;
+  margin-bottom: 16px;
   display: block;
-  margin-bottom: 18px;
-  line-height: 1;
+  transition: opacity var(--transition);
 }
-.judge-card h3 {
-  font-size: 16px; font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 10px;
-}
-.judge-card p { font-size: 13px; line-height: 1.65; color: var(--ink-3); }
+.judge-card:hover .judge-num { opacity: 1; }
+.judge-card h3 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+.judge-card p { font-size: 12px; color: var(--ink-3); line-height: 1.6; }
 
-/* ─── Section 7: Personalization ───────────────────────────── */
-#personalization { background: var(--sky-light); }
+/* ─── Section 7: Personalization ────────────────────────────── */
+#personalization { background: var(--cream); }
 .persona-formula {
-  display: grid; grid-template-columns: auto auto 1fr auto auto 1fr;
-  align-items: center; gap: 24px;
-  margin-bottom: 48px;
+  margin-bottom: 60px;
   padding: 32px 40px;
   background: var(--white);
-  border: 1px solid rgba(37,99,235,0.1);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
 }
 .persona-pct {
-  font-size: 20px; font-weight: 500;
-  color: var(--ink);
-}
-.persona-pct span {
   font-family: var(--font-display);
-  font-size: 48px; line-height: 1;
+  font-size: 56px; color: var(--ink);
+  letter-spacing: -0.04em;
 }
-.persona-divider {
-  width: 1px; height: 48px; background: rgba(0,0,0,0.08);
-}
-.persona-desc {
-  font-size: 14px; line-height: 1.6; color: var(--ink-3);
-}
+.persona-pct span { color: var(--amber); }
+.persona-divider { width: 1px; height: 60px; background: var(--border); flex-shrink: 0; }
+.persona-desc { font-size: 15px; color: var(--ink-3); max-width: 360px; line-height: 1.6; }
+.persona-desc strong { color: var(--ink); }
 .persona-layers {
-  display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
 }
 .persona-layer {
-  border-radius: var(--radius-lg);
-  padding: 32px;
+  border-radius: var(--radius);
+  padding: 32px 28px;
   position: relative; overflow: hidden;
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .persona-layer:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.persona-layer.public { background: var(--ink); color: var(--white); }
-.persona-layer.semi { background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.08); }
-.persona-layer.private { background: var(--sky); color: var(--white); }
+.persona-layer.public { background: var(--ink); }
+.persona-layer.semi { background: var(--white); border: 1px solid var(--border); }
+.persona-layer.private { background: var(--amber-light); border: 1px solid rgba(232,100,10,0.15); }
 .layer-label {
   font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.5;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
   margin-bottom: 16px;
 }
+.persona-layer.public .layer-label { color: rgba(255,255,255,0.3); }
+.persona-layer.semi .layer-label { color: var(--ink-3); }
+.persona-layer.private .layer-label { color: rgba(232,100,10,0.5); }
 .persona-layer h3 {
   font-family: var(--font-display);
-  font-size: 24px; line-height: 1.2;
-  margin-bottom: 12px;
+  font-size: 20px; margin-bottom: 10px; letter-spacing: -0.02em;
 }
-.persona-layer p {
-  font-size: 14px; line-height: 1.7;
-  opacity: 0.75;
-  margin-bottom: 32px;
-}
+.persona-layer.public h3 { color: var(--white); }
+.persona-layer.semi h3 { color: var(--ink); }
+.persona-layer.private h3 { color: var(--amber); }
+.persona-layer p { font-size: 13px; line-height: 1.65; }
+.persona-layer.public p { color: rgba(255,255,255,0.4); }
+.persona-layer.semi p { color: var(--ink-3); }
+.persona-layer.private p { color: rgba(232,100,10,0.6); }
 .layer-pct {
-  font-family: var(--font-display);
-  font-size: 64px; line-height: 1;
-  color: var(--amber);
   position: absolute; bottom: 24px; right: 24px;
-  opacity: 0.3;
+  font-family: var(--font-mono);
+  font-size: 32px; font-weight: 500; opacity: 0.15;
+  letter-spacing: -0.04em;
 }
+.persona-layer.public .layer-pct { color: var(--white); }
+.persona-layer.private .layer-pct { color: var(--amber); }
 
 /* ─── Section 8: Moat ───────────────────────────────────────── */
-#moat { background: var(--cream); }
+#moat { background: var(--white); }
 .moat-grid {
-  display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;
+  display: grid; grid-template-columns: 2fr 1fr; gap: 40px;
+  align-items: start;
 }
-.moat-cards {
-  display: flex; flex-direction: column; gap: 16px;
-}
+.moat-cards { display: flex; flex-direction: column; gap: 16px; }
 .moat-card {
-  display: flex; gap: 18px;
-  padding: 24px;
-  background: var(--white);
+  padding: 28px 32px;
+  background: var(--cream);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  display: flex; align-items: flex-start; gap: 20px;
   transition: all var(--transition);
 }
-.moat-card:hover { border-color: rgba(232,100,10,0.2); box-shadow: var(--shadow-md); }
+.moat-card:hover { background: var(--white); border-color: var(--ink); box-shadow: var(--shadow-md); }
 .moat-icon {
-  font-size: 24px;
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--amber-light);
-  border-radius: 10px;
-  flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--ink); display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
 }
-.moat-card h3 {
-  font-size: 16px; font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 8px;
-}
-.moat-card p { font-size: 13px; line-height: 1.7; color: var(--ink-3); }
+.moat-card h3 { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.moat-card p { font-size: 13px; color: var(--ink-3); line-height: 1.65; }
+/* Flywheel */
 .flywheel {
   background: var(--ink);
   border-radius: var(--radius-lg);
-  padding: 32px;
-  color: var(--white);
+  padding: 32px 28px;
   position: relative; overflow: hidden;
 }
 .flywheel::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at top right, rgba(232,100,10,0.08), transparent 40%);
+  background: conic-gradient(from 0deg, transparent 0deg 300deg, rgba(232,100,10,0.06) 300deg 360deg);
+  animation: rotate 8s linear infinite;
 }
+@keyframes rotate { to { transform: rotate(360deg); } }
 .flywheel-label {
   font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 28px;
+  font-size: 10px; color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 28px; position: relative;
+}
+.flywheel-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+.flywheel-step {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   position: relative;
 }
-.flywheel-steps { display: flex; flex-direction: column; gap: 20px; position: relative; }
-.flywheel-step { display: flex; gap: 14px; align-items: flex-start; }
+.flywheel-step:last-child { border-bottom: none; }
 .flywheel-arrow {
-  color: var(--amber);
-  font-size: 22px;
-  line-height: 1;
-  margin-top: -1px;
+  font-size: 14px; color: var(--amber);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
 }
 .flywheel-text {
-  font-size: 14px; line-height: 1.6;
-  color: rgba(255,255,255,0.72);
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  line-height: 1.4;
 }
-.flywheel-text strong { color: var(--white); }
+.flywheel-text strong { color: rgba(255,255,255,0.85); font-weight: 500; }
 
 /* ─── Section 9: Strategy ───────────────────────────────────── */
 #strategy {
-  background: linear-gradient(180deg, var(--ink), #0B1220);
+  background: var(--ink);
   position: relative; overflow: hidden;
 }
-#strategy::before {
-  content: ''; position: absolute;
-  top: 0; right: 0;
-  width: 50%; height: 100%;
-  background: radial-gradient(circle at top right, rgba(37,99,235,0.1), transparent 60%);
+#strategy::after {
+  content: ''; position: absolute; bottom: -300px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,100,10,0.05) 0%, transparent 65%);
+  pointer-events: none;
 }
 #strategy .section-label { color: rgba(255,255,255,0.3); }
 #strategy .section-label::before { background: rgba(255,255,255,0.2); }
+#strategy h2.section-title { color: var(--white); }
 .strategy-cards {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-  position: relative;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
 }
 .strategy-card {
-  background: rgba(255,255,255,0.04);
+  padding: 36px 32px;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg);
-  padding: 32px 28px;
+  background: rgba(255,255,255,0.02);
+  position: relative; overflow: hidden;
   transition: all var(--transition);
 }
-.strategy-card:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.14);
-  transform: translateY(-4px);
+.strategy-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  opacity: 0; transition: opacity var(--transition);
 }
+.strategy-card:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15); }
+.strategy-card:hover::before { opacity: 1; }
 .strategy-num {
   font-family: var(--font-mono);
-  font-size: 12px; color: var(--amber);
-  margin-bottom: 20px;
+  font-size: 11px; color: rgba(255,255,255,0.2);
+  margin-bottom: 24px; display: flex; align-items: center; gap: 8px;
+}
+.strategy-num::after {
+  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06);
 }
 .strategy-card h3 {
   font-family: var(--font-display);
-  font-size: 28px; line-height: 1.2;
+  font-size: 22px; color: var(--white);
+  margin-bottom: 12px; letter-spacing: -0.02em; line-height: 1.2;
+}
+.strategy-card p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.7; }
+.strategy-highlight {
+  display: inline; color: rgba(255,255,255,0.7); font-weight: 400;
+}
+
+/* ─── Careers ───────────────────────────────────────────────── */
+#careers {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(249,247,244,0.98) 56%, rgba(255,255,255,0.96) 100%);
+  position: relative;
+  overflow: hidden;
+}
+#careers::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 28%, black, transparent 72%);
+  opacity: 0.55;
+}
+#careers::after {
+  content: '';
+  position: absolute;
+  top: -220px;
+  right: -120px;
+  width: 620px;
+  height: 620px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, rgba(232,100,10,0.05) 28%, transparent 68%);
+}
+.career-shell { position: relative; z-index: 1; }
+.career-install-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  background: var(--ink);
+  color: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+}
+.career-install-banner strong { color: var(--white); font-weight: 500; }
+.career-install-badge {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.career-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+.career-searchbox,
+.career-search-meta,
+.career-mode-panel,
+.teacher-pack-callout {
+  background: rgba(255,255,255,0.86);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.career-searchbox {
+  padding: 18px 20px;
+}
+.career-search-label,
+.teacher-pack-eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.career-search-field {
+  position: relative;
+}
+.career-search-field::before {
+  content: '⌕';
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--ink-3);
+}
+.career-search-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--white);
+  padding: 15px 16px 15px 44px;
+  font: inherit;
+  color: var(--ink);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.career-search-input:focus {
+  outline: none;
+  border-color: rgba(37,99,235,0.35);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+}
+.career-search-meta {
+  padding: 18px 20px;
+  display: grid;
+  gap: 10px;
+  align-content: center;
+}
+.career-meta-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.career-meta-copy {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+.career-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.career-card {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  overflow: hidden;
+}
+.career-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--amber), var(--sky));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.career-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(37,99,235,0.18);
+  box-shadow: var(--shadow-lg);
+}
+.career-card:hover::before,
+.career-card.is-active::before { transform: scaleX(1); }
+.career-card.is-active {
+  border-color: rgba(37,99,235,0.24);
+  background: linear-gradient(180deg, rgba(239,246,255,0.82) 0%, rgba(255,255,255,0.96) 100%);
+}
+.career-card.is-coming-soon { background: rgba(255,255,255,0.75); }
+.career-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.career-card-title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.career-card-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.career-card-pill,
+.career-status-pill,
+.career-state-pill,
+.skill-risk-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+.career-card-pill.active,
+.career-status-pill.active,
+.career-state-pill.active {
+  background: rgba(232,100,10,0.1);
+  border: 1px solid rgba(232,100,10,0.14);
+  color: var(--amber);
+}
+.career-card-pill.ready,
+.career-status-pill.ready,
+.career-state-pill.ready {
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.14);
+  color: var(--sky);
+}
+.career-card-pill.soon {
+  background: rgba(17,17,16,0.05);
+  border: 1px solid rgba(17,17,16,0.08);
+  color: var(--ink-3);
+}
+.career-card-summary {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-3);
+}
+.career-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.career-card-tag {
+  font-size: 11px;
+  color: var(--ink-2);
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+.career-card-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 4px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.career-card-action span:last-child {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.career-feedback {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(37,99,235,0.07);
+  border: 1px solid rgba(37,99,235,0.1);
+  border-radius: 14px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.career-feedback.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.career-empty {
+  display: none;
+  margin-top: 16px;
+  padding: 24px;
+  background: rgba(255,255,255,0.82);
+  border: 1px dashed rgba(0,0,0,0.12);
+  border-radius: 18px;
+  color: var(--ink-3);
+  text-align: center;
+}
+.career-empty.is-visible { display: block; }
+.career-workspace {
+  margin-top: 24px;
+  display: grid;
+  gap: 20px;
+}
+.career-mode-panel {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+.career-mode-panel[hidden] { display: none; }
+.career-mode-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.career-mode-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+.career-mode-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.career-mode-copy {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-3);
+  max-width: 760px;
+}
+.career-mode-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.career-mode-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  background: var(--ink);
+  border-radius: 16px;
+  color: rgba(255,255,255,0.72);
+}
+.career-mode-foot p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.career-mode-foot strong { color: var(--white); font-weight: 500; }
+.pack-btn-main,
+.pack-btn-alt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition);
+  cursor: pointer;
+  appearance: none;
+}
+.pack-btn-main {
+  background: var(--ink);
   color: var(--white);
-  margin-bottom: 14px;
+  border: 1.5px solid var(--ink);
 }
-.strategy-card p {
-  font-size: 14px; line-height: 1.75;
-  color: rgba(255,255,255,0.55);
+.pack-btn-main:hover {
+  background: var(--amber);
+  border-color: var(--amber);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(232,100,10,0.22);
 }
-.strategy-highlight { color: var(--sky-light); font-weight: 500; }
+.pack-btn-alt {
+  background: var(--white);
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.pack-btn-alt:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.pack-btn-main.is-copied,
+.pack-btn-alt.is-copied {
+  background: var(--sky);
+  border-color: var(--sky);
+  color: var(--white);
+}
+.teacher-pack-stage {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+}
+.teacher-pack-stage.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.teacher-pack-stage[hidden] { display: none; }
+.teacher-pack-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+.teacher-pack {
+  display: grid;
+  gap: 18px;
+  padding-top: 4px;
+}
+.teacher-pack-callout {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+.teacher-pack-callout-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.teacher-pack-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.teacher-pack-sub {
+  max-width: 760px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-3);
+}
+.teacher-pack-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.teacher-pack-note {
+  padding: 16px 18px;
+  background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(232,100,10,0.07));
+  border: 1px solid rgba(37,99,235,0.1);
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+.teacher-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.skill-card {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background: rgba(255,255,255,0.94);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.skill-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(232,100,10,0.18);
+  box-shadow: var(--shadow-md);
+}
+.skill-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.skill-card-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+.skill-card-title {
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.skill-risk-pill {
+  border: 1px solid transparent;
+}
+.skill-risk-pill.low {
+  background: rgba(16,185,129,0.08);
+  border-color: rgba(16,185,129,0.16);
+  color: #0f766e;
+}
+.skill-risk-pill.medium {
+  background: rgba(245,158,11,0.08);
+  border-color: rgba(245,158,11,0.18);
+  color: #b45309;
+}
+.skill-risk-pill.high {
+  background: rgba(239,68,68,0.08);
+  border-color: rgba(239,68,68,0.18);
+  color: #b91c1c;
+}
+.skill-scene {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-3);
+}
+.skill-preview-grid {
+  display: grid;
+  gap: 10px;
+}
+.skill-preview {
+  padding: 14px 16px;
+  background: var(--cream);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+}
+.skill-preview-label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.skill-preview-copy {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+.skill-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.skill-details {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.35s ease, padding-top 0.35s ease, border-color 0.35s ease;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1px solid transparent;
+}
+.skill-card.is-open .skill-details {
+  max-height: 520px;
+  opacity: 1;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top-color: var(--border);
+}
+.skill-detail-block + .skill-detail-block { margin-top: 16px; }
+.skill-detail-title {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.skill-detail-list {
+  display: grid;
+  gap: 8px;
+  padding-left: 18px;
+  color: var(--ink-2);
+}
+.skill-detail-list li {
+  font-size: 13px;
+  line-height: 1.7;
+}
 
 /* ─── CTA / Footer ──────────────────────────────────────────── */
 #cta {
-  padding: 140px max(24px, calc(50vw - 680px)) 100px;
+  background: var(--cream);
   text-align: center;
-  background: var(--white);
+  padding: 140px max(24px, calc(50vw - 680px));
   position: relative; overflow: hidden;
 }
 #cta::before {
-  content: ''; position: absolute;
-  top: -200px; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 400px;
-  background: radial-gradient(circle, rgba(232,100,10,0.05) 0%, transparent 70%);
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 .cta-inner { position: relative; z-index: 1; }
 .cta-title {
   font-family: var(--font-display);
-  font-size: clamp(42px, 5vw, 72px);
-  line-height: 1.02;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--ink);
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .cta-title em { font-style: italic; color: var(--amber); }
 .cta-sub { font-size: 16px; color: var(--ink-3); margin-bottom: 48px; line-height: 1.7; }
 .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .cta-btn-main {
-  display: inline-flex; align-items: center;
-  background: var(--ink);
-  color: var(--white);
-  font-size: 14px; font-weight: 500;
-  padding: 16px 28px;
-  border-radius: 10px;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--ink); color: var(--white);
+  font-size: 15px; font-weight: 500;
+  padding: 16px 32px; border-radius: 12px;
   text-decoration: none;
-  border: 1px solid var(--ink);
   transition: all var(--transition);
+  border: 1.5px solid var(--ink);
 }
 .cta-btn-main:hover { background: var(--amber); border-color: var(--amber); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,100,10,0.3); }
 .cta-btn-alt {
-  display: inline-flex; align-items: center;
-  background: transparent;
-  color: var(--ink);
-  font-size: 14px; font-weight: 500;
-  padding: 16px 28px;
-  border-radius: 10px;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white); color: var(--ink);
+  font-size: 15px; font-weight: 500;
+  padding: 16px 32px; border-radius: 12px;
   text-decoration: none;
-  border: 1px solid var(--border);
   transition: all var(--transition);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 .cta-btn-alt:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 footer {
   background: var(--ink);
-  padding: 32px 24px;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 32px max(24px, calc(50vw - 680px));
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
 }
 .footer-logo {
   font-family: var(--font-mono);
-  font-size: 15px; color: rgba(255,255,255,0.8);
-  margin-bottom: 8px;
+  font-size: 14px; color: rgba(255,255,255,0.3);
 }
 .footer-logo span { color: var(--amber); }
 .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
-/* ─── Responsive ────────────────────────────────────────────── */
-@media (max-width: 1100px) {
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
   .formula-cards { grid-template-columns: repeat(2, 1fr); }
-  .judge-grid { grid-template-columns: repeat(2, 1fr); }
-  .strategy-cards { grid-template-columns: 1fr; }
+  .judge-grid { grid-template-columns: repeat(3, 1fr); }
   .moat-grid { grid-template-columns: 1fr; }
-  .persona-layers { grid-template-columns: 1fr; }
-  .persona-formula {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .persona-divider { width: 100%; height: 1px; }
+  .flywheel { max-width: 100%; }
+  .career-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .career-search-row { grid-template-columns: 1fr; }
+  .teacher-skills-grid { grid-template-columns: 1fr; }
 }
-
-@media (max-width: 900px) {
-  #hero {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding-top: calc(var(--nav-h) + 60px);
-  }
-  .arch-layer {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    text-align: left;
-  }
+@media (max-width: 768px) {
+  section { padding: 80px 24px; }
+  #hero { grid-template-columns: 1fr; padding-top: calc(var(--nav-h) + 48px); }
+  .hero-visual { display: none; }
+  .def-grid { grid-template-columns: 1fr; }
+  .formula-cards { grid-template-columns: 1fr 1fr; }
+  .arch-layer { grid-template-columns: 1fr; gap: 8px; }
+  .arch-layer-tag { display: none; }
   .schema-body { grid-template-columns: 1fr; }
   .schema-field:nth-child(odd) { border-right: none; }
-}
-
-@media (max-width: 720px) {
-  nav {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+  .judge-grid { grid-template-columns: repeat(2, 1fr); }
+  .persona-layers { grid-template-columns: 1fr; }
+  .strategy-cards { grid-template-columns: 1fr; }
   .nav-links { display: none; }
-  section { padding: 96px 20px; }
-  .hero-stats { gap: 24px; }
-  .skill-nodes { grid-template-columns: repeat(2, 1fr); }
-  .formula-cards,
+  .nav-mobile-toggle { display: flex; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .career-grid { grid-template-columns: 1fr; }
+  .career-install-banner,
+  .career-mode-top,
+  .career-mode-foot,
+  .teacher-pack-callout-head { display: grid; grid-template-columns: 1fr; }
+  .career-mode-foot,
+  .teacher-pack-actions { align-items: stretch; }
+  .pack-btn-main,
+  .pack-btn-alt { width: 100%; }
+}
+@media (max-width: 480px) {
+  .formula-cards { grid-template-columns: 1fr; }
   .judge-grid { grid-template-columns: 1fr; }
-  .def-grid { grid-template-columns: 1fr; }
-  .def-card,
-  .judge-card,
-  .formula-card,
-  .strategy-card { padding: 24px; }
-  .flywheel,
-  .skill-schema,
-  .persona-layer { padding: 24px; }
+  .persona-formula { flex-direction: column; gap: 12px; }
+  .persona-divider { display: none; }
+  .career-install-banner,
+  .career-searchbox,
+  .career-search-meta,
+  .career-card,
+  .career-mode-panel,
+  .teacher-pack-callout,
+  .skill-card { padding: 20px; }
+  .teacher-pack-title,
+  .career-mode-title { font-size: 28px; }
 }
 </style>
 </head>
 <body>
+
+<!-- Loader -->
 <div id="loader"><div class="loader-ring"></div></div>
 
+<!-- Navigation -->
 <nav id="nav">
   <a href="#hero" class="nav-logo">Skill<span>OS</span></a>
   <ul class="nav-links">
     <li><a href="#definition" data-section="definition">定义</a></li>
     <li><a href="#formula" data-section="formula">公式</a></li>
     <li><a href="#architecture" data-section="architecture">架构</a></li>
+    <li><a href="#careers" data-section="careers">职业库</a></li>
+    <li><a href="#skillunit" data-section="skillunit">Skill Unit</a></li>
     <li><a href="#moat" data-section="moat">壁垒</a></li>
-    <li><a href="#strategy" data-section="strategy">判断</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">进入架构体系</a>
+  <a href="#careers" class="nav-cta">选择职业身份</a>
 </nav>
 
+<!-- ── Hero ──────────────────────────────────────────────────── -->
 <section id="hero">
   <div class="hero-bg-grid"></div>
   <div class="hero-bg-glow"></div>
@@ -961,7 +1539,7 @@ footer {
     </p>
     <div class="hero-actions fade-in fade-in-delay-3">
       <a href="#formula" class="btn-primary">查看底层逻辑 →</a>
-      <a href="#architecture" class="btn-secondary">进入架构体系</a>
+      <a href="#careers" class="btn-secondary">选择职业身份</a>
     </div>
     <div class="hero-stats fade-in fade-in-delay-4">
       <div class="stat-item">
@@ -1016,6 +1594,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Core Definition ───────────────────────────────────────── -->
 <section id="definition">
   <div class="section-label">核心定义</div>
   <h2 class="section-title fade-in">我们卖的不是 AI，<br>而是职业能力的结构化交付</h2>
@@ -1050,6 +1629,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Formula ───────────────────────────────────────────────── -->
 <section id="formula">
   <div class="section-label">底层公式</div>
   <h2 class="section-title fade-in">职业专属 Skill 的底层公式</h2>
@@ -1117,6 +1697,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Architecture ──────────────────────────────────────────── -->
 <section id="architecture">
   <div class="section-label">平台架构</div>
   <h2 class="section-title fade-in">这不是 Prompt 集合，<br>而是一个职业工作流操作系统</h2>
@@ -1179,6 +1760,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Skill Unit ────────────────────────────────────────────── -->
 <section id="skillunit">
   <div class="section-label">最小单元</div>
   <h2 class="section-title fade-in">平台真正的最小单位，<br>不是职业，而是 Skill Unit</h2>
@@ -1246,6 +1828,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Judgment ──────────────────────────────────────────────── -->
 <section id="judgment">
   <div class="section-label">判断标准</div>
   <h2 class="section-title fade-in">不是所有工作<br>都值得做成 Skill</h2>
@@ -1280,6 +1863,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Personalization ───────────────────────────────────────── -->
 <section id="personalization">
   <div class="section-label">专属化机制</div>
   <h2 class="section-title fade-in">真正可规模化的专属化，<br>不是无限定制</h2>
@@ -1316,6 +1900,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Moat ──────────────────────────────────────────────────── -->
 <section id="moat">
   <div class="section-label">产品壁垒</div>
   <h2 class="section-title fade-in">真正的壁垒，<br>不在模型，在结构</h2>
@@ -1327,7 +1912,7 @@ footer {
         <div class="moat-icon">⛏</div>
         <div>
           <h3>对真实职业工作流的理解深度</h3>
-          <p>不是&quot;帮医生写文章&quot;，而是&quot;病历摘要的标准格式、关键字段、风险节点&quot;。这需要大量的一线调研和迭代。</p>
+          <p>不是"帮医生写文章"，而是"病历摘要的标准格式、关键字段、风险节点"。这需要大量的一线调研和迭代。</p>
         </div>
       </div>
       <div class="moat-card fade-in fade-in-delay-2">
@@ -1374,6 +1959,7 @@ footer {
   </div>
 </section>
 
+<!-- ── Strategy ──────────────────────────────────────────────── -->
 <section id="strategy">
   <div class="section-label">战略判断</div>
   <h2 class="section-title fade-in" style="color:var(--white)">这三个判断，决定<br>平台后面会不会越做越乱</h2>
@@ -1397,6 +1983,78 @@ footer {
   </div>
 </section>
 
+<!-- ── Careers ───────────────────────────────────────────────── -->
+<section id="careers">
+  <div class="career-shell">
+    <div class="career-install-banner fade-in">
+      <div><strong>不是在看文案，而是在安装职业能力包。</strong> 选定职业后，系统会加载该职业的高频 Skills，并支持一键复制到 OpenClaw。</div>
+      <div class="career-install-badge">Profession Pack</div>
+    </div>
+
+    <div class="section-label">职业库</div>
+    <h2 class="section-title fade-in">选择你的职业身份</h2>
+    <p class="section-sub fade-in fade-in-delay-1">选职业，即切换 AI 的工作身份。当前先开放教师职业包，其余职业保留入口与状态提示，方便后续扩展。</p>
+
+    <div class="career-search-row">
+      <div class="career-searchbox fade-in fade-in-delay-1">
+        <label class="career-search-label" for="careerSearch">搜索职业名称</label>
+        <div class="career-search-field">
+          <input id="careerSearch" class="career-search-input" type="search" placeholder="搜索教师、律师、销售、医生、顾问、运营" autocomplete="off">
+        </div>
+      </div>
+      <div class="career-search-meta fade-in fade-in-delay-2">
+        <div class="career-meta-label">当前状态</div>
+        <div class="career-meta-copy">教师职业包已可直接切换并复制到 OpenClaw，其余职业会先显示为 <strong>Coming Soon</strong>。</div>
+      </div>
+    </div>
+
+    <div id="careerGrid" class="career-grid"></div>
+    <div id="careerFeedback" class="career-feedback" aria-live="polite"></div>
+    <div id="careerEmpty" class="career-empty">没有找到匹配职业。你可以先试试输入“教师”。</div>
+
+    <div class="career-workspace">
+      <div id="careerModePanel" class="career-mode-panel fade-in" hidden>
+        <div class="career-mode-top">
+          <div>
+            <div class="career-mode-label">Current Identity</div>
+            <h3 id="careerModeTitle" class="career-mode-title">当前已切换到：教师职业工作模式</h3>
+            <p id="careerModeCopy" class="career-mode-copy">围绕备课、授课、练习、评语、家校沟通等高频教学工作流设计。</p>
+          </div>
+          <div id="careerModeStatus" class="career-mode-status"></div>
+        </div>
+        <div class="career-mode-foot">
+          <p><strong>复制下方 Prompt 到 OpenClaw 后，你的小龙虾将进入教师职业工作流模式。</strong></p>
+          <button id="teacherMasterCopy" class="pack-btn-main" type="button">复制教师职业总控 Prompt</button>
+        </div>
+      </div>
+
+      <div id="teacherPackStage" class="teacher-pack-stage" hidden>
+        <div class="teacher-pack-inner">
+          <div class="teacher-pack">
+            <div class="teacher-pack-callout fade-in">
+              <div class="teacher-pack-callout-head">
+                <div>
+                  <span class="teacher-pack-eyebrow">Teacher Skills Pack</span>
+                  <h3 class="teacher-pack-title">教师职业 Skills</h3>
+                  <p class="teacher-pack-sub">围绕备课、授课、练习、评语、家校沟通等高频教学工作流设计，让教师 AI 从“能回答”变成“能工作”。</p>
+                </div>
+                <div class="teacher-pack-actions">
+                  <button id="teacherPackCopyAgain" class="pack-btn-main" type="button">复制职业总控 Prompt</button>
+                  <button id="teacherPackCollapse" class="pack-btn-alt" type="button">收起教师职业包</button>
+                </div>
+              </div>
+              <div class="teacher-pack-note">当前页面表达的不是职业说明，而是一个可以安装到 OpenClaw 的教师工作身份层。点击任一 Skill 的复制按钮，就能把对应工作流 Prompt 直接带走。</div>
+            </div>
+
+            <div id="teacherSkillsGrid" class="teacher-skills-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────────── -->
 <section id="cta">
   <div class="cta-inner">
     <p class="section-label" style="justify-content:center; margin-bottom:32px">开始构建</p>
@@ -1408,18 +2066,20 @@ footer {
       Build the Operating System for Work.
     </p>
     <div class="cta-buttons fade-in fade-in-delay-2">
-      <a href="#" class="cta-btn-main">Start Building Skills →</a>
-      <a href="#architecture" class="cta-btn-alt">Design Your Workflow AI</a>
+      <a href="#careers" class="cta-btn-main">Start Building Skills →</a>
+      <a href="#careers" class="cta-btn-alt">Design Your Workflow AI</a>
     </div>
   </div>
 </section>
 
+<!-- Footer -->
 <footer>
   <div class="footer-logo">Skill<span>OS</span></div>
   <div class="footer-copy">职业工作流操作系统 · Built for the Future of Work</div>
 </footer>
 
 <script>
+/* ─── Loader ────────────────────────────────────────────────── */
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loader').classList.add('done');
@@ -1429,17 +2089,27 @@ window.addEventListener('load', () => {
   }, 400);
 });
 
-const fadeEls = document.querySelectorAll('.fade-in');
+/* ─── Fade-in registration ─────────────────────────────────── */
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-fadeEls.forEach(el => observer.observe(el));
 
+function registerFadeIns(root = document) {
+  root.querySelectorAll('.fade-in').forEach(el => {
+    if (el.dataset.fadeObserved === 'true') return;
+    el.dataset.fadeObserved = 'true';
+    observer.observe(el);
+  });
+}
+
+registerFadeIns(document);
+
+/* ─── Nav scroll behavior ───────────────────────────────────── */
 const nav = document.getElementById('nav');
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a[data-section]');
@@ -1448,24 +2118,865 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 
   let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 120) current = section.id;
   });
-  navLinks.forEach(a => {
-    a.classList.toggle('active', a.dataset.section === current);
+
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.section === current);
   });
 }, { passive: true });
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const offset = target.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: offset, behavior: 'smooth' });
-    }
+/* ─── Smooth anchor scrolling ───────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', event => {
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#') return;
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    event.preventDefault();
+    const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: offset, behavior: 'smooth' });
   });
 });
+
+/* ─── Profession Library ────────────────────────────────────── */
+const professionLibrary = [
+  {
+    id: 'teacher',
+    name: '教师',
+    label: 'Teaching Workflow Pack',
+    availability: 'available',
+    summary: '围绕备课、授课、练习、评语、家校沟通等高频教学工作流设计，适合作为第一批职业能力包上线。',
+    tags: ['10 个高频 Skills', '课堂工作流', '可复制到 OpenClaw'],
+    status: ['Active', 'Ready for OpenClaw'],
+    searchTokens: '教师 教学 teacher 备课 讲稿 作业 评语 家校沟通'
+  },
+  {
+    id: 'lawyer',
+    name: '律师',
+    label: 'Legal Workflow Pack',
+    availability: 'coming-soon',
+    summary: '合同审查、法律检索、风险提示等高频法务流程，下一批优先扩展。',
+    tags: ['Coming Soon', '合同与合规', '专业壁垒强'],
+    status: ['Coming Soon'],
+    searchTokens: '律师 法务 legal 合同 合规'
+  },
+  {
+    id: 'sales',
+    name: '销售',
+    label: 'Sales Workflow Pack',
+    availability: 'coming-soon',
+    summary: '客户沟通、商机跟进、报价推进和异议处理，适合做成高转化职业包。',
+    tags: ['Coming Soon', '客户推进', '高频沟通'],
+    status: ['Coming Soon'],
+    searchTokens: '销售 sales 客户 商机 跟进'
+  },
+  {
+    id: 'doctor',
+    name: '医生',
+    label: 'Clinical Workflow Pack',
+    availability: 'coming-soon',
+    summary: '病历摘要、沟通记录、随访文案等临床场景，需要更强风险控制后开放。',
+    tags: ['Coming Soon', '高风险审核', '医疗表达'],
+    status: ['Coming Soon'],
+    searchTokens: '医生 medical 临床 病历'
+  },
+  {
+    id: 'consultant',
+    name: '顾问',
+    label: 'Consulting Workflow Pack',
+    availability: 'coming-soon',
+    summary: '方案结构化、客户诊断、会议纪要与项目推进，是后续适合复制的智力工作流。',
+    tags: ['Coming Soon', '方案产出', '项目推进'],
+    status: ['Coming Soon'],
+    searchTokens: '顾问 consultant 方案 客户 诊断'
+  },
+  {
+    id: 'operations',
+    name: '运营',
+    label: 'Operations Workflow Pack',
+    availability: 'coming-soon',
+    summary: '活动执行、内容协同、数据复盘和 SOP 输出，适合平台化沉淀。',
+    tags: ['Coming Soon', 'SOP 与复盘', '协同管理'],
+    status: ['Coming Soon'],
+    searchTokens: '运营 operations 活动 复盘 内容'
+  }
+];
+
+const teacherProfessionPack = {
+  profession: {
+    id: 'teacher',
+    name: '教师',
+    status: ['Active', 'Ready for OpenClaw'],
+    summary: '围绕备课、授课、练习、评语、家校沟通等高频教学工作流设计。',
+    openClawHint: '复制下方 Prompt 到 OpenClaw 后，你的小龙虾将进入教师职业工作流模式。'
+  },
+  masterPrompt: `你现在进入“教师职业工作模式”。
+
+你的角色不是通用聊天助手，而是一名专业教师工作流助手。你的任务是帮助教师高质量完成高频教学任务，包括但不限于：教学目标拆解、教案生成、课堂讲稿生成、课堂导入设计、练习题生成、作业设计、试卷生成、讲评内容整理、学生评语生成、家校沟通文案撰写。
+
+你的工作原则如下：
+
+1. 所有输出必须符合教师真实工作场景，不能空泛，不能像普通AI聊天回复。
+2. 所有内容必须强调实用性、可直接使用、结构清晰。
+3. 输出时默认优先考虑以下因素：
+   - 年级
+   - 学科
+   - 教学主题
+   - 课时长度
+   - 学生水平
+   - 使用场景
+4. 如用户未补充完整信息，你要先给出“最合理的标准版结果”，同时列出可补充参数。
+5. 输出内容要尽量贴近一线教师真实表达，既专业，又自然。
+6. 对涉及学生评价、家校沟通、成绩分析等内容，要注意措辞稳妥，避免夸张、冒犯、绝对化表达。
+7. 对涉及试卷、练习题、答案、讲评时，默认使用标准教学格式输出。
+8. 所有输出必须尽量模块化，方便教师直接复制、修改、打印或发送。
+
+默认输出格式要求：
+- 标题清晰
+- 分点明确
+- 结构完整
+- 可直接用于教学工作
+
+当我发送具体任务时，请直接按“教师职业工作模式”执行，不要再把自己当成普通助手。`,
+  skills: [
+    {
+      id: 'teaching-objectives',
+      name: '教学目标拆解',
+      scenario: '用于备课前快速明确本节课的知识目标、能力目标与情感目标。',
+      inputRequirements: ['学科', '年级', '课程主题', '课时长度', '教材版本（可选）', '学生基础情况（可选）'],
+      outputStructure: ['课题信息', '知识目标', '能力目标', '情感目标', '教学重点建议', '教学难点建议', '补充参数'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：教学目标拆解。
+
+【任务目标】
+根据提供的课程信息，拆解出本节课可直接用于备课的教学目标体系。
+
+【输入项】
+我会提供以下部分或全部信息：
+- 学科
+- 年级
+- 课程主题
+- 课时长度
+- 教材版本
+- 学生基础情况
+
+【执行要求】
+1. 输出必须符合真实教学场景，目标表述清楚、可落地、可评价。
+2. 目标必须区分：知识目标、能力目标、情感目标。
+3. 目标不能空泛，不要堆砌套话。
+4. 如信息不足，默认生成一版最稳妥、最常用的标准版本。
+5. 可根据主题补充教学重点和教学难点建议。
+
+【输出格式】
+1. 课题信息
+2. 知识目标
+3. 能力目标
+4. 情感目标
+5. 教学重点建议
+6. 教学难点建议
+7. 如需补充的参数
+
+请直接输出结果，不要写额外说明。`
+    },
+    {
+      id: 'lesson-plan',
+      name: '教案生成',
+      scenario: '用于生成一份完整、可直接使用的课堂教案。',
+      inputRequirements: ['学科', '年级', '教材版本', '课程主题', '课时长度', '教学目标（可选）', '学生基础情况（可选）', '课堂风格（常规课/公开课）'],
+      outputStructure: ['课题', '教学目标', '教学重点', '教学难点', '教学准备', '教学过程', '教师提问设计', '学生活动设计', '板书设计', '课堂小结', '作业布置'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：教案生成。
+
+你的任务是根据我提供的教学信息，生成一份完整、可直接使用的教案。
+
+【角色要求】
+你是一名经验丰富的一线教师教案助手，熟悉课堂节奏、教学目标设计、重难点设置、互动提问、板书设计与作业安排。
+
+【输入信息】
+我会给你以下内容中的部分或全部：
+- 学科
+- 年级
+- 教材版本
+- 课程主题
+- 课时长度
+- 教学目标
+- 学生基础情况
+- 是否需要公开课风格 / 常规课风格
+
+【输出要求】
+请输出一份完整教案，至少包括：
+1. 课题
+2. 教学目标
+3. 教学重点
+4. 教学难点
+5. 教学准备
+6. 教学过程
+7. 教师提问设计
+8. 学生活动设计
+9. 板书设计
+10. 课堂小结
+11. 作业布置
+
+【质量要求】
+- 内容必须符合真实课堂节奏
+- 语言必须像教师真实使用的教案
+- 不要写空话
+- 教学过程必须分步骤写清楚
+- 每一步都要体现教师行为和学生行为
+- 如果信息不足，默认生成一个最稳妥、最常用的标准版本
+
+【输出格式】
+请直接输出完整教案正文，不要写额外解释。`
+    },
+    {
+      id: 'class-script',
+      name: '课堂讲稿生成',
+      scenario: '用于将教案转成老师课堂上可直接使用的话术稿。',
+      inputRequirements: ['教案正文或课程主题', '学科', '年级', '课时长度', '课堂风格（可选）'],
+      outputStructure: ['开场话术', '知识讲解话术', '提问互动话术', '过渡衔接话术', '课堂总结话术', '板书提示（可选）'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：课堂讲稿生成。
+
+【任务目标】
+根据教案或课程主题，生成一份教师上课时可直接使用的课堂讲稿。
+
+【输入项】
+我会提供：
+- 教案正文或课程主题
+- 学科
+- 年级
+- 课时长度
+- 课堂风格（可选）
+
+【执行要求】
+1. 讲稿要贴近教师真实课堂表达，不能像书面报告。
+2. 内容要体现课堂节奏，包括导入、讲解、提问、互动、总结。
+3. 语言要清楚、自然、便于直接开口使用。
+4. 可适度加入提问句、过渡句、强调句。
+5. 如信息不足，默认输出最常用、最稳妥的标准讲稿版本。
+
+【输出格式】
+1. 开场话术
+2. 核心知识讲解话术
+3. 提问互动话术
+4. 过渡衔接话术
+5. 课堂总结话术
+6. 如有需要，可补充板书提示
+
+请直接输出讲稿，不要添加解释。`
+    },
+    {
+      id: 'lesson-hook',
+      name: '课堂导入设计',
+      scenario: '用于快速设计开场提问、故事导入、情境导入或互动导入。',
+      inputRequirements: ['课程主题', '学科', '学生年龄段', '导入风格偏好（可选）'],
+      outputStructure: ['导入目标', '导入方案 1', '导入方案 2', '导入方案 3', '使用建议'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：课堂导入设计。
+
+【任务目标】
+根据课程主题和学生年龄段，设计适合课堂使用的导入方案。
+
+【输入项】
+我会提供：
+- 课程主题
+- 学科
+- 学生年龄段
+- 导入风格偏好（可选）
+
+【执行要求】
+1. 导入必须服务于教学目标，不能只追求热闹。
+2. 至少提供 3 种不同形式的导入方案，例如：提问导入、故事导入、情境导入、互动导入。
+3. 每个方案都要说明适用点和教师如何展开。
+4. 语言要简洁、自然、可直接用于课堂。
+5. 如信息不足，默认输出最通用的标准版本。
+
+【输出格式】
+1. 导入目标
+2. 导入方案 1
+3. 导入方案 2
+4. 导入方案 3
+5. 使用建议
+
+请直接输出结果，不要做额外说明。`
+    },
+    {
+      id: 'exercise-generator',
+      name: '练习题生成',
+      scenario: '用于围绕知识点快速生成课内练习或课后练习。',
+      inputRequirements: ['学科', '年级', '知识点', '题型', '难度', '题量（可选）'],
+      outputStructure: ['题目清单', '参考答案', '简要解析', '难度标注'],
+      riskLevel: 'Medium',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：练习题生成。
+
+【任务目标】
+根据指定知识点、题型和难度，生成一组适合教学使用的练习题。
+
+【输入项】
+我会提供：
+- 学科
+- 年级
+- 知识点
+- 题型
+- 难度
+- 题量（可选）
+
+【执行要求】
+1. 题目必须紧扣知识点，不能偏题。
+2. 题型要符合对应年级的真实教学使用习惯。
+3. 难度梯度要合理，不要全部过难或过易。
+4. 默认附参考答案；如适合，可附简要解析。
+5. 若为客观题，答案必须准确；若为主观题，给出参考答案要点。
+6. 如信息不足，默认生成一版标准课堂练习。
+
+【输出格式】
+1. 练习题
+2. 参考答案
+3. 简要解析
+4. 难度说明
+
+请直接输出结果，不要写额外解释。`
+    },
+    {
+      id: 'homework-design',
+      name: '作业设计',
+      scenario: '用于根据课堂内容快速生成分层作业。',
+      inputRequirements: ['学科', '年级', '课程内容', '教学目标', '作业类型偏好（可选）'],
+      outputStructure: ['作业目标', '基础版作业', '提升版作业', '提交要求', '教师使用建议'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：作业设计。
+
+【任务目标】
+根据课程内容和教学目标，设计一份可直接布置的课后作业。
+
+【输入项】
+我会提供：
+- 学科
+- 年级
+- 课程内容
+- 教学目标
+- 作业类型偏好（可选）
+
+【执行要求】
+1. 作业必须服务于课堂目标，不做无效堆量。
+2. 默认区分：基础版、提升版。
+3. 内容要符合学生年龄与作业负担。
+4. 如适合，可补充口头表达、观察记录、思维整理等非纸笔任务。
+5. 如信息不足，默认输出最稳妥的标准作业版本。
+
+【输出格式】
+1. 作业目标
+2. 基础版作业
+3. 提升版作业
+4. 提交要求
+5. 教师使用建议
+
+请直接输出作业内容，不要添加额外解释。`
+    },
+    {
+      id: 'exam-paper',
+      name: '试卷生成',
+      scenario: '用于生成单元测、随堂测或阶段测的完整试卷。',
+      inputRequirements: ['学科', '年级', '单元范围', '题型结构', '难度', '总分或题量（可选）'],
+      outputStructure: ['试卷标题', '考试说明', '试卷正文', '参考答案', '评分建议'],
+      riskLevel: 'Medium',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：试卷生成。
+
+【任务目标】
+根据指定范围和题型结构，生成一份完整测试卷。
+
+【输入项】
+我会提供：
+- 学科
+- 年级
+- 单元范围
+- 题型结构
+- 难度
+- 总分或题量（可选）
+
+【执行要求】
+1. 试卷结构必须完整、规范，适合真实教学测评场景。
+2. 题型分布要合理，难度梯度要自然。
+3. 题目必须围绕给定范围，不得明显超纲。
+4. 默认附参考答案；必要时提供评分建议。
+5. 若信息不足，生成一份标准单元测试卷版本。
+
+【输出格式】
+1. 试卷标题
+2. 考试说明
+3. 试卷正文
+4. 参考答案
+5. 评分建议
+
+请直接输出试卷，不要写额外说明。`
+    },
+    {
+      id: 'paper-review',
+      name: '作业/试卷讲评',
+      scenario: '用于围绕错题和典型问题生成讲评思路与讲评话术。',
+      inputRequirements: ['学科', '年级', '作业或试卷内容', '学生常错题', '讲评目标（可选）'],
+      outputStructure: ['讲评重点', '典型错误分析', '讲评流程', '讲评话术示例', '补救建议'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：作业/试卷讲评。
+
+【任务目标】
+根据学生常错题或试卷内容，生成一套可直接用于课堂讲评的内容。
+
+【输入项】
+我会提供：
+- 学科
+- 年级
+- 作业或试卷内容
+- 学生常错题
+- 讲评目标（可选）
+
+【执行要求】
+1. 讲评重点要围绕典型错误和共性问题。
+2. 不只给答案，要解释错误原因和改进方法。
+3. 可提供教师讲评思路和课堂话术。
+4. 语言要适合课堂讲评，清楚、具体、可执行。
+5. 若信息不足，按常见教学场景生成标准讲评版本。
+
+【输出格式】
+1. 讲评重点
+2. 典型错误分析
+3. 讲评流程
+4. 讲评话术示例
+5. 补救建议
+
+请直接输出讲评内容，不要写额外解释。`
+    },
+    {
+      id: 'student-comments',
+      name: '学生评语生成',
+      scenario: '用于生成期末评语、阶段评语或日常表现评价。',
+      inputRequirements: ['学生性格特点', '学习表现', '课堂表现', '作业情况', '同伴相处情况', '表达倾向（鼓励/表扬/提醒）'],
+      outputStructure: ['简洁版评语', '温暖版评语', '稍正式版评语'],
+      riskLevel: 'Medium',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：学生评语生成。
+
+你的任务是根据学生的实际表现，生成一段自然、具体、得体、可直接使用的学生评语。
+
+【输入信息】
+我会提供：
+- 学生性格特点
+- 学习表现
+- 课堂表现
+- 作业情况
+- 与同学相处情况
+- 需要鼓励还是表扬还是提醒
+
+【输出要求】
+1. 真实自然，不模板化
+2. 既指出优点，也可以提出建议
+3. 措辞要有温度
+4. 不要过度夸张
+5. 不要出现伤害学生自尊的表达
+6. 能体现教师的观察感和具体感
+
+【输出版本】
+请默认输出：
+- 简洁版评语
+- 温暖版评语
+- 稍正式版评语
+
+【注意事项】
+- 如果学生表现较弱，语气要委婉但不能失去方向
+- 如果学生进步明显，要突出进步点
+- 避免空泛词汇堆砌
+
+请直接输出评语，不要做多余解释。`
+    },
+    {
+      id: 'parent-communication',
+      name: '家校沟通文案',
+      scenario: '用于生成适合发给家长的沟通话术和消息文案。',
+      inputRequirements: ['学生当前情况', '想沟通的问题', '沟通目的', '语气偏好（温和/正式/建议型/提醒型）'],
+      outputStructure: ['微信简洁版', '正式沟通版', '更温和的建议版'],
+      riskLevel: 'High',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：家校沟通文案生成。
+
+你的任务是根据学生情况和沟通目标，生成一段适合发给家长的沟通话术。
+
+【输入信息】
+我会提供：
+- 学生当前情况
+- 想沟通的问题
+- 沟通目的
+- 希望语气（温和 / 正式 / 建议型 / 提醒型）
+
+【输出要求】
+1. 语言礼貌得体
+2. 既专业又有人情味
+3. 不制造家长焦虑
+4. 不空泛，不敷衍
+5. 让家长清楚知道问题、现状和建议
+6. 有利于建立教师与家长之间的信任
+
+【默认输出结构】
+请生成以下 3 个版本：
+- 微信简洁版
+- 正式沟通版
+- 更温和的建议版
+
+【风险控制】
+- 避免绝对化判断
+- 避免情绪化表达
+- 避免让家长感到被指责
+- 对学生问题描述要客观
+
+请直接输出文案结果，不要添加说明。`
+    },
+    {
+      id: 'class-review',
+      name: '课堂导入后追问设计',
+      scenario: '用于为已有课堂导入补上追问链路，让互动更完整。',
+      inputRequirements: ['导入方案', '学科', '年级', '目标知识点'],
+      outputStructure: ['追问设计', '学生可能回答', '教师承接话术', '进入正课的过渡句'],
+      riskLevel: 'Low',
+      prompt: `你现在进入“教师职业工作模式”。
+
+当前执行的 Skill 是：课堂导入后追问设计。
+
+【任务目标】
+根据已有的导入方案，补全导入后的追问链路，让教师可以自然把学生从兴趣点带到正式教学内容。
+
+【输入项】
+我会提供：
+- 导入方案
+- 学科
+- 年级
+- 目标知识点
+
+【执行要求】
+1. 追问要符合学生年龄特点。
+2. 追问链路要能推动课堂进入本节核心目标。
+3. 每一步都要给出教师承接语言。
+4. 如信息不足，默认输出一版通用课堂追问设计。
+
+【输出格式】
+1. 追问设计
+2. 学生可能回答
+3. 教师承接话术
+4. 进入正课的过渡句
+
+请直接输出结果，不要额外解释。`
+    }
+  ]
+};
+
+if (teacherProfessionPack.skills.length > 10) {
+  teacherProfessionPack.skills = teacherProfessionPack.skills.slice(0, 10);
+}
+
+const riskMeta = {
+  Low: { label: '低风险', className: 'low' },
+  Medium: { label: '中风险', className: 'medium' },
+  High: { label: '高风险', className: 'high' }
+};
+
+const careerState = {
+  activeProfessionId: null,
+  feedbackTimer: null
+};
+
+const careerGrid = document.getElementById('careerGrid');
+const careerSearch = document.getElementById('careerSearch');
+const careerFeedback = document.getElementById('careerFeedback');
+const careerEmpty = document.getElementById('careerEmpty');
+const careerModePanel = document.getElementById('careerModePanel');
+const careerModeTitle = document.getElementById('careerModeTitle');
+const careerModeCopy = document.getElementById('careerModeCopy');
+const careerModeStatus = document.getElementById('careerModeStatus');
+const teacherPackStage = document.getElementById('teacherPackStage');
+const teacherSkillsGrid = document.getElementById('teacherSkillsGrid');
+const teacherMasterCopy = document.getElementById('teacherMasterCopy');
+const teacherPackCopyAgain = document.getElementById('teacherPackCopyAgain');
+const teacherPackCollapse = document.getElementById('teacherPackCollapse');
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function showCareerFeedback(message) {
+  careerFeedback.textContent = message;
+  careerFeedback.classList.add('is-visible');
+  clearTimeout(careerState.feedbackTimer);
+  careerState.feedbackTimer = setTimeout(() => {
+    careerFeedback.classList.remove('is-visible');
+  }, 2200);
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (error) {
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'absolute';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    const succeeded = document.execCommand('copy');
+    document.body.removeChild(area);
+    return succeeded;
+  }
+}
+
+async function handleCopy(button, text, copiedLabel = '已复制') {
+  const ok = await copyText(text);
+  const originalLabel = button.dataset.originalLabel || button.textContent;
+  button.dataset.originalLabel = originalLabel;
+  button.textContent = ok ? copiedLabel : '复制失败';
+  if (ok) button.classList.add('is-copied');
+  clearTimeout(button.copyTimer);
+  button.copyTimer = setTimeout(() => {
+    button.textContent = originalLabel;
+    button.classList.remove('is-copied');
+  }, ok ? 1600 : 1800);
+  if (ok) showCareerFeedback('Prompt 已复制，可以直接粘贴到 OpenClaw。');
+}
+
+function renderModeStatus() {
+  careerModeStatus.innerHTML = teacherProfessionPack.profession.status.map(status => {
+    const cls = status.toLowerCase().includes('ready') ? 'ready' : 'active';
+    return `<span class="career-state-pill ${cls}">${escapeHtml(status)}</span>`;
+  }).join('');
+}
+
+function setTeacherPackOpen(isOpen, options = {}) {
+  const { withScroll = true } = options;
+  careerState.activeProfessionId = isOpen ? 'teacher' : null;
+  renderProfessionCards();
+
+  careerModePanel.hidden = !isOpen;
+  if (isOpen) {
+    careerModeTitle.textContent = '当前已切换到：教师职业工作模式';
+    careerModeCopy.textContent = teacherProfessionPack.profession.summary;
+    renderModeStatus();
+    teacherPackStage.hidden = false;
+    requestAnimationFrame(() => teacherPackStage.classList.add('is-open'));
+    if (withScroll) {
+      setTimeout(() => {
+        teacherPackStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 180);
+    }
+  } else {
+    teacherPackStage.classList.remove('is-open');
+    setTimeout(() => {
+      if (!teacherPackStage.classList.contains('is-open')) {
+        teacherPackStage.hidden = true;
+      }
+    }, 420);
+  }
+}
+
+function renderProfessionCards() {
+  const query = careerSearch.value.trim().toLowerCase();
+  const filteredProfessions = professionLibrary.filter(profession => {
+    if (!query) return true;
+    return `${profession.name} ${profession.label} ${profession.searchTokens}`.toLowerCase().includes(query);
+  });
+
+  if (careerState.activeProfessionId === 'teacher' && !filteredProfessions.some(item => item.id === 'teacher')) {
+    setTeacherPackOpen(false, { withScroll: false });
+    return;
+  }
+
+  careerEmpty.classList.toggle('is-visible', filteredProfessions.length === 0);
+  careerGrid.innerHTML = filteredProfessions.map(profession => {
+    const isAvailable = profession.availability === 'available';
+    const isActive = careerState.activeProfessionId === profession.id;
+    const pills = profession.status.map(status => {
+      const statusClass = status.toLowerCase().includes('ready')
+        ? 'ready'
+        : status.toLowerCase().includes('coming')
+          ? 'soon'
+          : 'active';
+      return `<span class="career-card-pill ${statusClass}">${escapeHtml(status)}</span>`;
+    }).join('');
+
+    return `
+      <article class="career-card ${isActive ? 'is-active' : ''} ${isAvailable ? '' : 'is-coming-soon'} fade-in" data-career-id="${profession.id}" tabindex="0" role="button" aria-pressed="${isActive}">
+        <div class="career-card-top">
+          <div>
+            <div class="career-card-kicker">${escapeHtml(profession.label)}</div>
+            <h3 class="career-card-title">${escapeHtml(profession.name)}</h3>
+          </div>
+          <div>${pills}</div>
+        </div>
+        <p class="career-card-summary">${escapeHtml(profession.summary)}</p>
+        <div class="career-card-tags">
+          ${profession.tags.map(tag => `<span class="career-card-tag">${escapeHtml(tag)}</span>`).join('')}
+        </div>
+        <div class="career-card-action">
+          <span>${isAvailable ? '点击后立即安装教师职业能力包' : '当前仅展示职业入口和状态'}</span>
+          <span>${isAvailable ? (isActive ? 'Collapse' : 'Install') : 'Preview'}</span>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  registerFadeIns(careerGrid);
+
+  careerGrid.querySelectorAll('.career-card').forEach(card => {
+    const activate = () => {
+      const professionId = card.dataset.careerId;
+      const profession = professionLibrary.find(item => item.id === professionId);
+      if (!profession) return;
+
+      if (profession.id === 'teacher') {
+        if (careerState.activeProfessionId === 'teacher') {
+          setTeacherPackOpen(false, { withScroll: false });
+          showCareerFeedback('教师职业能力包已收起。');
+        } else {
+          setTeacherPackOpen(true);
+          showCareerFeedback('当前已切换到：教师职业工作模式。');
+        }
+        return;
+      }
+
+      showCareerFeedback(`${profession.name}职业包即将开放。当前先可体验教师职业工作模式。`);
+    };
+
+    card.addEventListener('click', activate);
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate();
+      }
+    });
+  });
+}
+
+function renderTeacherSkills() {
+  teacherSkillsGrid.innerHTML = teacherProfessionPack.skills.map((skill, index) => {
+    const risk = riskMeta[skill.riskLevel] || riskMeta.Low;
+    return `
+      <article class="skill-card fade-in" data-skill-id="${skill.id}">
+        <div class="skill-card-top">
+          <div>
+            <div class="skill-card-index">Skill ${String(index + 1).padStart(2, '0')}</div>
+            <h4 class="skill-card-title">${escapeHtml(skill.name)}</h4>
+          </div>
+          <span class="skill-risk-pill ${risk.className}">${risk.label}</span>
+        </div>
+        <p class="skill-scene">${escapeHtml(skill.scenario)}</p>
+        <div class="skill-preview-grid">
+          <div class="skill-preview">
+            <span class="skill-preview-label">适用场景</span>
+            <div class="skill-preview-copy">${escapeHtml(skill.scenario)}</div>
+          </div>
+          <div class="skill-preview">
+            <span class="skill-preview-label">输入内容</span>
+            <div class="skill-preview-copy">${escapeHtml(skill.inputRequirements.slice(0, 4).join(' / '))}</div>
+          </div>
+          <div class="skill-preview">
+            <span class="skill-preview-label">输出结果</span>
+            <div class="skill-preview-copy">${escapeHtml(skill.outputStructure.slice(0, 4).join(' / '))}</div>
+          </div>
+        </div>
+        <div class="skill-actions">
+          <button class="pack-btn-main skill-copy-btn" type="button" data-skill-id="${skill.id}">复制 Skill Prompt</button>
+          <button class="pack-btn-alt skill-toggle-btn" type="button" data-skill-id="${skill.id}" aria-expanded="false">查看 Skill 说明</button>
+        </div>
+        <div class="skill-details">
+          <div class="skill-detail-block">
+            <span class="skill-detail-title">适用场景</span>
+            <ul class="skill-detail-list">
+              <li>${escapeHtml(skill.scenario)}</li>
+            </ul>
+          </div>
+          <div class="skill-detail-block">
+            <span class="skill-detail-title">输入要求</span>
+            <ul class="skill-detail-list">
+              ${skill.inputRequirements.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="skill-detail-block">
+            <span class="skill-detail-title">输出结构</span>
+            <ul class="skill-detail-list">
+              ${skill.outputStructure.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="skill-detail-block">
+            <span class="skill-detail-title">风险等级</span>
+            <ul class="skill-detail-list">
+              <li>${risk.label}</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  registerFadeIns(teacherSkillsGrid);
+
+  teacherSkillsGrid.querySelectorAll('.skill-copy-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const skill = teacherProfessionPack.skills.find(item => item.id === button.dataset.skillId);
+      if (!skill) return;
+      handleCopy(button, skill.prompt, '已复制 Skill Prompt');
+    });
+  });
+
+  teacherSkillsGrid.querySelectorAll('.skill-toggle-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const card = button.closest('.skill-card');
+      const isOpen = card.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', String(isOpen));
+      button.textContent = isOpen ? '收起 Skill 说明' : '查看 Skill 说明';
+    });
+  });
+}
+
+careerSearch.addEventListener('input', renderProfessionCards);
+
+teacherMasterCopy.addEventListener('click', () => {
+  handleCopy(teacherMasterCopy, teacherProfessionPack.masterPrompt, '已复制职业总控 Prompt');
+});
+
+teacherPackCopyAgain.addEventListener('click', () => {
+  handleCopy(teacherPackCopyAgain, teacherProfessionPack.masterPrompt, '已复制职业总控 Prompt');
+});
+
+teacherPackCollapse.addEventListener('click', () => {
+  setTeacherPackOpen(false, { withScroll: false });
+  showCareerFeedback('教师职业能力包已收起。');
+});
+
+renderTeacherSkills();
+renderProfessionCards();
 </script>
 </body>
 </html>
