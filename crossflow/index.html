@@ -1,390 +1,1059 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CrossFlow | 跨境客服与售后运营交付页</title>
-<meta name="description" content="CrossFlow 帮跨境团队把客服、售后、升级和日报整理成一条可落地的运营流程。">
-<style>
-:root {
-  --paper: #f6f1e8;
-  --surface: #fffdf8;
-  --ink: #1f1b17;
-  --ink-soft: #5a5148;
-  --line: rgba(31, 27, 23, 0.12);
-  --accent: #af6430;
-  --accent-deep: #8f4f24;
-  --success-bg: rgba(52, 102, 71, 0.1);
-  --success-ink: #346647;
-  --radius-lg: 28px;
-  --radius-md: 18px;
-  --radius-sm: 12px;
-  --shadow: 0 18px 44px rgba(31, 27, 23, 0.08);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowBridge AI | 跨境电商 AI 客服 / 运营交付平台</title>
+  <style>
+:root{
+  --orange:#E89B4E;--brown:#6B4A2E;--cream:#F6E7D4;--sky:#87C9F5;--white:#FFFDF9;
+  --text:#6B4A2E;--muted:#8C6A4C;--shadow:0 24px 60px rgba(107,74,46,.12);--glass:blur(18px);
+  --card:rgba(255,253,249,.72);--ease:cubic-bezier(.22,1,.36,1)
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:radial-gradient(circle at top left, rgba(175,100,48,.08), transparent 28%), radial-gradient(circle at top right, rgba(66,110,145,.08), transparent 30%), var(--paper);line-height:1.65}
-a{color:inherit}
-.shell{width:min(1160px,calc(100vw - 32px));margin:0 auto}
-.site-header{position:sticky;top:0;z-index:10;background:rgba(246,241,232,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;letter-spacing:-.03em}
-.brand::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px rgba(175,100,48,.12)}
-.nav-links{display:flex;gap:26px;align-items:center}
-.nav-links a{text-decoration:none;color:var(--ink-soft);font-size:.95rem}
-.nav-links a:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-weight:600}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 10px 24px rgba(175,100,48,.2)}
-.btn-primary:hover{background:var(--accent-deep)}
-.btn-secondary{background:var(--surface);border-color:var(--line)}
-.hero{padding:72px 0 40px}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:start}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,248,.85);color:var(--ink-soft);font-size:.86rem}
-.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
-h1{margin:18px 0 16px;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.05em}
-.lead{margin:0;max-width:680px;font-size:1.08rem;color:var(--ink-soft)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0 20px}
-.hero-notes{display:flex;flex-wrap:wrap;gap:10px}
-.hero-notes span{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.9rem;color:var(--ink-soft)}
-.panel{background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow)}
-.preview{padding:24px}
-.preview h2{margin:10px 0 10px;font-size:1.45rem;line-height:1.25}
-.preview p{margin:0 0 18px;color:var(--ink-soft)}
-.preview-list{display:grid;gap:14px}
-.preview-item{padding:16px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--line)}
-.preview-item strong{display:block;margin-bottom:6px}
-.preview-item span{color:var(--ink-soft);font-size:.95rem}
-.section{padding:28px 0 72px}
-.section-head{max-width:760px;margin-bottom:26px}
-.kicker{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);font-weight:700}
-.section h2{margin:12px 0 12px;font-size:clamp(2rem,4vw,3.2rem);line-height:1.06;letter-spacing:-.04em}
-.section-head p{margin:0;color:var(--ink-soft);font-size:1.03rem}
-.grid-3,.grid-2{display:grid;gap:18px}
-.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.card{padding:24px;background:rgba(255,253,248,.88);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(31,27,23,.04)}
-.card h3,.card strong{display:block;margin:0 0 10px;font-size:1.12rem;line-height:1.35}
-.card p,.card li{margin:0;color:var(--ink-soft)}
-.card ul{margin:0;padding-left:18px}
-.card li+li{margin-top:8px}
-.workflow{display:grid;gap:16px}
-.step{display:grid;grid-template-columns:120px 1fr 220px;gap:16px;align-items:start}
-.step .label{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#8b7f73;padding-top:4px}
-.step .detail strong{display:block;font-size:1.08rem;margin-bottom:6px}
-.step .detail p{margin:0;color:var(--ink-soft)}
-.step .result{padding:14px 16px;border-radius:var(--radius-md);background:#f0e7db;border:1px solid var(--line);color:var(--ink-soft);font-size:.94rem}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-ink);font-size:.9rem;font-weight:700}
-.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--success-ink)}
-.contact{display:grid;grid-template-columns:1fr .9fr;gap:18px}
-.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:grid;gap:8px}
-.field.full{grid-column:1 / -1}
-.field label{font-size:.92rem;font-weight:600}
-.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 16px;color:var(--ink)}
-.field textarea{min-height:130px;resize:vertical}
-.form-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-.helper{margin:0;color:#867a70;font-size:.92rem}
-.footer{padding:24px 0 44px;color:var(--ink-soft);font-size:.92rem}
-.footer-wrap{padding-top:22px;border-top:1px solid var(--line)}
-@media (max-width: 980px){.hero-grid,.grid-3,.grid-2,.contact{grid-template-columns:1fr}.step{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}}
-@media (max-width: 760px){.nav{flex-direction:column;align-items:flex-start;padding:14px 0}.nav-links{flex-wrap:wrap}.hero{padding-top:36px}.hero-actions,.form-actions{flex-direction:column;align-items:stretch}.btn{width:100%}.shell{width:min(1160px,calc(100vw - 24px))}}
-</style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{
+  margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);overflow-x:hidden;
+  background:radial-gradient(circle at 10% 10%,rgba(232,155,78,.18),transparent 28%),
+  radial-gradient(circle at 90% 8%,rgba(135,201,245,.18),transparent 26%),
+  radial-gradient(circle at 50% 100%,rgba(232,155,78,.10),transparent 32%),
+  linear-gradient(180deg,#fffdf9 0%,#fff8f0 45%,#fffdf9 100%)
+}
+body.loading .hero-copy>*,body.loading .hero-preview,body.loading .nav-shell{opacity:0;transform:translateY(24px)}
+a{text-decoration:none;color:inherit}h1,h2,h3,p{margin:0}
+.ambient,.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;animation:float 14s ease-in-out infinite}
+.b1{width:360px;height:360px;left:-60px;top:60px;background:rgba(232,155,78,.35)}
+.b2{width:420px;height:420px;right:-90px;top:120px;background:rgba(135,201,245,.34);animation-delay:-4s}
+.b3{width:320px;height:320px;left:22%;bottom:-50px;background:rgba(246,231,212,.75);animation-delay:-7s}
+.cursor-glow{position:absolute;width:280px;height:280px;border-radius:50%;filter:blur(28px);background:radial-gradient(circle,rgba(232,155,78,.14),rgba(135,201,245,.10),transparent 72%);transform:translate(-50%,-50%)}
+.particle{position:absolute;border-radius:50%;transform:translate(-50%,-50%);animation:pop 1s var(--ease) forwards}
+.container{width:min(1180px,calc(100% - 32px));margin:0 auto;position:relative;z-index:1}
+section{padding:96px 0}.section-head{max-width:760px;margin-bottom:38px}.section-head.center{text-align:center;margin-inline:auto}
+.section-head h2{margin-top:18px;font-size:clamp(2rem,4vw,3.3rem);line-height:1.08;letter-spacing:-.05em}
+.section-head p{margin-top:14px;color:var(--muted);font-size:1rem}
+.tag{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.8);backdrop-filter:var(--glass);font-size:13px;font-weight:700;color:var(--muted)}
+.tag:before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--sky))}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}.reveal.visible{opacity:1;transform:none}
+.hero-preview,.cta-shell,.workflow-shell,.footer-shell,.pain-card,.step,.cap-card,.scene-card,.panel{
+  background:var(--card);border:1px solid rgba(255,255,255,.8);backdrop-filter:var(--glass);box-shadow:var(--shadow)
+}
+.hover{position:relative;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.hover:before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.72),transparent 45%);opacity:0;transition:opacity .3s ease}
+.hover:hover{transform:translateY(-8px);box-shadow:0 28px 70px rgba(107,74,46,.16);border-color:rgba(232,155,78,.28)}.hover:hover:before{opacity:1}.hover>*{position:relative;z-index:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;border-radius:999px;font-weight:800;transition:transform .3s var(--ease),box-shadow .3s var(--ease);position:relative;overflow:hidden;white-space:nowrap;border:none;cursor:pointer;appearance:none}
+.btn:before{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(120deg,rgba(255,255,255,.45),transparent 45%,rgba(255,255,255,.18));transform:translateX(-120%);transition:transform .7s var(--ease)}
+.btn:hover:before{transform:translateX(120%)}.btn:hover{transform:translateY(-3px)}
+.btn.primary{color:#fff;background:linear-gradient(135deg,var(--orange),#d67d3a 52%,var(--sky));box-shadow:0 18px 42px rgba(232,155,78,.30)}
+.btn.secondary{background:rgba(255,255,255,.72);border:1px solid rgba(232,155,78,.20);color:var(--text)}
+header{position:sticky;top:0;z-index:20;padding:16px 0}.nav-shell{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px 14px 18px;border-radius:999px;background:rgba(255,252,247,.64);border:1px solid rgba(255,255,255,.84);backdrop-filter:var(--glass);transition:.35s}
+.scrolled .nav-shell{background:rgba(255,250,244,.84);box-shadow:0 18px 50px rgba(107,74,46,.12)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.02em}
+.logo-mark{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--orange),#f6d0a3 45%,var(--sky));box-shadow:0 12px 24px rgba(232,155,78,.24);position:relative}
+.logo-mark:before,.logo-mark:after{content:"";position:absolute;left:8px;right:8px;height:5px;border-radius:999px;background:#fff}
+.logo-mark:before{top:11px;transform:rotate(-14deg)}.logo-mark:after{bottom:11px;transform:rotate(14deg)}
+nav{display:flex;align-items:center;gap:6px}nav a{padding:10px 14px;border-radius:999px;color:var(--muted);transition:.25s}nav a:hover{background:rgba(255,255,255,.72);color:var(--text)}
+.menu-btn{display:none;border:none;background:rgba(255,255,255,.72);width:44px;height:44px;border-radius:999px}
+.menu-btn span,.menu-btn span:before,.menu-btn span:after{display:block;position:relative;width:18px;height:2px;background:var(--text);margin:auto;border-radius:999px}
+.menu-btn span:before,.menu-btn span:after{content:"";position:absolute;left:0}.menu-btn span:before{top:-6px}.menu-btn span:after{top:6px}
+.trust-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.trust-chip,.proof-mini,.scope-card,.persona-card,.compare-card,.roi-card,.case-card,.artifact-card,.pilot-card,.safe-card,.cta-path,.contact-card,.company-card{
+  background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.84);border-radius:24px;box-shadow:var(--shadow)
+}
+.trust-chip{padding:14px 16px;font-size:.86rem;color:var(--muted)}.trust-chip strong{display:block;color:var(--text);font-size:1rem;margin-bottom:4px}
+.proof-grid,.scope-grid,.persona-grid,.compare-grid,.roi-grid,.case-grid,.artifact-grid,.safe-grid,.company-grid,.contact-grid{display:grid;gap:18px}
+.proof-grid,.scope-grid,.persona-grid,.compare-grid,.roi-grid,.case-grid,.artifact-grid,.company-grid,.contact-grid{grid-template-columns:repeat(3,1fr)}
+.safe-grid{grid-template-columns:repeat(4,1fr)}
+.proof-mini,.scope-card,.persona-card,.compare-card,.roi-card,.case-card,.artifact-card,.pilot-card,.safe-card,.cta-path,.contact-card,.company-card{padding:24px}
+.proof-mini h3,.scope-card h3,.persona-card h3,.compare-card h3,.roi-card h3,.case-card h3,.artifact-card h3,.pilot-card h3,.safe-card h3,.cta-path h3,.contact-card h3,.company-card h3{font-size:1.14rem;line-height:1.2}
+.proof-mini p,.scope-card p,.persona-card p,.compare-card p,.roi-card p,.case-card p,.artifact-card p,.pilot-card p,.safe-card p,.cta-path p,.contact-card p,.company-card p{margin-top:12px;color:var(--muted)}
+.micro{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:rgba(107,74,46,.06);color:var(--muted);font-size:.76rem;font-weight:700}
+.micro.warn{background:rgba(232,155,78,.16);color:#a45d25}.micro.sky{background:rgba(135,201,245,.18);color:#2f6d99}
+.bullet-list{display:grid;gap:10px;margin-top:14px}
+.bullet-list div{padding-left:18px;position:relative;color:var(--muted)}
+.bullet-list div:before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--sky))}
+.persona-card strong,.roi-card strong,.case-card strong,.artifact-card strong,.pilot-card strong,.safe-card strong,.company-card strong,.contact-card strong{display:block;margin-top:14px;font-size:1.8rem;line-height:1;letter-spacing:-.05em}
+.compare-row{display:grid;gap:12px;margin-top:16px}
+.compare-item{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.compare-item span{padding:12px 14px;border-radius:18px;background:rgba(107,74,46,.05);font-size:.88rem}
+.compare-item span:last-child{background:linear-gradient(135deg,rgba(232,155,78,.12),rgba(135,201,245,.14))}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;position:relative;margin-top:20px}
+.timeline:before{content:"";position:absolute;left:8%;right:8%;top:28px;height:2px;background:linear-gradient(90deg,rgba(232,155,78,.18),rgba(135,201,245,.45),rgba(232,155,78,.18))}
+.time-card{padding:54px 18px 20px;border-radius:24px;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.84);position:relative}
+.time-card:before{content:attr(data-day);position:absolute;top:16px;left:18px;padding:8px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(232,155,78,.16),rgba(135,201,245,.16));font-size:.78rem;font-weight:800}
+.time-card h3{font-size:1.05rem}.time-card p{margin-top:10px;color:var(--muted);font-size:.92rem}
+.pilot-shell,.cta-shell-extended{padding:28px;border-radius:30px;background:rgba(255,253,249,.74);border:1px solid rgba(255,255,255,.84);box-shadow:var(--shadow)}
+.pilot-shell{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.cta-shell-extended{display:grid;grid-template-columns:1fr .9fr;gap:18px}
+.cta-path{display:grid;gap:12px}
+.path-step{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(107,74,46,.08)}
+.path-step:last-child{border-bottom:none}
+.path-no{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,rgba(232,155,78,.18),rgba(135,201,245,.18));font-weight:900;flex:none}
+.contact-card .channels{display:grid;gap:10px;margin-top:14px}
+.channel{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.72);display:flex;justify-content:space-between;gap:10px}
+.logo-wall{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
+.logo-ghost{padding:18px 10px;border-radius:18px;background:rgba(255,255,255,.62);text-align:center;color:var(--muted);font-size:.84rem;font-weight:700;letter-spacing:.04em}
+.hero{padding-top:34px;min-height:calc(100vh - 96px);display:flex;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center}
+.hero-copy h1{margin-top:18px;font-size:clamp(3rem,6vw,5.2rem);line-height:.97;letter-spacing:-.07em;max-width:10.5ch}
+.hero-copy h1 span{display:block;margin-top:10px;background:linear-gradient(135deg,#cc6f2b,var(--orange) 44%,#59a6d8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy p{margin-top:22px;color:var(--muted);font-size:1.04rem;max-width:58ch}
+.hero-sub{margin-top:18px;padding:12px 16px;border-radius:18px;display:inline-flex;background:linear-gradient(135deg,rgba(232,155,78,.15),rgba(135,201,245,.18));font-weight:800}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.mini{padding:18px;border-radius:24px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.84)}
+.mini span{display:block;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.mini strong{display:block;margin-top:10px;font-size:1.3rem;line-height:1;letter-spacing:-.04em}.mini p{margin-top:8px;font-size:.88rem;color:var(--muted)}
+.hero-side{position:relative;min-height:620px;display:flex;align-items:center;justify-content:center;perspective:1400px}
+.hero-preview{width:100%;max-width:610px;padding:18px;border-radius:32px;transition:transform .18s linear;animation:float 8s ease-in-out infinite}
+.preview-top{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 16px}.dots{display:flex;gap:8px}.dots i{width:10px;height:10px;border-radius:50%}.dots i:nth-child(1){background:#ffb47d}.dots i:nth-child(2){background:#ffd17e}.dots i:nth-child(3){background:#96d6ff}
+.preview-title{font-weight:800}.status{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.72);font-size:.82rem;color:var(--muted)}
+.preview-body{display:grid;grid-template-columns:168px 1fr;gap:14px}.side-nav,.workspace,.summary-strip,.mini-row .item{border-radius:24px;background:rgba(255,255,255,.70);border:1px solid rgba(255,255,255,.84)}
+.side-nav{padding:14px;display:grid;gap:10px}.side-nav .item{padding:10px 12px;border-radius:16px;color:var(--muted)}.side-nav .item.active{background:linear-gradient(135deg,rgba(232,155,78,.18),rgba(135,201,245,.14));color:var(--text);font-weight:700}
+.screen{display:grid;gap:14px}.mini-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini-row .item{padding:14px}.mini-row span{display:block;font-size:.76rem;color:var(--muted)}.mini-row strong{display:block;margin-top:8px;font-size:1.12rem;line-height:1}
+.workspace{padding:14px;display:grid;grid-template-columns:.9fr 1.1fr;gap:12px}.queue-card,.draft-card{padding:14px;border-radius:18px;background:rgba(255,255,255,.66);margin-bottom:10px}.queue-card:last-child,.draft-card:last-child{margin-bottom:0}
+.queue-head,.draft-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:.78rem;color:var(--muted)}
+.queue-title{font-size:.92rem;font-weight:800;line-height:1.35}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pill{padding:6px 10px;border-radius:999px;background:rgba(107,74,46,.07);font-size:.72rem;color:var(--muted)}.pill.warn{background:rgba(232,155,78,.15);color:#b56629}.pill.sky{background:rgba(135,201,245,.18);color:#2d6f9f}
+.msg{padding:12px 14px;border-radius:16px;font-size:.9rem;line-height:1.55}.msg.user{background:rgba(107,74,46,.06)}.msg.ai{background:linear-gradient(135deg,rgba(232,155,78,.14),rgba(135,201,245,.16));margin-top:10px}
+.summary-strip{padding:14px 16px;display:flex;justify-content:space-between;gap:14px;align-items:center}.summary-strip strong{display:block;font-size:.95rem}.summary-strip p{margin-top:4px;font-size:.82rem;color:var(--muted)}.summary-strip span{padding:10px 12px;border-radius:999px;background:linear-gradient(135deg,rgba(135,201,245,.20),rgba(232,155,78,.16));font-size:.8rem;font-weight:800}
+.float-note{position:absolute;padding:13px 15px;border-radius:18px;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.84);box-shadow:0 16px 38px rgba(107,74,46,.12);font-size:.84rem;max-width:220px;animation:float 7s ease-in-out infinite}
+.float-note strong{display:block;margin-bottom:4px;font-size:.92rem}.n1{right:-8px;top:40px}.n2{left:-12px;bottom:120px;animation-delay:-2s}.n3{right:24px;bottom:20px;animation-delay:-4s}
+.pain-grid,.caps,.scenes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.pain-grid{grid-template-columns:repeat(4,1fr)}
+.pain-card,.cap-card,.scene-card,.step{padding:26px;border-radius:28px;position:relative}
+.index{position:absolute;right:20px;top:14px;font-size:3.7rem;font-weight:900;color:rgba(107,74,46,.06);line-height:1}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.kicker:before{content:"";width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--sky))}
+.pain-card h3,.cap-card h3,.scene-card h3,.step h3{margin-top:16px;font-size:1.2rem;line-height:1.2}.pain-card p,.cap-card p,.scene-card p,.step p{margin-top:12px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;position:relative}.steps:before{content:"";position:absolute;left:6%;right:6%;top:30px;height:2px;background:linear-gradient(90deg,rgba(232,155,78,.18),rgba(135,201,245,.42),rgba(232,155,78,.18))}
+.step{padding-top:56px}.step:before{content:"";position:absolute;top:22px;left:22px;width:15px;height:15px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--sky));box-shadow:0 0 0 8px rgba(232,155,78,.10)}
+.step-no{display:inline-block;padding:7px 12px;border-radius:999px;background:rgba(107,74,46,.06);font-size:.76rem;color:var(--muted)}.meta{display:inline-flex;margin-top:16px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.72);font-size:.78rem;color:var(--muted)}
+.icon{width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,rgba(232,155,78,.20),rgba(135,201,245,.22));display:grid;place-items:center}.icon svg{width:28px;height:28px;stroke:var(--text);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.dashboard-shell{padding:22px;border-radius:32px}.top-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{padding:20px;border-radius:24px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.84)}
+.stat label{display:block;font-size:.84rem;color:var(--muted)}.stat strong{display:block;margin:12px 0 8px;font-size:2.2rem;line-height:1;letter-spacing:-.05em}.delta{display:inline-flex;padding:7px 10px;border-radius:999px;background:rgba(107,74,46,.06);font-size:.8rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:14px}.panel{padding:22px;border-radius:28px}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}.panel-head h3{font-size:1.08rem}.panel-head span{padding:7px 10px;border-radius:999px;background:rgba(107,74,46,.06);font-size:.8rem;color:var(--muted)}
+.bars{display:grid;gap:16px}.bar{display:grid;grid-template-columns:90px 1fr 42px;gap:12px;align-items:center}.track{height:10px;border-radius:999px;background:rgba(107,74,46,.08);overflow:hidden}
+.fill{height:100%;width:var(--w);border-radius:999px;background:linear-gradient(90deg,var(--orange),#f0bf86 48%,var(--sky));transform:scaleX(0);transform-origin:left;transition:transform 1.2s var(--ease)}.dashboard-shell.visible .fill{transform:scaleX(1)}
+.donut-wrap{display:grid;grid-template-columns:180px 1fr;gap:18px;align-items:center}.donut{position:relative;width:170px;height:170px;margin:auto;border-radius:50%;background:conic-gradient(var(--orange) 0 38%,#f3bb73 38% 65%,var(--sky) 65% 86%,rgba(107,74,46,.14) 86% 100%)}.donut:before{content:"";position:absolute;inset:22px;border-radius:50%;background:rgba(255,251,246,.96)}
+.donut-mid{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-weight:900;z-index:1}.donut-mid strong{font-size:1.9rem;line-height:1}.donut-mid span{display:block;margin-top:4px;font-size:.8rem;color:var(--muted)}
+.legend{display:grid;gap:12px}.legend .row{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.92rem}.legend b{color:var(--text)}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:10px}
+.trend svg{width:100%;height:auto;display:block}.trend .line{stroke-dasharray:700;stroke-dashoffset:700;transition:stroke-dashoffset 1.6s var(--ease)}.dashboard-shell.visible .trend .line{stroke-dashoffset:0}.days{display:grid;grid-template-columns:repeat(7,1fr);margin-top:10px;color:var(--muted);font-size:.78rem;text-align:center}
+.feed{display:grid;gap:12px}.feed-item{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:14px;border-radius:20px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.84)}.time{font-weight:900}.feed-item strong{display:block;font-size:.95rem}.feed-item p{margin-top:6px;font-size:.88rem;color:var(--muted)}.chip{display:inline-flex;margin-top:8px;padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(232,155,78,.15),rgba(135,201,245,.15));font-size:.74rem;font-weight:800}
+.workflow-shell{padding:38px 28px 30px;border-radius:34px;position:relative}.workflow-shell:before{content:"";position:absolute;left:8%;right:8%;top:70px;height:2px;background:linear-gradient(90deg,rgba(232,155,78,.18),rgba(135,201,245,.45),rgba(232,155,78,.18))}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;position:relative}.flow{padding-top:34px;position:relative}
+.node{position:absolute;top:0;left:50%;transform:translateX(-50%);width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,rgba(232,155,78,.24),rgba(135,201,245,.24));font-weight:900;box-shadow:0 14px 34px rgba(107,74,46,.12)}
+.flow-card{min-height:220px;padding:82px 18px 20px;border-radius:24px;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.84)}.flow:nth-child(even) .flow-card{margin-top:44px}.flow-card h3{text-align:center;font-size:1.05rem}.flow-card p{text-align:center;margin-top:10px;color:var(--muted)}
+.flow-foot{margin-top:22px;padding:16px 18px;border-radius:22px;background:linear-gradient(135deg,rgba(232,155,78,.14),rgba(135,201,245,.15));display:flex;justify-content:space-between;gap:14px;align-items:center}.flow-foot strong{font-size:.98rem}.flow-pills{display:flex;flex-wrap:wrap;gap:10px}.flow-pills span{padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.74);font-size:.8rem;color:var(--muted)}
+.cta-shell{padding:54px 34px;border-radius:34px;text-align:center;position:relative;overflow:hidden}.cta-shell:before{content:"";position:absolute;width:360px;height:360px;left:-70px;top:-120px;border-radius:50%;background:radial-gradient(circle,rgba(232,155,78,.18),transparent 68%)}.cta-shell:after{content:"";position:absolute;width:340px;height:340px;right:-60px;bottom:-120px;border-radius:50%;background:radial-gradient(circle,rgba(135,201,245,.18),transparent 68%)}.cta-shell>*{position:relative;z-index:1}.cta-shell h2{margin:18px auto 0;max-width:16ch;font-size:clamp(2rem,4vw,3.1rem);line-height:1.08;letter-spacing:-.05em}.cta-shell p{margin:16px auto 0;max-width:58ch;color:var(--muted)}.cta-shell .btn{margin-top:28px}
+.hero-targets,.hero-links,.pilot-commitments,.contact-links,.contact-list,.trust-list,.proof-list,.scope-list{display:flex;flex-wrap:wrap;gap:10px}
+.hero-targets{margin-top:18px}.hero-targets span,.hero-links a,.pilot-commitments span,.contact-links a,.scope-list span{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.84);font-size:.82rem;color:var(--muted)}
+.hero-links{margin-top:14px}.hero-links a{font-weight:700}
+.hero-note{margin-top:14px;font-size:.9rem;color:var(--muted)}
+.fit-grid,.roi-grid,.pilot-grid,.compare-grid,.proof-grid,.trust-grid,.roles-grid,.contact-grid,.scope-grid{display:grid;gap:18px}
+.fit-grid,.roi-grid,.pilot-grid,.compare-grid,.trust-grid,.roles-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.proof-grid{grid-template-columns:1.2fr .8fr}.contact-grid{grid-template-columns:1.1fr .9fr}.scope-grid{grid-template-columns:1.2fr .8fr}
+.fit-card,.roi-card,.pilot-card,.compare-card,.proof-card,.trust-card,.role-card,.scope-box,.contact-block{padding:24px;border-radius:28px;background:rgba(255,255,255,.70);border:1px solid rgba(255,255,255,.84);box-shadow:var(--shadow)}
+.fit-card h3,.roi-card h3,.pilot-card h3,.compare-card h3,.proof-card h3,.trust-card h3,.role-card h3,.scope-box h3,.contact-block h3{font-size:1.16rem;line-height:1.2}
+.fit-card p,.roi-card p,.pilot-card p,.compare-card p,.proof-card p,.trust-card p,.role-card p,.scope-box p,.contact-block p{margin-top:12px;color:var(--muted)}
+.fit-card .kicker,.scope-box .kicker,.compare-card .kicker,.role-card .kicker{margin-bottom:4px}
+.scope-box.good{background:linear-gradient(180deg,rgba(255,253,249,.82),rgba(252,244,234,.72))}
+.scope-box.bad{background:linear-gradient(180deg,rgba(255,250,245,.82),rgba(250,241,234,.72))}
+.scope-list{margin-top:16px}.scope-list span.bad{background:rgba(107,74,46,.06);color:var(--muted)}
+.roi-card strong{display:block;margin-top:14px;font-size:2rem;line-height:1;letter-spacing:-.05em}
+.roi-card small,.demo-note,.proof-card small,.trust-card small,.contact-help{display:block;margin-top:10px;font-size:.82rem;color:var(--muted)}
+.roi-band,.pilot-band,.contact-help{margin-top:18px;padding:14px 16px;border-radius:20px;background:linear-gradient(135deg,rgba(232,155,78,.12),rgba(135,201,245,.12));border:1px solid rgba(255,255,255,.74)}
+.pilot-card .meta{margin-top:18px}.pilot-commitments{margin-top:16px}
+.compare-card.featured{background:linear-gradient(180deg,rgba(255,252,246,.88),rgba(251,243,233,.82));border-color:rgba(232,155,78,.26)}
+.compare-card ul,.proof-list,.trust-list,.contact-list{list-style:none;padding:0;margin:16px 0 0}
+.compare-card li,.proof-list li,.trust-list li,.contact-list li{position:relative;padding-left:18px;color:var(--muted);margin-bottom:10px}
+.compare-card li:before,.proof-list li:before,.trust-list li:before,.contact-list li:before{content:"";position:absolute;left:0;top:.56em;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--sky))}
+.proof-card .proof-badge,.contact-block .proof-badge{display:inline-flex;margin-top:16px;padding:8px 12px;border-radius:999px;background:rgba(107,74,46,.06);font-size:.78rem;color:var(--muted)}
+.demo-note{margin-bottom:16px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.64);border:1px solid rgba(255,255,255,.82)}
+.contact-form{padding:26px;border-radius:30px;background:rgba(255,255,255,.74);border:1px solid rgba(255,255,255,.84);box-shadow:var(--shadow)}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:grid;gap:8px}.field.full{grid-column:1 / -1}.field label{font-size:.84rem;font-weight:700;color:var(--text)}
+.field input,.field select,.field textarea{width:100%;padding:14px 16px;border-radius:18px;border:1px solid rgba(107,74,46,.12);background:rgba(255,255,255,.88);color:var(--text);outline:none;transition:border-color .2s ease,box-shadow .2s ease}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(232,155,78,.42);box-shadow:0 0 0 4px rgba(232,155,78,.10)}
+.field textarea{min-height:120px;resize:vertical}
+.contact-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;align-items:center}
+.contact-aside{display:grid;gap:18px}.mini-cta{margin-top:8px;font-size:.86rem;color:var(--muted)}
+.contact-links a{font-weight:800}
+.section-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.quote-grid,.pilot-metrics{display:grid;gap:18px;margin-top:18px}
+.quote-grid{grid-template-columns:repeat(3,1fr)}
+.quote-card,.metric-card,.contact-success{padding:22px;border-radius:24px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.84);box-shadow:var(--shadow)}
+.quote-card blockquote{margin:0;font-size:1.02rem;line-height:1.7;color:var(--text)}
+.quote-card cite{display:block;margin-top:14px;font-style:normal;font-size:.86rem;color:var(--muted)}
+.pilot-metrics{grid-template-columns:repeat(3,1fr)}
+.metric-card strong{display:block;font-size:1.22rem;line-height:1;letter-spacing:-.03em}
+.metric-card p{margin-top:10px;color:var(--muted);font-size:.92rem}
+.contact-success{display:none;margin-top:18px;text-align:left}
+.contact-success.show{display:block}
+.contact-success strong{display:block;font-size:1.08rem}
+.contact-success p{margin-top:8px;color:var(--muted)}
+.contact-summary{margin-top:14px;padding:14px 16px;border-radius:18px;background:rgba(107,74,46,.05);color:var(--muted);font-size:.92rem;line-height:1.7;white-space:pre-wrap}
+.contact-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.contact-meta span{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.76);border:1px solid rgba(255,255,255,.84);font-size:.8rem;color:var(--muted)}
+.secondary-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+footer{padding:0 0 36px}.footer-shell{padding:30px;border-radius:28px;display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:22px}.footer-shell p{margin-top:12px;color:var(--muted)}.ft-title{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}.ft-list{display:grid;gap:10px}.copyright{text-align:center;color:var(--muted);font-size:.84rem;margin-top:18px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes pop{0%{opacity:.6;transform:translate(-50%,-50%) scale(.6)}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.7)}}
+@media (max-width:1100px){.hero-grid,.grid,.pilot-shell,.cta-shell-extended,.proof-grid,.contact-grid,.scope-grid{grid-template-columns:1fr}.proof-grid,.scope-grid,.persona-grid,.compare-grid,.roi-grid,.case-grid,.artifact-grid,.company-grid,.contact-grid,.pain-grid,.caps,.scenes-grid,.quote-grid,.pilot-metrics{grid-template-columns:repeat(2,1fr)}.safe-grid,.trust-strip,.top-stats{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.steps:before,.workflow-shell:before,.timeline:before{display:none}.workflow{grid-template-columns:repeat(2,1fr)}.workflow .flow:last-child{grid-column:1/-1;max-width:54%;margin:auto}.footer-shell{grid-template-columns:1fr 1fr}.logo-wall{grid-template-columns:repeat(3,1fr)}.hero-side{min-height:auto}}
+@media (max-width:860px){.menu-btn{display:inline-block}nav{position:absolute;top:calc(100% + 12px);left:0;right:0;display:flex;flex-direction:column;align-items:stretch;background:rgba(255,250,244,.94);padding:14px;border-radius:24px;opacity:0;pointer-events:none;transform:translateY(-10px);transition:.3s}.nav-shell.open nav{opacity:1;pointer-events:auto;transform:none}.nav-cta{display:none}.hero-grid,.preview-body,.workspace{grid-template-columns:1fr}.hero-stats,.mini-row,.form-grid,.trust-strip{grid-template-columns:1fr}.float-note{position:static;max-width:none;margin-top:12px;animation:none}.hero-copy h1{max-width:12ch;font-size:clamp(2.6rem,10vw,4.2rem)}}
+@media (max-width:640px){section{padding:78px 0}.proof-grid,.scope-grid,.persona-grid,.compare-grid,.roi-grid,.case-grid,.artifact-grid,.safe-grid,.company-grid,.contact-grid,.pain-grid,.caps,.scenes-grid,.top-stats,.workflow,.footer-shell,.steps,.timeline,.logo-wall,.quote-grid,.pilot-metrics{grid-template-columns:1fr}.workflow .flow:last-child{max-width:none}.flow:nth-child(even) .flow-card{margin-top:0}.preview-top,.summary-strip,.flow-foot,.donut-wrap{display:block}.summary-strip span{display:inline-flex;margin-top:10px}.bar{grid-template-columns:78px 1fr 36px;gap:8px}.donut-wrap{display:grid;grid-template-columns:1fr;gap:18px}.contact-actions,.secondary-actions{display:block}.contact-actions .btn,.secondary-actions .btn{width:100%}.secondary-actions a{display:flex}.contact-actions .mini-cta{margin-top:10px}}
+  </style>
 </head>
-<body>
-<header class="site-header">
-  <div class="shell nav">
-    <a href="#top" class="brand">CrossFlow</a>
-    <nav class="nav-links" aria-label="主导航">
-      <a href="#proof">可验证点</a>
-      <a href="#fit">适合谁</a>
-      <a href="#workflow">怎么落地</a>
-      <a href="#deliverables">交付内容</a>
-      <a href="#faq">常见问题</a>
-      <a href="#contact">联系</a>
-    </nav>
-    <a href="#contact" class="btn btn-primary">预约演示</a>
+<body class="loading">
+  <div class="ambient" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="cursor-glow" id="glow"></div>
   </div>
-</header>
+  <div class="particles" id="particles" aria-hidden="true"></div>
 
-<main id="top">
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div>
-        <div class="eyebrow">跨境客服与售后，不再靠多人手工切后台</div>
-        <h1>把跨境客服、售后和日报，收成一条真正能交付的运营流水线。</h1>
-        <p class="lead">CrossFlow 面向 Amazon、Shopify、TikTok Shop 和独立站团队。它负责统一收消息、按风险分流、生成可执行回复与工单动作，并把处理结果回写到日报、周报和 FAQ 更新里。</p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">预约演示</a>
-          <a href="#proof" class="btn btn-secondary">先看怎么证明</a>
+  <header id="top">
+    <div class="container">
+      <div class="nav-shell">
+        <a class="logo" href="#top"><span class="logo-mark"></span><span>FlowBridge AI</span></a>
+        <button class="menu-btn" type="button" aria-label="打开菜单"><span></span></button>
+        <nav>
+          <a href="#who">适合谁</a>
+          <a href="#outcomes">交付什么</a>
+          <a href="#cases">证据与案例</a>
+          <a href="#rollout">如何落地</a>
+          <a href="#contact">申请试跑</a>
+        </nav>
+        <a class="btn primary nav-cta" href="#contact">获取专属接入方案</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="tag">最适合 3-20 人、多平台消息分散的跨境团队</span>
+          <h1>把 Amazon、Shopify、TikTok Shop 的客服、售后与日报，<span>交给一套真正替你完成交付的 AI 系统</span></h1>
+          <p>FlowBridge AI 不卖插件，不卖聊天机器人，而是统一接入多平台消息，完成客服处理、售后分级、纠纷升级、日报周报与 FAQ 沉淀。尤其适合消息分散、售后堆积、老板每天等日报的跨境团队。</p>
+          <div class="hero-sub">不是让你多一个后台，而是替你少一堆售后和日报工作</div>
+          <div class="hero-targets">
+            <span>首响更快，漏回更少</span>
+            <span>高风险售后自动升级</span>
+            <span>7-14 天看到第一版结果</span>
+          </div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">获取专属接入方案</a>
+            <a class="btn secondary" href="#contact">申请 7 天试跑</a>
+          </div>
+          <div class="hero-note">支持先接 1 个店铺 / 1 个平台试跑，不要求一次性全面替换现有流程。</div>
+          <div class="hero-links">
+            <a href="#rollout">查看试跑流程</a>
+            <a href="#cases">先看证据链</a>
+            <a href="#contact">选择沟通方式</a>
+          </div>
+          <div class="hero-stats">
+            <div class="mini hover"><span>少招人</span><strong>1-2 人</strong><p>典型 3-20 人团队先从一个店 / 一个平台开始替代重复客服与报表整理。</p></div>
+            <div class="mini hover"><span>少赔钱</span><strong class="count" data-prefix="-" data-target="23" data-suffix="%">0</strong><p>高风险退款与纠纷优先升级，减少无效补偿、重复赔付和差评放大。</p></div>
+            <div class="mini hover"><span>少等老板催</span><strong>18:00</strong><p>日报、退款原因和异常单结构按时交付，不再靠人工半夜补表。</p></div>
+          </div>
+          <div class="trust-strip">
+            <div class="trust-chip"><strong>你买到的是什么</strong>按店铺交付客服 / 售后 / 报表结果，不是软件授权。</div>
+            <div class="trust-chip"><strong>最适合谁</strong>3-20 人跨境团队，多平台消息分散，老板每天等日报。</div>
+            <div class="trust-chip"><strong>谁来兜底</strong>AI 处理高频，复杂退款 / 投诉 / 边界问题进入人工审核。</div>
+            <div class="trust-chip"><strong>怎么开始</strong>先跑一个店、一个平台、7-14 天试跑，再决定是否全面接入。</div>
+          </div>
         </div>
-        <div class="hero-notes">
-          <span>普通咨询自动处理</span>
-          <span>高风险售后人工兜底</span>
-          <span>日报、周报、知识沉淀一起交付</span>
+
+        <div class="hero-side">
+          <div class="hero-preview" id="preview">
+            <div class="preview-top">
+              <div class="dots"><i></i><i></i><i></i></div>
+              <div class="preview-title">FlowBridge Delivery Console</div>
+              <div class="status">实时同步</div>
+            </div>
+            <div class="preview-body">
+              <div class="side-nav">
+                <div class="item active">Unified Inbox</div>
+                <div class="item">After-sales</div>
+                <div class="item">Disputes</div>
+                <div class="item">Daily Brief</div>
+                <div class="item">Knowledge Base</div>
+              </div>
+              <div class="screen">
+                <div class="mini-row">
+                  <div class="item"><span>待处理消息</span><strong class="count" data-target="128">0</strong></div>
+                  <div class="item"><span>采纳率</span><strong class="count" data-target="92" data-suffix="%">0</strong></div>
+                  <div class="item"><span>高风险</span><strong class="count" data-target="6">0</strong></div>
+                </div>
+                <div class="workspace">
+                  <div>
+                    <div class="queue-card"><div class="queue-head"><span>Amazon US</span><span class="pill warn">退款意向</span></div><div class="queue-title">物流延迟 9 天，客户要求退款并投诉时效</div><div class="pills"><span class="pill">今日已处理 126 条</span><span class="pill sky">优先处理</span></div></div>
+                    <div class="queue-card"><div class="queue-head"><span>Shopify</span><span class="pill">尺码咨询</span></div><div class="queue-title">客户询问材质兼容性与更换尺码</div><div class="pills"><span class="pill">首响已控到 8 分钟</span><span class="pill sky">标准回复</span></div></div>
+                    <div class="queue-card"><div class="queue-head"><span>TikTok Shop</span><span class="pill">异常签收</span></div><div class="queue-title">订单未签收，用户要求重新补发</div><div class="pills"><span class="pill">高风险升级 8 条</span><span class="pill warn">人工兜底</span></div></div>
+                  </div>
+                  <div>
+                    <div class="draft-card"><div class="draft-head"><strong>AI 回复建议</strong><span>Draft + Risk</span></div><div class="msg user">客户反馈物流延迟，要求退款并表示会发起投诉。</div><div class="msg ai">已生成回复建议：先确认包裹节点与补偿边界，提供预计送达时间，并同步退款 / 重发选项。</div></div>
+                    <div class="draft-card"><div class="draft-head"><strong>风险提醒</strong><span>Escalated</span></div><div class="msg ai">检测到退款意向 + 时效争议，已自动归类为高风险售后，并推送人工兜底检查。</div></div>
+                  </div>
+                </div>
+                <div class="summary-strip">
+                  <div><strong>18:00 自动交付日报</strong><p>把客服负载、退款原因、高风险工单与 FAQ 新增条目直接交给老板和运营负责人。</p></div>
+                  <span>Daily Brief Ready</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="float-note n1"><strong>今日已处理消息 126 条</strong>多平台消息统一接入，不再来回切后台。</div>
+          <div class="float-note n2"><strong>高风险工单已升级 8 条</strong>退款倾向和投诉争议自动进入人工复核。</div>
+          <div class="float-note n3"><strong>今日日报 18:00 自动交付</strong>老板拿到的是能决策的统一经营视图。</div>
         </div>
       </div>
-      <aside class="panel preview" aria-label="产品预览">
-        <div class="kicker">演示时会直接看到什么</div>
-        <h2>不再靠“AI 很厉害”成交，而是先看交付动作是否成立。</h2>
-        <p>页面不再放没证据的数字。更可信的做法，是拿真实消息样本、售后工单和日报需求，现场看它是否能跑通。</p>
-        <div class="preview-list">
-          <div class="preview-item">
-            <strong>统一收件箱</strong>
-            <span>先把 Amazon、Shopify、TikTok Shop、独立站消息收进一条队列，再决定自动处理还是升级人工。</span>
-          </div>
-          <div class="preview-item">
-            <strong>风险分流</strong>
-            <span>普通咨询先自动处理，退款纠纷、差评风险、复杂售后直接升级给人。</span>
-          </div>
-          <div class="preview-item">
-            <strong>结果回写</strong>
-            <span>日报、周报和 FAQ 更新跟着处理结果一起产生，而不是靠事后手工整理。</span>
-          </div>
+    </section>
+
+    <section id="who">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">最适合的客户画像</span>
+          <h2>这套交付服务，最适合这三类已经被客服、售后和日报拖慢的跨境团队</h2>
+          <p>如果你的消息量还不大，只想先试一个轻量工具，暂时未必需要这么完整的交付链路。FlowBridge AI 更适合消息量已经上来、售后损耗已经真实发生、老板已经开始盯日报和退款结构的团队。</p>
         </div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="section" id="proof">
-    <div class="shell">
-      <div class="section-head">
-        <div class="kicker">Proof, not slogans</div>
-        <h2>如果你认真考虑要不要聊，最该看的不是大词，而是这四个可验证环节。</h2>
-        <p>没有客户 logo、没有公开案例、没有被证实的数据时，正确做法不是继续堆“行业领先”，而是把演示路径说清楚。</p>
-      </div>
-      <div class="grid-3">
-        <article class="card">
-          <strong>1. 用真实消息样本，看它怎么归类和分流</strong>
-          <p>拿一条常见咨询、一条售后工单、一条高风险纠纷样本，当场看系统如何判断：能自动处理，还是必须升级人工。</p>
-        </article>
-        <article class="card">
-          <strong>2. 用你的回复标准，看它给出的动作是否可执行</strong>
-          <p>不只看语气顺不顺。要看回复草稿是否贴近你的店铺政策、售后边界和升级规则，能不能减少返工。</p>
-        </article>
-        <article class="card">
-          <strong>3. 用你的日报需求，看它能不能自动回写结果</strong>
-          <p>今天处理了什么、哪些平台压力最高、哪些工单需要老板关注、哪些话术该沉淀成 FAQ，都应该跟着流程一起出来。</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="fit">
-    <div class="shell">
-      <div class="section-head">
-        <div class="kicker">Fit</div>
-        <h2>适合谁，不适合谁，直接写出来，比对所有人都说“适合”更有用。</h2>
-        <p>这也是去掉“AI 味”的关键。好的 B2B 首页不是拼命扩大受众，而是帮不合适的人尽早退出，让合适的人更快认出自己。</p>
-      </div>
-      <div class="grid-2">
-        <article class="card">
-          <strong>更适合这些团队</strong>
-          <ul>
-            <li>多平台同时经营，客服消息和售后工单已经明显分散。</li>
-            <li>团队已有基础 SOP，希望把重复问题自动化，把人工集中在高风险案例上。</li>
-            <li>老板或运营负责人需要更稳定的日报、周报，而不是临时手工拼表。</li>
-            <li>希望把 FAQ 和客服经验沉淀下来，不再依赖某个熟手的脑内经验。</li>
-          </ul>
-        </article>
-        <article class="card">
-          <strong>暂时不适合这些情况</strong>
-          <ul>
-            <li>你现在只需要翻译插件，或只想买一个客服聊天窗口。</li>
-            <li>团队还没有基本售后规则，希望系统替你决定全部政策边界。</li>
-            <li>你只想看炫技 demo，不准备拿真实流程和样本来验证效果。</li>
-            <li>你希望所有退款、纠纷和差评风险都完全自动化，不接受人工兜底。</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="workflow">
-    <div class="shell">
-      <div class="section-head">
-        <div class="kicker">Workflow</div>
-        <h2>交付流程很短，但每一步都要有明确产物。</h2>
-        <p>不需要先上大工程。我们先把入口、规则、人工兜底和日报这四件事跑通，再看是否继续深入。</p>
-      </div>
-      <div class="workflow">
-        <article class="card step">
-          <div class="label">Step 01</div>
-          <div class="detail">
-            <strong>梳理入口和处理规则</strong>
-            <p>确认哪些平台、哪些消息类型、哪些售后工单会进入试运行范围，同时标出必须人工确认的高风险场景。</p>
-          </div>
-          <div class="result">产物：试运行范围表、风险兜底规则、优先级清单</div>
-        </article>
-        <article class="card step">
-          <div class="label">Step 02</div>
-          <div class="detail">
-            <strong>把消息和工单先收入口</strong>
-            <p>先把入口统一，再做自动标记、工单归类和分流。没有统一入口，后面所有自动化都只是局部效率。</p>
-          </div>
-          <div class="result">产物：统一消息面板、基础标签、升级队列</div>
-        </article>
-        <article class="card step">
-          <div class="label">Step 03</div>
-          <div class="detail">
-            <strong>先自动化低风险，保留高风险兜底</strong>
-            <p>例如物流查询、模板化售后、FAQ 回答、日报摘要。高风险纠纷继续保留人工确认。</p>
-          </div>
-          <div class="result">产物：可自动处理的场景清单、人工确认清单</div>
-        </article>
-        <article class="card step">
-          <div class="label">Step 04</div>
-          <div class="detail">
-            <strong>日报回写和复盘</strong>
-            <p>每天看处理量、异常项和积压工单，每周看是否减少切后台、减少漏回、减少高风险事件。决定要不要继续扩大范围。</p>
-          </div>
-          <div class="result">产物：日报模板、每周复盘项、是否扩围的判断依据</div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="deliverables">
-    <div class="shell">
-      <div class="section-head">
-        <div class="kicker">Deliverables</div>
-        <h2>第一页不该只写“能力”，应该写清楚你能拿到什么。</h2>
-        <p>真正有用的是下面这些明确产物，而不是模糊词。</p>
-      </div>
-      <div class="grid-3">
-        <article class="card">
-          <strong>运营日报</strong>
-          <p>当天处理量、未结工单、异常项、风险案例、需要老板判断的事项，按固定结构回传。</p>
-        </article>
-        <article class="card">
-          <strong>统一处理面板</strong>
-          <p>把多平台消息、售后工单和升级项收口。第一页不是功能大全，而是让客服不再在五个平台之间来回切。</p>
-        </article>
-        <article class="card">
-          <strong>人工兜底规则</strong>
-          <p>哪些场景可以走模板和自动化，哪些必须人工确认，页面上就先写清楚边界。</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="faq">
-    <div class="shell">
-      <div class="section-head">
-        <div class="kicker">FAQ</div>
-        <h2>不再假装有帮助中心页面，先把最关键的问题在这里答清楚。</h2>
-        <p>原页脚那些“定价方案、帮助中心、隐私政策、服务条款”都只是空链接。现在先去掉虚假成熟感，把实际会被问到的问题落在同一页。</p>
-      </div>
-      <div class="grid-2">
-        <article class="card"><strong>你们到底卖的是工具，还是代运营服务？</strong><p>更准确的说法是“运营交付系统”。它不是替你拍脑袋做决策的代运营，也不只是一个聊天工具，而是把客服、售后、升级和汇报流程收成一条可执行、可追踪、可复盘的工作流。</p></article>
-        <article class="card"><strong>是不是要把现有流程全部推翻？</strong><p>不是。试运行阶段只接最重复、最容易标准化、最容易看出差异的一类消息或一类工单。判断是否值得做试运行。</p></article>
-        <article class="card"><strong>如果我们 SOP 还不完整怎么办？</strong><p>那就先别追求大范围自动化。没有基础规则时，先补处理边界和升级路径，否则任何系统都会把混乱放大。</p></article>
-        <article class="card"><strong>适合与哪类团队开始？</strong><p>通常从最重复、最容易拖慢客服的一类消息开始，比如物流查询、标准售后说明、常见 FAQ 或日报摘要。</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="contact">
-    <div class="shell">
-      <div class="section-head">
-        <div class="kicker">Contact</div>
-        <h2>想继续聊，给我一点真实上下文。不要只留一句“想了解”。</h2>
-        <p>这里不再放空按钮。你可以直接发邮件，也可以填下面这张表，页面会帮你组装一封预约演示邮件。</p>
-      </div>
-      <div class="contact">
-        <form class="panel card" id="demo-form">
-          <div class="badge">所有 CTA 都已接到真实动作</div>
-          <div class="field-grid" style="margin-top:18px">
-            <div class="field">
-              <label for="contact-name">联系人</label>
-              <input id="contact-name" name="name" type="text" placeholder="例如：Jason">
+        <div class="persona-grid">
+          <article class="persona-card hover reveal">
+            <div class="micro">ICP 01</div>
+            <h3>Amazon / 多店铺精品团队</h3>
+            <p>多账号、多站点、多客服班次，消息和售后堆积在平台后台里，最怕漏回、超时、投诉升级和团队口径不统一。</p>
+            <div class="bullet-list">
+              <div>典型规模: 5-20 人，2-10 个店铺</div>
+              <div>最关心: 差评、投诉、退款损耗、客服管理成本</div>
+              <div>最适合买点: 人工兜底 + 风险识别 + 日报交付</div>
             </div>
-            <div class="field">
-              <label for="contact-company">公司 / 店铺</label>
-              <input id="contact-company" name="company" type="text" placeholder="例如：某跨境店铺">
-            </div>
-            <div class="field">
-              <label for="contact-platform">主要平台</label>
-              <input id="contact-platform" name="platform" type="text" placeholder="Amazon / Shopify / TikTok Shop">
-            </div>
-            <div class="field">
-              <label for="contact-volume">每日大概消息量</label>
-              <select id="contact-volume" name="volume">
-                <option value="">请选择</option>
-                <option>少于 100 条</option>
-                <option>100 - 300 条</option>
-                <option>300 - 1000 条</option>
-                <option>1000 条以上</option>
-              </select>
-            </div>
-            <div class="field full">
-              <label for="contact-pain">当前最痛的地方</label>
-              <textarea id="contact-pain" name="pain" placeholder="例如：售后工单分散、退款升级慢、日报靠人手汇总、客服反复切后台。"></textarea>
-            </div>
-          </div>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">生成预约邮件</button>
-            <a class="btn btn-secondary" href="mailto:hello@crossflow.ai?subject=CrossFlow%20演示预约">直接发邮件</a>
-          </div>
-          <p class="helper">提交后会调用你的默认邮件客户端，不会把内容发到未知后端。</p>
-        </form>
-        <div style="display:grid;gap:18px">
-          <article class="card">
-            <strong>我更关心这些信息</strong>
-            <ul>
-              <li>你现在哪几个入口要处理，消息和工单分别从哪里进来。</li>
-              <li>哪些场景最消耗团队，哪些场景最容易出事故。</li>
-              <li>你是否愿意先从一个渠道或一类工单开始。</li>
-            </ul>
           </article>
-          <article class="card">
-            <strong>直接联系</strong>
-            <p><a href="mailto:hello@crossflow.ai">hello@crossflow.ai</a></p>
-            <p class="helper">邮件会比表单更快，因为很多跨境团队一开始就想把当前问题截图发过来。</p>
+          <article class="persona-card hover reveal">
+            <div class="micro sky">ICP 02</div>
+            <h3>Shopify / 独立站 DTC 团队</h3>
+            <p>售前咨询、物流追踪、退款原因和客服话术散在多个工具里，老板想看转化与退款的真实结构，但团队来不及整理。</p>
+            <div class="bullet-list">
+              <div>典型规模: 3-12 人，单品牌或多站点</div>
+              <div>最关心: 首响速度、售后承接、日报和 FAQ 沉淀</div>
+              <div>最适合买点: 消息聚合 + 日报自动化 + SOP 留存</div>
+            </div>
+          </article>
+          <article class="persona-card hover reveal">
+            <div class="micro warn">ICP 03</div>
+            <h3>TikTok Shop / 小团队快节奏卖家</h3>
+            <p>单量和咨询量增长快，但团队小、节奏乱、退款争议容易放大，最需要一套能把高频客服和异常单稳住的交付层。</p>
+            <div class="bullet-list">
+              <div>典型规模: 3-8 人，增长快，流程未标准化</div>
+              <div>最关心: 跑得快、扛得住、先试跑、别搞重项目</div>
+              <div>最适合买点: 7-14 天试跑 + 一个店先落地</div>
+            </div>
           </article>
         </div>
+        <div class="roi-band reveal">
+          <strong>我们先说明，哪些团队最容易先跑出结果</strong>
+          <p>如果你现在更需要的是轻量插件、翻译工具，或仍处于极低消息量阶段，这套服务可能还不是第一优先级。我们更擅长已经开始忙不过来、需要稳定交付结果的多平台跨境团队。</p>
+        </div>
       </div>
+    </section>
+    <section id="outcomes">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="tag">你买到的具体交付物</span>
+          <h2>不是“AI 能帮什么”，而是这 4 类结果会被持续交付出来</h2>
+          <p>合作范围会在一开始就说清楚: 你买到的是统一消息处理、售后与纠纷承接、日报周报交付，以及 FAQ / SOP 沉淀，不是无限制的万能运营外包。</p>
+        </div>
+        <div class="scope-grid">
+          <article class="scope-card hover reveal">
+            <div class="micro">交付 01</div>
+            <h3>客服处理结果</h3>
+            <p>统一接住 Amazon、Shopify、TikTok Shop、独立站消息，输出可发出的回复、首响节奏和升级队列，而不是只生成一段草稿。</p>
+            <div class="bullet-list">
+              <div>包括: 咨询回复、物流追踪、标准售前问答</div>
+              <div>不包括: 大促营销策划、广告投放运营</div>
+            </div>
+          </article>
+          <article class="scope-card hover reveal">
+            <div class="micro sky">交付 02</div>
+            <h3>售后与纠纷承接结果</h3>
+            <p>退款、补发、缺件、物流异常、投诉争议进入统一工单和风险分级，复杂边界由人工复核，不让 AI 在高风险场景里自行乱回。</p>
+            <div class="bullet-list">
+              <div>包括: 风险识别、升级、复核、处理记录</div>
+              <div>不包括: 脱离规则的赔付承诺和平台违规操作</div>
+            </div>
+          </article>
+          <article class="scope-card hover reveal">
+            <div class="micro warn">交付 03</div>
+            <h3>老板能直接看的管理结果</h3>
+            <p>日报、周报、退款原因结构、高风险案例、FAQ 新增和异常单变化按约定时间交付，避免老板反复追着团队要报表。</p>
+            <div class="bullet-list">
+              <div>包括: 日报周报、问题结构、退款趋势、FAQ 沉淀</div>
+              <div>不包括: 无边界 BI 定制和全公司数据中台建设</div>
+            </div>
+          </article>
+        </div>
+        <div style="height:18px"></div>
+        <div class="steps">
+          <article class="step hover reveal"><span class="step-no">01</span><h3>聚合 Amazon / Shopify / TikTok / 独立站消息</h3><p>多平台入口统一收口，客服与售后不再被后台割裂。</p><span class="meta">Unified Inbox</span></article>
+          <article class="step hover reveal"><span class="step-no">02</span><h3>AI 自动分类、草拟回复、识别风险</h3><p>自动识别售前、售后、退款、物流异常与纠纷倾向。</p><span class="meta">AI Classification</span></article>
+          <article class="step hover reveal"><span class="step-no">03</span><h3>高风险案例进入人工兜底</h3><p>复杂投诉、退款争议和平台规则边界进入人工审核。</p><span class="meta">Human Review</span></article>
+          <article class="step hover reveal"><span class="step-no">04</span><h3>自动生成日报周报与 FAQ</h3><p>处理数据、退款原因、高频问题和 SOP 自动沉淀。</p><span class="meta">Auto Briefing</span></article>
+          <article class="step hover reveal"><span class="step-no">05</span><h3>最终交付给老板的是“已完成结果”</h3><p>更快响应、更低售后损耗、更清晰经营视图，而不是一堆待运营功能。</p><span class="meta">Delivery Outcome</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="roi">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">ROI 与替代方案对比</span>
+          <h2>如果不做，你继续付出的不是“麻烦”，而是持续发生的人力、赔付和决策成本</h2>
+          <p>老板不会因为“AI 很先进”买单，只会因为它替团队少招人、少赔钱、少等报表、少让问题失控而买单。这里把经济账和替代方案摆清楚。</p>
+        </div>
+        <div class="roi-grid">
+          <article class="roi-card hover reveal">
+            <div class="micro">经济账 01</div>
+            <h3>重复客服与报表整理，通常先吞掉 1-2 个全职人的时间</h3>
+            <p>不是所有团队都要裁员，但多数 3-20 人跨境团队都能先从一个店、一个平台开始，把重复回复、异常筛选和日报整理从人工身上拿下来。</p>
+            <strong>1-2 人</strong>
+          </article>
+          <article class="roi-card hover reveal">
+            <div class="micro sky">经济账 02</div>
+            <h3>高风险售后处理晚一步，赔付和差评会被放大</h3>
+            <p>真正贵的不是回复慢，而是退款倾向、投诉升级、平台规则踩线没有被及时识别，最后变成赔钱、掉分、掉店铺稳定性。</p>
+            <strong class="count" data-prefix="-" data-target="23" data-suffix="%">0</strong>
+          </article>
+          <article class="roi-card hover reveal">
+            <div class="micro warn">经济账 03</div>
+            <h3>老板每天等不到统一日报，团队就会持续在错误的事情上忙</h3>
+            <p>没有统一问题结构、退款原因和高风险案例视图，管理动作就会慢半拍，决策质量下降，团队会一直靠感觉运营。</p>
+            <strong>18:00</strong>
+          </article>
+        </div>
+        <div style="height:18px"></div>
+        <div class="compare-grid">
+          <article class="compare-card hover reveal">
+            <div class="micro">对比 01</div>
+            <h3>和 AI 工具的区别</h3>
+            <div class="compare-row">
+              <div class="compare-item"><span>传统 AI 工具: 给你一个后台和一堆能力</span><span>FlowBridge AI: 直接交付客服、售后、日报结果</span></div>
+              <div class="compare-item"><span>传统 AI 工具: 需要你自己设计流程和盯效果</span><span>FlowBridge AI: 附带人工兜底、交付口径和落地节奏</span></div>
+            </div>
+          </article>
+          <article class="compare-card hover reveal">
+            <div class="micro sky">对比 02</div>
+            <h3>和人工外包 / BPO 的区别</h3>
+            <div class="compare-row">
+              <div class="compare-item"><span>传统外包: 人多但知识沉淀弱，报表口径不稳定</span><span>FlowBridge AI: 每一次处理都沉淀为 FAQ、SOP 和统一视图</span></div>
+              <div class="compare-item"><span>传统外包: 依赖人，波动大</span><span>FlowBridge AI: AI 处理高频，人工只兜高风险</span></div>
+            </div>
+          </article>
+          <article class="compare-card hover reveal">
+            <div class="micro warn">对比 03</div>
+            <h3>和内部自己拼流程的区别</h3>
+            <div class="compare-row">
+              <div class="compare-item"><span>自己拼流程: 一直在 Excel、群聊、平台后台之间补漏洞</span><span>FlowBridge AI: 从消息、工单到报表是同一条交付链</span></div>
+              <div class="compare-item"><span>自己拼流程: 需要老板持续盯</span><span>FlowBridge AI: 给老板的是每天准时可读的结果</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="cases">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="tag">证据链、样例与前后对比</span>
+          <h2>要让人相信你能交付，不靠漂亮话，靠前后对比、样例交付包和可审计的处理路径</h2>
+          <p>正式合作前，客户最关心的不是概念，而是你到底交付什么、怎么验收、复杂案例谁兜底、结果是否可追踪。下面这组内容就是把这些问题提前回答清楚。</p>
+        </div>
+        <div class="proof-grid">
+          <article class="proof-mini hover reveal">
+            <div class="micro">证明 01</div>
+            <h3>前后对比，不讲概念</h3>
+            <p>把“接入前靠表格 + 群聊”和“接入后有统一消息队列、风险升级、日报自动交付”放在一张图里，用户一眼就能看懂差异。</p>
+          </article>
+          <article class="proof-mini hover reveal">
+            <div class="micro sky">证明 02</div>
+            <h3>脱敏案例，也要能看出业务真实度</h3>
+            <p>即使暂时不能公开客户名，也要把团队规模、平台结构、问题类型、试跑周期和结果变化说完整，让人看得出不是空壳演示。</p>
+          </article>
+          <article class="proof-mini hover reveal">
+            <div class="micro warn">证明 03</div>
+            <h3>指标说明，别让数据像摆拍</h3>
+            <p>每组数字都写清楚口径，例如“以下为 14 天脱敏试跑结果，口径含客服队列与售后队列”，这样看板才像可用证据，而不只是好看数字。</p>
+          </article>
+        </div>
+        <div class="logo-wall reveal">
+          <div class="logo-ghost">Amazon 精品卖家</div>
+          <div class="logo-ghost">Shopify DTC</div>
+          <div class="logo-ghost">TikTok Shop</div>
+          <div class="logo-ghost">独立站团队</div>
+          <div class="logo-ghost">多平台团队</div>
+        </div>
+        <div style="height:18px"></div>
+        <div class="case-grid">
+          <article class="case-card hover reveal">
+            <div class="micro">脱敏案例 A</div>
+            <h3>8 人 Amazon 团队，先跑 2 个店铺</h3>
+            <p>接入前: 客服靠平台后台和表格补位，退款和投诉升级全靠主管盯。接入后: 统一消息 + 风险升级 + 日报交付按时跑起来。</p>
+            <div class="bullet-list">
+              <div>试跑周期: 14 天</div>
+              <div>主要改善: 首响更稳，高风险售后先被抓出来</div>
+              <div>老板最在意的变化: 每晚固定拿到统一日报</div>
+            </div>
+          </article>
+          <article class="case-card hover reveal">
+            <div class="micro sky">脱敏案例 B</div>
+            <h3>5 人 Shopify 团队，重点解决退款结构不清</h3>
+            <p>接入前: 问题和退款原因散在工单、聊天记录和表格里。接入后: 每天自动沉淀退款原因、FAQ 新增和异常单分布。</p>
+            <div class="bullet-list">
+              <div>试跑周期: 14 天</div>
+              <div>主要改善: 日报不再靠人工补，FAQ 开始稳定增长</div>
+              <div>老板最在意的变化: 能看到退款到底为什么发生</div>
+            </div>
+          </article>
+          <article class="case-card hover reveal">
+            <div class="micro warn">脱敏案例 C</div>
+            <h3>3 人 TikTok 小团队，先稳住快节奏异常单</h3>
+            <p>接入前: 团队人少、节奏乱，最怕物流异常和退款争议放大。接入后: 高风险售后自动升级，人工只看复杂问题。</p>
+            <div class="bullet-list">
+              <div>试跑周期: 7-14 天</div>
+              <div>主要改善: 复杂案例不再在队列里淹没</div>
+              <div>老板最在意的变化: 人少也能先扛住波峰</div>
+            </div>
+          </article>
+        </div>
+        <div class="quote-grid reveal">
+          <article class="quote-card hover">
+            <blockquote>“以前主管每天盯退款和投诉，试跑后至少知道哪几单必须先看，队列终于不靠猜。”</blockquote>
+            <cite>脱敏反馈摘要 · Amazon 团队负责人</cite>
+          </article>
+          <article class="quote-card hover">
+            <blockquote>“最有感的不是 AI 会回消息，而是日报终于在固定时间出来，老板不用在群里追数据了。”</blockquote>
+            <cite>脱敏反馈摘要 · Shopify 运营负责人</cite>
+          </article>
+          <article class="quote-card hover">
+            <blockquote>“先跑一个平台就够了，我们先验证结果，再决定扩不扩，这种合作方式更容易开始。”</blockquote>
+            <cite>脱敏反馈摘要 · TikTok 小团队创始人</cite>
+          </article>
+        </div>
+        <div style="height:18px"></div>
+        <div class="artifact-grid">
+          <article class="artifact-card hover reveal">
+            <div class="micro">交付样例 01</div>
+            <h3>你实际会收到的日报长什么样</h3>
+            <p>包含消息处理量、首响、退款原因、高风险工单、FAQ 新增与需要老板关注的异常项，而不是只有几张好看的图。</p>
+            <div class="bullet-list">
+              <div>今日待处理消息、平均首响、关闭率</div>
+              <div>退款原因结构与平台分布</div>
+              <div>高风险工单清单与需人工决策项</div>
+            </div>
+          </article>
+          <article class="artifact-card hover reveal">
+            <div class="micro sky">交付样例 02</div>
+            <h3>FAQ / SOP 不是附件，而是持续增长的资产</h3>
+            <p>每次高频问题、标准回复和优秀处理方式都会回流沉淀，后续不需要再靠某个老员工记在脑子里。</p>
+            <div class="bullet-list">
+              <div>问题分类、标准话术、升级条件</div>
+              <div>支持新客服快速接手与复盘</div>
+              <div>随试跑周期持续新增和修正</div>
+            </div>
+          </article>
+          <article class="artifact-card hover reveal">
+            <div class="micro warn">交付样例 03</div>
+            <h3>复杂售后怎么被追踪与复核</h3>
+            <p>每个高风险案例都能看到来源平台、风险标签、建议处理、人工复核动作和最终结果，方便后续审计与复盘。</p>
+            <div class="bullet-list">
+              <div>谁判定、谁复核、最后怎么结案</div>
+              <div>避免 AI 黑盒和“到底谁拍板”的混乱</div>
+              <div>为 SLA 和责任边界提供依据</div>
+            </div>
+          </article>
+        </div>
+        <div style="height:18px"></div>
+        <div class="dashboard-shell reveal">
+          <div class="panel-head"><h3>脱敏试跑样例看板</h3><span>以下为 14 天试跑口径样例，含客服与售后队列</span></div>
+          <div class="top-stats">
+            <div class="stat hover"><label>今日待处理消息</label><strong class="count" data-target="428">0</strong><span class="delta">较昨日 -14%</span></div>
+            <div class="stat hover"><label>平均首响时长</label><strong class="count" data-target="6.8" data-decimals="1" data-suffix=" 分钟">0</strong><span class="delta">效率持续优化</span></div>
+            <div class="stat hover"><label>工单关闭率</label><strong class="count" data-target="94" data-suffix="%">0</strong><span class="delta">稳定高于目标线</span></div>
+            <div class="stat hover"><label>自动生成报告</label><strong class="count" data-target="12" data-suffix=" 份">0</strong><span class="delta">日报 / 周报已交付</span></div>
+          </div>
+          <div class="grid">
+            <div class="panel hover">
+              <div class="panel-head"><h3>高频问题分布</h3><span>Top 5</span></div>
+              <div class="bars">
+                <div class="bar"><span>物流延迟</span><div class="track"><div class="fill" style="--w:84%"></div></div><strong>84</strong></div>
+                <div class="bar"><span>退款申请</span><div class="track"><div class="fill" style="--w:72%"></div></div><strong>72</strong></div>
+                <div class="bar"><span>尺码兼容</span><div class="track"><div class="fill" style="--w:51%"></div></div><strong>51</strong></div>
+                <div class="bar"><span>缺货催发</span><div class="track"><div class="fill" style="--w:39%"></div></div><strong>39</strong></div>
+                <div class="bar"><span>破损补寄</span><div class="track"><div class="fill" style="--w:28%"></div></div><strong>28</strong></div>
+              </div>
+            </div>
+            <div class="panel hover">
+              <div class="panel-head"><h3>平台问题占比</h3><span>本周聚合</span></div>
+              <div class="donut-wrap">
+                <div class="donut"><div class="donut-mid"><div><strong>38%</strong><span>Amazon 最高</span></div></div></div>
+                <div class="legend">
+                  <div class="row"><span><i style="background:var(--orange)"></i>Amazon</span><b>38%</b></div>
+                  <div class="row"><span><i style="background:#f3bb73"></i>Shopify</span><b>27%</b></div>
+                  <div class="row"><span><i style="background:var(--sky)"></i>TikTok Shop</span><b>21%</b></div>
+                  <div class="row"><span><i style="background:rgba(107,74,46,.24)"></i>独立站</span><b>14%</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="panel hover trend">
+              <div class="panel-head"><h3>本周退款原因趋势</h3><span>7 Days</span></div>
+              <svg viewBox="0 0 520 220" aria-label="本周退款原因趋势图">
+                <defs>
+                  <linearGradient id="gradLine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#E89B4E"></stop><stop offset="50%" stop-color="#F1BB73"></stop><stop offset="100%" stop-color="#87C9F5"></stop></linearGradient>
+                  <linearGradient id="gradArea" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="rgba(232,155,78,.30)"></stop><stop offset="100%" stop-color="rgba(135,201,245,0)"></stop></linearGradient>
+                </defs>
+                <g stroke="rgba(107,74,46,.08)" stroke-width="1"><line x1="20" y1="30" x2="500" y2="30"></line><line x1="20" y1="80" x2="500" y2="80"></line><line x1="20" y1="130" x2="500" y2="130"></line><line x1="20" y1="180" x2="500" y2="180"></line></g>
+                <path d="M24 180 C 76 162, 102 164, 138 142 S 220 92, 268 112 S 366 184, 436 118 S 474 86, 496 92 L 496 180 L 24 180 Z" fill="url(#gradArea)"></path>
+                <path class="line" d="M24 166 C 76 148, 102 154, 138 132 S 220 90, 268 108 S 366 178, 436 112 S 474 78, 496 86" fill="none" stroke="url(#gradLine)" stroke-width="4" stroke-linecap="round"></path>
+                <g fill="#fffdf9" stroke="#E89B4E" stroke-width="3"><circle cx="24" cy="166" r="5"></circle><circle cx="98" cy="150" r="5"></circle><circle cx="170" cy="122" r="5"></circle><circle cx="250" cy="98" r="5"></circle><circle cx="328" cy="142" r="5"></circle><circle cx="412" cy="126" r="5"></circle><circle cx="496" cy="86" r="5"></circle></g>
+              </svg>
+              <div class="days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </div>
+            <div class="panel hover">
+              <div class="panel-head"><h3>自动交付记录</h3><span>Today</span></div>
+              <div class="feed">
+                <div class="feed-item"><div class="time">09:18</div><div><strong>售后回复草稿已生成</strong><p>系统已为物流延迟退款案例补齐平台规则、补偿建议和回复模板。</p><span class="chip">AI 建议已推送</span></div></div>
+                <div class="feed-item"><div class="time">11:40</div><div><strong>高风险纠纷已升级人工复核</strong><p>检测到平台投诉倾向和重复退款要求，已自动进入人工兜底队列。</p><span class="chip">Risk Escalated</span></div></div>
+                <div class="feed-item"><div class="time">18:00</div><div><strong>日报已交付至运营负责人</strong><p>汇总 428 条消息、31 个售后工单、12 个高风险案例和 7 条新增 FAQ。</p><span class="chip">Daily Brief Ready</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-actions reveal">
+          <button class="btn secondary" type="button" id="downloadSampleBtn">下载脱敏日报样例</button>
+          <a class="btn primary" href="#contact">获取试跑方案</a>
+        </div>
+      </div>
+    </section>
+    <section id="scenes">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="tag">不同角色为什么会买</span>
+          <h2>老板、客服主管、运营负责人，不会因为同一个理由下单</h2>
+          <p>不同角色关心点并不一样。老板看利润和稳定性，客服主管看效率与风控，运营负责人看报表与知识沉淀，所以合作价值也需要分别说清楚。</p>
+        </div>
+        <div class="scenes-grid">
+          <article class="scene-card hover reveal"><div class="kicker">Role 01</div><h3>老板 / 创始人</h3><p>关心的不是模型参数，而是少招几个人、少赔多少钱、少掉多少差评，以及每天 18:00 能不能看到统一经营视图。</p></article>
+          <article class="scene-card hover reveal"><div class="kicker">Role 02</div><h3>客服主管</h3><p>关心的是队列能不能稳住、谁该升级、谁该复核、团队口径是否统一，以及 SLA 会不会失控。</p></article>
+          <article class="scene-card hover reveal"><div class="kicker">Role 03</div><h3>运营负责人</h3><p>关心的是退款原因、高风险售后、平台问题结构和 FAQ 是否持续沉淀，能否支撑后续业务动作。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="rollout">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="tag">从提交需求到正式接入，一共 5 步</span>
+          <h2>先诊断，后接入；先试跑，后放大</h2>
+          <p>点击之后会发生什么、多久能拿到方案、什么时候看到第一版结果，我们都提前写清楚。这样你在开始合作前，就知道试跑节奏和验收方式。</p>
+        </div>
+        <div class="timeline reveal">
+          <article class="time-card hover" data-day="Step 01"><h3>提交需求</h3><p>告诉我们你的平台结构、团队规模和最头疼的问题，不需要先准备一堆材料。</p></article>
+          <article class="time-card hover" data-day="Step 02"><h3>业务诊断</h3><p>我们判断你的消息入口、售后压力、人工兜底边界和更适合先跑哪一段。</p></article>
+          <article class="time-card hover" data-day="Step 03"><h3>出接入方案</h3><p>给出试跑范围、报表口径、升级规则、人工兜底方式和预期验收目标。</p></article>
+          <article class="time-card hover" data-day="Step 04"><h3>小范围试跑</h3><p>先接 1 个店铺 / 1 个平台 / 1 类高频售后场景，用 7-14 天跑出第一版结果。</p></article>
+          <article class="time-card hover" data-day="Step 05"><h3>正式接入</h3><p>试跑有效后，再逐步扩到更多店铺、更多平台和更完整的交付模块。</p></article>
+        </div>
+        <div class="pilot-band reveal">
+          <strong>低风险开始方式</strong>
+          <p>不需要一开始就全面替换现有团队。支持先跑 1 个平台消息、1 类高频售后，或先只交付日报 / FAQ，先把结果跑出来再决定是否放大。</p>
+          <div class="pilot-commitments">
+            <span>7 天内确认试跑方案</span>
+            <span>14 天内跑出第一版交付结果</span>
+            <span>不强制全面替换现有流程</span>
+          </div>
+        </div>
+        <div class="pilot-metrics reveal">
+          <article class="metric-card hover">
+            <strong>48 小时内</strong>
+            <p>确认平台结构、试跑范围、接入清单和人工兜底边界。</p>
+          </article>
+          <article class="metric-card hover">
+            <strong>第 7-14 天</strong>
+            <p>跑出第一版消息承接、升级规则、日报样例和 FAQ 沉淀结果。</p>
+          </article>
+          <article class="metric-card hover">
+            <strong>复盘看 3 个数</strong>
+            <p>首响速度、高风险升级及时率、日报准时交付率，用结果决定要不要扩大。</p>
+          </article>
+        </div>
+        <div style="height:18px"></div>
+        <div class="workflow-shell reveal">
+          <div class="workflow">
+            <div class="flow"><div class="node">01</div><div class="flow-card"><h3>消息接入</h3><p>统一接收 Amazon、Shopify、TikTok Shop 和独立站消息。</p></div></div>
+            <div class="flow"><div class="node">02</div><div class="flow-card"><h3>AI 判断</h3><p>自动分类、生成草稿回复，并识别风险和优先级。</p></div></div>
+            <div class="flow"><div class="node">03</div><div class="flow-card"><h3>人工兜底</h3><p>复杂纠纷、投诉边界和赔付判断交给人工复核。</p></div></div>
+            <div class="flow"><div class="node">04</div><div class="flow-card"><h3>自动交付</h3><p>回复完成、工单完成、日报周报同步生成输出。</p></div></div>
+            <div class="flow"><div class="node">05</div><div class="flow-card"><h3>报表沉淀</h3><p>问题结构、退款原因、FAQ 与 SOP 自动沉淀积累。</p></div></div>
+          </div>
+          <div class="flow-foot">
+            <strong>输出的不是一个看起来聪明的工具，而是一条真正能跑起来、能被审计、有人兜底的交付链路。</strong>
+            <div class="flow-pills"><span>更快响应</span><span>更低损耗</span><span>更清晰视图</span></div>
+          </div>
+        </div>
+        <div style="height:18px"></div>
+        <div class="safe-grid">
+          <article class="safe-card hover reveal"><div class="micro">人工兜底</div><h3>什么情况下人工接管</h3><p>退款意向、投诉风险、赔付边界、规则不确定、情绪升级等案例，系统直接升级人工，不让 AI 自行拍板。</p><div class="bullet-list"><div>复杂纠纷保留人工复核</div><div>升级动作和最终处理留痕</div><div>谁接管、谁结案都可追踪</div></div></article>
+          <article class="safe-card hover reveal"><div class="micro sky">SLA</div><h3>怎么约定交付节奏</h3><p>可约定首响口径、日报出具时间、高风险升级响应时间和试跑复盘频率，让“交付结果”可被检查。</p><div class="bullet-list"><div>可约定工作日首次响应窗口</div><div>可约定 18:00 前日报交付</div><div>可约定周复盘与试跑验收节奏</div></div></article>
+          <article class="safe-card hover reveal"><div class="micro warn">安全</div><h3>怎么处理数据安全与权限</h3><p>按角色权限查看、处理记录留痕、关键案例可审计、敏感信息脱敏展示，不把客服与订单数据扔进黑盒。</p><div class="bullet-list"><div>按角色控制可见范围</div><div>关键处理动作保留审计记录</div><div>敏感信息支持脱敏展示</div></div></article>
+          <article class="safe-card hover reveal"><div class="micro">责任边界</div><h3>什么不做、谁拍板</h3><p>平台违规、脱离规则的赔付承诺、超出约定范围的运营动作，不会被系统自动执行，最终边界清晰可追责。</p><div class="bullet-list"><div>规则外赔付不会自动承诺</div><div>试跑范围外动作需单独确认</div><div>最终决策责任边界先写清楚</div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="tag">低风险开始，不强推全量接入</span>
+          <h2>先跑一个店、一个平台、7-14 天试跑，再决定要不要全面接入</h2>
+          <p>提交之后，你会先收到需求诊断、试跑范围建议、接入清单和 7-14 天试跑节奏。我们希望你在开始前，就知道这次沟通会产出什么。</p>
+        </div>
+        <div class="pilot-shell reveal">
+          <div class="pilot-card hover">
+            <div class="micro">7-14 天试跑包</div>
+            <h3>更适合正式合作前的最小成交动作</h3>
+            <p>先接一个店、一个平台、一个明确问题场景，验证消息接入、风险升级、日报交付和 FAQ 沉淀能不能跑顺，再决定是否扩大。</p>
+            <div class="bullet-list">
+              <div>第 1 步: 提交平台、团队规模、最痛问题、月消息量</div>
+              <div>第 2 步: 48 小时内拿到试跑建议和接入清单</div>
+              <div>第 3 步: 进入 7-14 天试跑，按日看交付结果</div>
+              <div>第 4 步: 试跑复盘后决定是否扩大店铺和平台范围</div>
+            </div>
+            <div class="pilot-commitments">
+              <span>接入清单</span>
+              <span>日报样例</span>
+              <span>升级规则</span>
+              <span>复盘结论</span>
+            </div>
+          </div>
+          <div class="cta-path hover">
+            <h3>点击“申请试跑”后，你会得到什么</h3>
+            <div class="path-step"><div class="path-no">1</div><div><strong>需求诊断</strong><p>确认你是 Amazon、多平台、还是独立站团队，目前最痛的是客服、售后还是日报。</p></div></div>
+            <div class="path-step"><div class="path-no">2</div><div><strong>试跑方案</strong><p>收到试跑范围、接入清单、人工兜底边界和预期结果，不会被一上来推全量项目。</p></div></div>
+            <div class="path-step"><div class="path-no">3</div><div><strong>节奏约定</strong><p>明确日报时间、升级规则、复盘频率和谁来对接，避免“合作后才开始猜”。</p></div></div>
+            <div class="path-step"><div class="path-no">4</div><div><strong>是否扩大</strong><p>根据试跑结果决定是否扩店、扩平台、扩交付范围，而不是被一次性绑死。</p></div></div>
+          </div>
+        </div>
+        <div style="height:18px"></div>
+        <div class="cta-shell reveal">
+          <div class="contact-grid">
+            <form class="contact-form" id="contactForm">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">您的姓名</label>
+                  <input id="name" name="name" type="text" placeholder="例如：Allen" required />
+                </div>
+                <div class="field">
+                  <label for="contactInput">联系方式</label>
+                  <input id="contactInput" name="contact" type="text" placeholder="微信 / 手机 / WhatsApp / 邮箱，填写一种即可" required />
+                </div>
+                <div class="field">
+                  <label for="platform">店铺平台</label>
+                  <select id="platform" name="platform">
+                    <option>Amazon</option>
+                    <option>Shopify / 独立站</option>
+                    <option>TikTok Shop</option>
+                    <option>多平台同时经营</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="teamSize">团队规模</label>
+                  <select id="teamSize" name="teamSize">
+                    <option>1-5 人</option>
+                    <option selected>6-20 人</option>
+                    <option>20+ 人</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="painPoint">当前最头疼的问题</label>
+                  <select id="painPoint" name="painPoint">
+                    <option>消息分散</option>
+                    <option>售后堆积</option>
+                    <option>退款纠纷</option>
+                    <option>报表交付</option>
+                    <option>FAQ / SOP 沉淀</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="volume">日均 / 月消息量</label>
+                  <input id="volume" name="volume" type="text" placeholder="例如：日均 180 条（选填）" />
+                </div>
+                <div class="field full">
+                  <label for="pilotScope">希望先试跑的范围</label>
+                  <select id="pilotScope" name="pilotScope">
+                    <option>先接 1 个店铺</option>
+                    <option>先接 1 个平台</option>
+                    <option>先跑 1 类高频售后场景</option>
+                    <option>先交付日报 / FAQ 沉淀</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="notes">补充说明</label>
+                  <textarea id="notes" name="notes" placeholder="例如：目前 Amazon + Shopify 并行，售后退款和日报最头疼，希望先跑 Amazon US 店铺。"></textarea>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn primary" type="submit">获取我的接入方案</button>
+                <a class="btn secondary" href="#rollout">先看 5 步试跑路径</a>
+              </div>
+              <div class="contact-help">我们会在 1 个工作日内联系你，先确认业务结构，再给出试跑建议、接入路径和验收口径。</div>
+              <div class="contact-success" id="contactSuccess" aria-live="polite">
+                <strong>试跑需求摘要已整理完成</strong>
+                <p>你可以直接复制这份摘要给微信 / WhatsApp / 邮件联系人，也可以点击下方按钮发给 FlowBridge AI 顾问继续沟通。</p>
+                <div class="contact-meta" id="contactMeta"></div>
+                <div class="contact-summary" id="contactSummary"></div>
+                <div class="secondary-actions">
+                  <button class="btn secondary" type="button" id="copySummaryBtn">复制需求摘要</button>
+                  <a class="btn primary" id="mailFallbackLink" href="mailto:hello@flowbridge.ai">通过邮件发送</a>
+                </div>
+              </div>
+            </form>
+
+            <div class="contact-aside">
+              <div class="contact-block hover">
+                <div class="kicker">沟通方式</div>
+                <h3>选择你最方便的沟通方式</h3>
+                <p>你可以先提交需求表单，也可以先指定希望用微信、 WhatsApp 或邮件沟通。我们会根据你的店铺结构和处理压力，判断更适合先跑消息接入、售后处理，还是先交付日报和 FAQ。</p>
+                <div class="contact-links">
+                  <a href="#contact" data-prefill="微信">选择微信沟通</a>
+                  <a href="#contact" data-prefill="WhatsApp">选择 WhatsApp 沟通</a>
+                  <a href="mailto:hello@flowbridge.ai?subject=FlowBridge%20AI%20%E6%8E%A5%E5%85%A5%E6%96%B9%E6%A1%88">邮件沟通</a>
+                </div>
+                <div class="mini-cta">先把最小可跑通的范围定义清楚，再决定是否扩平台、扩店铺、扩交付模块。</div>
+              </div>
+              <div class="contact-block hover">
+                <div class="kicker">下一步</div>
+                <h3>提交后会发生什么</h3>
+                <ul class="contact-list">
+                  <li>先确认你的平台结构、团队规模和最痛的问题。</li>
+                  <li>判断更适合先跑 1 个平台、1 个店铺还是 1 类售后场景。</li>
+                  <li>给出试跑范围、升级规则、日报口径和人工兜底边界。</li>
+                  <li>7-14 天跑出第一版结果，再决定是否扩大接入。</li>
+                </ul>
+                <span class="proof-badge">先诊断，后接入；先试跑，后放大。</span>
+              </div>
+              <div class="contact-block hover">
+                <div class="kicker">合作保障</div>
+                <h3>合作前你可以先确认的保障</h3>
+                <ul class="contact-list">
+                  <li>支持按角色配置权限、关键处理动作留痕可审计。</li>
+                  <li>支持明确试跑范围、升级 SLA 和日报交付时间。</li>
+                  <li>复杂退款、投诉争议和边界问题保留人工复核。</li>
+                  <li>支持在正式合作前确认 NDA、周复盘和责任边界。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-shell">
+        <div class="company-grid" style="grid-template-columns:1fr">
+          <a class="logo" href="#top"><span class="logo-mark"></span><span>FlowBridge AI</span></a>
+          <p>跨境电商 AI 客服 / 运营交付平台，专注把客服处理、售后工单、纠纷归类、日报周报和 FAQ 沉淀真正做完。</p>
+          <div class="bullet-list">
+            <div>服务方式: 先试跑，再扩店，再扩平台</div>
+            <div>交付边界: 客服、售后、纠纷、日报、FAQ / SOP</div>
+            <div>交付机制: AI 处理高频，人工兜底高风险</div>
+          </div>
+        </div>
+        <div class="company-card">
+          <div class="ft-title">保障</div>
+          <h3>公司级信任信息</h3>
+          <p>正式合作前，你可以先确认试跑协议、响应节奏、数据处理方式和人工兜底范围。我们把客户最常问的保障项直接写清楚。</p>
+          <div class="bullet-list">
+            <div>支持 NDA、试跑协议与标准响应 SLA</div>
+            <div>支持权限配置、关键处理动作留痕与复盘</div>
+            <div>复杂纠纷、退款边界和高风险案例保留人工复核</div>
+          </div>
+        </div>
+        <div class="company-card">
+          <div class="ft-title">联系</div>
+          <h3>联系与承接</h3>
+          <p>你可以先提交需求表单，我们会根据店铺结构和处理压力，判断更适合邮件、微信、WhatsApp 还是会议沟通，并给出对应的试跑路径。</p>
+          <div class="ft-list">
+            <a href="mailto:hello@flowbridge.ai">hello@flowbridge.ai</a>
+            <span>微信优先 / WhatsApp 优先 / 邮件沟通均可</span>
+            <span>工作日 09:00 - 18:00，1 个工作日内响应</span>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">© 2026 FlowBridge AI. All rights reserved.</div>
     </div>
-  </section>
-</main>
+  </footer>
 
-<footer class="footer">
-  <div class="shell footer-wrap">
-    CrossFlow 不是拿来展示“AI 很厉害”的首页范本，而是一张让跨境运营负责人快速判断值不值得继续聊的成交页。页面只保留真实可用的链接与动作。
-  </div>
-</footer>
-
-<script>
-const form = document.getElementById('demo-form');
-if (form) {
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const name = document.getElementById('contact-name').value.trim() || '未填写';
-    const company = document.getElementById('contact-company').value.trim() || '未填写';
-    const platform = document.getElementById('contact-platform').value.trim() || '未填写';
-    const volume = document.getElementById('contact-volume').value.trim() || '未填写';
-    const pain = document.getElementById('contact-pain').value.trim() || '未填写';
-    const subject = company === '未填写' ? 'CrossFlow 演示预约' : company + ' - CrossFlow 演示预约';
-    const body = [
-      '你好，',
-      '',
-      '我想聊一下 CrossFlow 的演示方案，当前情况如下：',
-      '',
-      '联系人: ' + name,
-      '公司 / 店铺: ' + company,
-      '主要平台: ' + platform,
-      '每日大概消息量: ' + volume,
-      '',
-      '当前最痛的地方:',
-      pain,
-      '',
-      '希望优先演示：',
-      '1. 哪些消息可自动处理',
-      '2. 哪些场景需要人工兜底',
-      '3. 日报、FAQ 和升级工单如何回写'
-    ].join('\n');
-    window.location.href = 'mailto:hello@crossflow.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  });
-}
-</script>
+  <script>
+    (function(){
+      var body=document.body,header=document.querySelector('header'),navShell=document.querySelector('.nav-shell');
+      var menuBtn=document.querySelector('.menu-btn'),navLinks=document.querySelectorAll('nav a');
+      var reveal=document.querySelectorAll('.reveal'),counts=document.querySelectorAll('.count');
+      var preview=document.getElementById('preview'),hero=document.querySelector('.hero');
+      var contactForm=document.getElementById('contactForm'),contactInput=document.getElementById('contactInput');
+      var contactSuccess=document.getElementById('contactSuccess'),contactSummary=document.getElementById('contactSummary');
+      var copySummaryBtn=document.getElementById('copySummaryBtn'),mailFallbackLink=document.getElementById('mailFallbackLink');
+      var contactMeta=document.getElementById('contactMeta'),downloadSampleBtn=document.getElementById('downloadSampleBtn');
+      var prefillLinks=document.querySelectorAll('[data-prefill]');
+      var glow=document.getElementById('glow'),particles=document.getElementById('particles');
+      var fine=window.matchMedia('(pointer:fine)').matches,reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function easeOut(t){return 1-Math.pow(1-t,3)}
+      function format(v,d){return d>0?Number(v).toFixed(d):Math.round(v).toLocaleString('zh-CN')}
+      function animateCount(el){
+        if(el.dataset.done)return;el.dataset.done='1';
+        var target=parseFloat(el.dataset.target||0),decimals=parseInt(el.dataset.decimals||((el.dataset.target||'').split('.')[1]||'').length||0,10);
+        var prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'',start=performance.now(),dur=1400;
+        requestAnimationFrame(function run(now){
+          var p=Math.min((now-start)/dur,1),v=target*easeOut(p);
+          el.textContent=prefix+format(v,decimals)+suffix;
+          if(p<1)requestAnimationFrame(run)
+        })
+      }
+      function onScroll(){header.classList.toggle('scrolled',window.scrollY>16)}
+      onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+      menuBtn.addEventListener('click',function(){navShell.classList.toggle('open')});
+      navLinks.forEach(function(a){a.addEventListener('click',function(){navShell.classList.remove('open')})});
+      document.querySelectorAll('a[href^="#"]').forEach(function(link){
+        link.addEventListener('click',function(e){
+          var id=this.getAttribute('href'),target=document.querySelector(id);
+          if(!target)return;
+          e.preventDefault();
+          window.scrollTo({top:target.getBoundingClientRect().top+window.pageYOffset-header.offsetHeight-12,behavior:reduce?'auto':'smooth'})
+        })
+      });
+      prefillLinks.forEach(function(link){
+        link.addEventListener('click',function(e){
+          e.preventDefault();
+          var label=this.getAttribute('data-prefill');
+          if(contactInput){
+            if(!contactInput.value.trim()){contactInput.value=label + ': '}
+            contactInput.focus();
+          }
+          var target=document.querySelector('#contact');
+          if(target){
+            window.scrollTo({top:target.getBoundingClientRect().top+window.pageYOffset-header.offsetHeight-12,behavior:reduce?'auto':'smooth'})
+          }
+        })
+      });
+      document.querySelectorAll('.hover').forEach(function(card){
+        card.addEventListener('pointermove',function(e){
+          var r=card.getBoundingClientRect();
+          card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+          card.style.setProperty('--my',(e.clientY-r.top)+'px')
+        })
+      });
+      if(contactForm){
+        contactForm.addEventListener('submit',function(e){
+          e.preventDefault();
+          var formData=new FormData(contactForm);
+          var subject='FlowBridge AI 接入方案申请 - ' + (formData.get('name') || '新线索');
+          var summary=[
+            '姓名: ' + (formData.get('name') || ''),
+            '联系方式: ' + (formData.get('contact') || ''),
+            '店铺平台: ' + (formData.get('platform') || ''),
+            '团队规模: ' + (formData.get('teamSize') || ''),
+            '当前最头疼的问题: ' + (formData.get('painPoint') || ''),
+            '日均 / 月消息量: ' + (formData.get('volume') || ''),
+            '希望先试跑的范围: ' + (formData.get('pilotScope') || ''),
+            '补充说明: ' + (formData.get('notes') || '')
+          ].join('\n');
+          var metaItems=[
+            formData.get('platform') || '未填写平台',
+            formData.get('teamSize') || '未填写团队规模',
+            formData.get('painPoint') || '未填写问题类型'
+          ];
+          if(contactSummary)contactSummary.textContent=summary;
+          if(contactMeta){
+            contactMeta.innerHTML='';
+            metaItems.forEach(function(item){
+              var chip=document.createElement('span');
+              chip.textContent=item;
+              contactMeta.appendChild(chip);
+            });
+          }
+          if(mailFallbackLink){
+            mailFallbackLink.href='mailto:hello@flowbridge.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(summary);
+          }
+          if(contactSuccess){
+            contactSuccess.classList.add('show');
+            contactSuccess.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});
+          }
+        })
+      }
+      if(copySummaryBtn){
+        copySummaryBtn.addEventListener('click',function(){
+          if(!contactSummary)return;
+          var text=contactSummary.textContent || '';
+          if(!text.trim())return;
+          if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(function(){
+              var old=copySummaryBtn.textContent;
+              copySummaryBtn.textContent='已复制';
+              setTimeout(function(){copySummaryBtn.textContent=old},1600);
+            });
+          }
+        })
+      }
+      if(downloadSampleBtn){
+        downloadSampleBtn.addEventListener('click',function(){
+          var sample='<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>FlowBridge 脱敏日报样例</title><style>body{font-family:Segoe UI,PingFang SC,Microsoft YaHei,sans-serif;background:#FFFDF9;color:#6B4A2E;padding:32px;line-height:1.7}h1,h2{margin:0 0 12px}section{margin-top:24px;padding:20px;border:1px solid rgba(107,74,46,.12);border-radius:18px;background:#fff}small{color:#8C6A4C}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{padding:16px;border-radius:14px;background:#FDF6EC}strong{font-size:1.4rem}ul{padding-left:18px}</style></head><body><small>FlowBridge AI / 脱敏试跑日报样例</small><h1>Amazon + Shopify 试跑日报</h1><p>统计口径：含客服队列、售后队列与高风险升级记录；以下数据为脱敏样例。</p><section><h2>今日总览</h2><div class=\"grid\"><div class=\"card\"><div>待处理消息</div><strong>428</strong></div><div class=\"card\"><div>平均首响</div><strong>6.8 分钟</strong></div><div class=\"card\"><div>高风险升级</div><strong>12 条</strong></div></div></section><section><h2>老板需要关注</h2><ul><li>物流延迟仍是今日最高频问题，占比 38%。</li><li>退款意向与投诉倾向相关工单共 12 条，已全部进入人工复核。</li><li>Shopify 退款原因里，尺码兼容相关问题较昨日上升。</li></ul></section><section><h2>客服与售后执行</h2><ul><li>已完成标准回复 126 条，AI 草稿采纳率 89%。</li><li>高风险工单全部留痕，可追溯来源平台、建议处理与最终结案动作。</li><li>FAQ 新增 7 条，涉及物流时效、尺码兼容、补寄说明。</li></ul></section><section><h2>明日建议</h2><ul><li>优先补齐物流异常话术和补偿边界说明。</li><li>重点复盘 TikTok 异常签收与退款争议案例。</li><li>继续跟踪 Amazon US 店铺晚间工单峰值。</li></ul></section></body></html>';
+          var blob=new Blob([sample],{type:'text/html'});
+          var url=URL.createObjectURL(blob);
+          var link=document.createElement('a');
+          link.href=url;
+          link.download='FlowBridge-脱敏日报样例.html';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(function(){URL.revokeObjectURL(url)},1000);
+        })
+      }
+      if('IntersectionObserver' in window){
+        var ro=new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');ro.unobserve(entry.target)}})
+        },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+        reveal.forEach(function(el){ro.observe(el)});
+        var co=new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){if(entry.isIntersecting){animateCount(entry.target);co.unobserve(entry.target)}})
+        },{threshold:.35});
+        counts.forEach(function(el){co.observe(el)})
+      }else{
+        reveal.forEach(function(el){el.classList.add('visible')});
+        counts.forEach(animateCount)
+      }
+      if(fine&&!reduce){
+        hero.addEventListener('pointermove',function(e){
+          var r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+          preview.style.transform='translate3d('+(x*18)+'px,'+(y*16)+'px,0) rotateX('+(-y*5)+'deg) rotateY('+(x*5)+'deg)'
+        });
+        hero.addEventListener('pointerleave',function(){preview.style.transform='translate3d(0,0,0) rotateX(0deg) rotateY(0deg)'});
+        var mx=window.innerWidth/2,my=window.innerHeight/2,sx=mx,sy=my,last=0;
+        window.addEventListener('pointermove',function(e){
+          mx=e.clientX;my=e.clientY;
+          var now=performance.now();
+          if(now-last>55){
+            last=now;
+            var p=document.createElement('span'),size=8+Math.random()*12,warm=Math.random()>.45;
+            p.className='particle';p.style.width=size+'px';p.style.height=size+'px';p.style.left=mx+'px';p.style.top=my+'px';
+            p.style.setProperty('--dx',((Math.random()-.5)*34)+'px');
+            p.style.setProperty('--dy',(-14-Math.random()*26)+'px');
+            p.style.background=warm?'radial-gradient(circle,rgba(232,155,78,.55),transparent 70%)':'radial-gradient(circle,rgba(135,201,245,.5),transparent 70%)';
+            particles.appendChild(p);p.addEventListener('animationend',function(){p.remove()},{once:true})
+          }
+        },{passive:true});
+        (function follow(){
+          sx+=(mx-sx)*.08;sy+=(my-sy)*.08;
+          glow.style.transform='translate('+sx+'px,'+sy+'px) translate(-50%,-50%)';
+          requestAnimationFrame(follow)
+        })()
+      }else{glow.style.display='none'}
+      requestAnimationFrame(function(){body.classList.remove('loading')})
+    })();
+  </script>
 </body>
 </html>
