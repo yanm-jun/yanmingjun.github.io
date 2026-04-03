@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrossFlow | 跨境客服与售后运营交付页</title>
+<meta name="description" content="CrossFlow 帮跨境团队把客服、售后、升级和日报整理成一条可落地的运营流程。">
+<style>
+:root {
+  --paper: #f6f1e8;
+  --surface: #fffdf8;
+  --ink: #1f1b17;
+  --ink-soft: #5a5148;
+  --line: rgba(31, 27, 23, 0.12);
+  --accent: #af6430;
+  --accent-deep: #8f4f24;
+  --success-bg: rgba(52, 102, 71, 0.1);
+  --success-ink: #346647;
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 18px 44px rgba(31, 27, 23, 0.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:radial-gradient(circle at top left, rgba(175,100,48,.08), transparent 28%), radial-gradient(circle at top right, rgba(66,110,145,.08), transparent 30%), var(--paper);line-height:1.65}
+a{color:inherit}
+.shell{width:min(1160px,calc(100vw - 32px));margin:0 auto}
+.site-header{position:sticky;top:0;z-index:10;background:rgba(246,241,232,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;letter-spacing:-.03em}
+.brand::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px rgba(175,100,48,.12)}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--ink-soft);font-size:.95rem}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-weight:600}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 10px 24px rgba(175,100,48,.2)}
+.btn-primary:hover{background:var(--accent-deep)}
+.btn-secondary{background:var(--surface);border-color:var(--line)}
+.hero{padding:72px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,248,.85);color:var(--ink-soft);font-size:.86rem}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+h1{margin:18px 0 16px;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.05em}
+.lead{margin:0;max-width:680px;font-size:1.08rem;color:var(--ink-soft)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0 20px}
+.hero-notes{display:flex;flex-wrap:wrap;gap:10px}
+.hero-notes span{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.9rem;color:var(--ink-soft)}
+.panel{background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+.preview{padding:24px}
+.preview h2{margin:10px 0 10px;font-size:1.45rem;line-height:1.25}
+.preview p{margin:0 0 18px;color:var(--ink-soft)}
+.preview-list{display:grid;gap:14px}
+.preview-item{padding:16px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--line)}
+.preview-item strong{display:block;margin-bottom:6px}
+.preview-item span{color:var(--ink-soft);font-size:.95rem}
+.section{padding:28px 0 72px}
+.section-head{max-width:760px;margin-bottom:26px}
+.kicker{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);font-weight:700}
+.section h2{margin:12px 0 12px;font-size:clamp(2rem,4vw,3.2rem);line-height:1.06;letter-spacing:-.04em}
+.section-head p{margin:0;color:var(--ink-soft);font-size:1.03rem}
+.grid-3,.grid-2{display:grid;gap:18px}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{padding:24px;background:rgba(255,253,248,.88);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(31,27,23,.04)}
+.card h3,.card strong{display:block;margin:0 0 10px;font-size:1.12rem;line-height:1.35}
+.card p,.card li{margin:0;color:var(--ink-soft)}
+.card ul{margin:0;padding-left:18px}
+.card li+li{margin-top:8px}
+.workflow{display:grid;gap:16px}
+.step{display:grid;grid-template-columns:120px 1fr 220px;gap:16px;align-items:start}
+.step .label{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#8b7f73;padding-top:4px}
+.step .detail strong{display:block;font-size:1.08rem;margin-bottom:6px}
+.step .detail p{margin:0;color:var(--ink-soft)}
+.step .result{padding:14px 16px;border-radius:var(--radius-md);background:#f0e7db;border:1px solid var(--line);color:var(--ink-soft);font-size:.94rem}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-ink);font-size:.9rem;font-weight:700}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--success-ink)}
+.contact{display:grid;grid-template-columns:1fr .9fr;gap:18px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:8px}
+.field.full{grid-column:1 / -1}
+.field label{font-size:.92rem;font-weight:600}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 16px;color:var(--ink)}
+.field textarea{min-height:130px;resize:vertical}
+.form-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.helper{margin:0;color:#867a70;font-size:.92rem}
+.footer{padding:24px 0 44px;color:var(--ink-soft);font-size:.92rem}
+.footer-wrap{padding-top:22px;border-top:1px solid var(--line)}
+@media (max-width: 980px){.hero-grid,.grid-3,.grid-2,.contact{grid-template-columns:1fr}.step{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}}
+@media (max-width: 760px){.nav{flex-direction:column;align-items:flex-start;padding:14px 0}.nav-links{flex-wrap:wrap}.hero{padding-top:36px}.hero-actions,.form-actions{flex-direction:column;align-items:stretch}.btn{width:100%}.shell{width:min(1160px,calc(100vw - 24px))}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="shell nav">
+    <a href="#top" class="brand">CrossFlow</a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#proof">可验证点</a>
+      <a href="#fit">适合谁</a>
+      <a href="#workflow">怎么落地</a>
+      <a href="#deliverables">交付内容</a>
+      <a href="#faq">常见问题</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <a href="#contact" class="btn btn-primary">预约演示</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <div class="eyebrow">跨境客服与售后，不再靠多人手工切后台</div>
+        <h1>把跨境客服、售后和日报，收成一条真正能交付的运营流水线。</h1>
+        <p class="lead">CrossFlow 面向 Amazon、Shopify、TikTok Shop 和独立站团队。它负责统一收消息、按风险分流、生成可执行回复与工单动作，并把处理结果回写到日报、周报和 FAQ 更新里。</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">预约演示</a>
+          <a href="#proof" class="btn btn-secondary">先看怎么证明</a>
+        </div>
+        <div class="hero-notes">
+          <span>普通咨询自动处理</span>
+          <span>高风险售后人工兜底</span>
+          <span>日报、周报、知识沉淀一起交付</span>
+        </div>
+      </div>
+      <aside class="panel preview" aria-label="产品预览">
+        <div class="kicker">演示时会直接看到什么</div>
+        <h2>不再靠“AI 很厉害”成交，而是先看交付动作是否成立。</h2>
+        <p>页面不再放没证据的数字。更可信的做法，是拿真实消息样本、售后工单和日报需求，现场看它是否能跑通。</p>
+        <div class="preview-list">
+          <div class="preview-item">
+            <strong>统一收件箱</strong>
+            <span>先把 Amazon、Shopify、TikTok Shop、独立站消息收进一条队列，再决定自动处理还是升级人工。</span>
+          </div>
+          <div class="preview-item">
+            <strong>风险分流</strong>
+            <span>普通咨询先自动处理，退款纠纷、差评风险、复杂售后直接升级给人。</span>
+          </div>
+          <div class="preview-item">
+            <strong>结果回写</strong>
+            <span>日报、周报和 FAQ 更新跟着处理结果一起产生，而不是靠事后手工整理。</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="proof">
+    <div class="shell">
+      <div class="section-head">
+        <div class="kicker">Proof, not slogans</div>
+        <h2>如果你认真考虑要不要聊，最该看的不是大词，而是这四个可验证环节。</h2>
+        <p>没有客户 logo、没有公开案例、没有被证实的数据时，正确做法不是继续堆“行业领先”，而是把演示路径说清楚。</p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <strong>1. 用真实消息样本，看它怎么归类和分流</strong>
+          <p>拿一条常见咨询、一条售后工单、一条高风险纠纷样本，当场看系统如何判断：能自动处理，还是必须升级人工。</p>
+        </article>
+        <article class="card">
+          <strong>2. 用你的回复标准，看它给出的动作是否可执行</strong>
+          <p>不只看语气顺不顺。要看回复草稿是否贴近你的店铺政策、售后边界和升级规则，能不能减少返工。</p>
+        </article>
+        <article class="card">
+          <strong>3. 用你的日报需求，看它能不能自动回写结果</strong>
+          <p>今天处理了什么、哪些平台压力最高、哪些工单需要老板关注、哪些话术该沉淀成 FAQ，都应该跟着流程一起出来。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="fit">
+    <div class="shell">
+      <div class="section-head">
+        <div class="kicker">Fit</div>
+        <h2>适合谁，不适合谁，直接写出来，比对所有人都说“适合”更有用。</h2>
+        <p>这也是去掉“AI 味”的关键。好的 B2B 首页不是拼命扩大受众，而是帮不合适的人尽早退出，让合适的人更快认出自己。</p>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <strong>更适合这些团队</strong>
+          <ul>
+            <li>多平台同时经营，客服消息和售后工单已经明显分散。</li>
+            <li>团队已有基础 SOP，希望把重复问题自动化，把人工集中在高风险案例上。</li>
+            <li>老板或运营负责人需要更稳定的日报、周报，而不是临时手工拼表。</li>
+            <li>希望把 FAQ 和客服经验沉淀下来，不再依赖某个熟手的脑内经验。</li>
+          </ul>
+        </article>
+        <article class="card">
+          <strong>暂时不适合这些情况</strong>
+          <ul>
+            <li>你现在只需要翻译插件，或只想买一个客服聊天窗口。</li>
+            <li>团队还没有基本售后规则，希望系统替你决定全部政策边界。</li>
+            <li>你只想看炫技 demo，不准备拿真实流程和样本来验证效果。</li>
+            <li>你希望所有退款、纠纷和差评风险都完全自动化，不接受人工兜底。</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="workflow">
+    <div class="shell">
+      <div class="section-head">
+        <div class="kicker">Workflow</div>
+        <h2>交付流程很短，但每一步都要有明确产物。</h2>
+        <p>不需要先上大工程。我们先把入口、规则、人工兜底和日报这四件事跑通，再看是否继续深入。</p>
+      </div>
+      <div class="workflow">
+        <article class="card step">
+          <div class="label">Step 01</div>
+          <div class="detail">
+            <strong>梳理入口和处理规则</strong>
+            <p>确认哪些平台、哪些消息类型、哪些售后工单会进入试运行范围，同时标出必须人工确认的高风险场景。</p>
+          </div>
+          <div class="result">产物：试运行范围表、风险兜底规则、优先级清单</div>
+        </article>
+        <article class="card step">
+          <div class="label">Step 02</div>
+          <div class="detail">
+            <strong>把消息和工单先收入口</strong>
+            <p>先把入口统一，再做自动标记、工单归类和分流。没有统一入口，后面所有自动化都只是局部效率。</p>
+          </div>
+          <div class="result">产物：统一消息面板、基础标签、升级队列</div>
+        </article>
+        <article class="card step">
+          <div class="label">Step 03</div>
+          <div class="detail">
+            <strong>先自动化低风险，保留高风险兜底</strong>
+            <p>例如物流查询、模板化售后、FAQ 回答、日报摘要。高风险纠纷继续保留人工确认。</p>
+          </div>
+          <div class="result">产物：可自动处理的场景清单、人工确认清单</div>
+        </article>
+        <article class="card step">
+          <div class="label">Step 04</div>
+          <div class="detail">
+            <strong>日报回写和复盘</strong>
+            <p>每天看处理量、异常项和积压工单，每周看是否减少切后台、减少漏回、减少高风险事件。决定要不要继续扩大范围。</p>
+          </div>
+          <div class="result">产物：日报模板、每周复盘项、是否扩围的判断依据</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="deliverables">
+    <div class="shell">
+      <div class="section-head">
+        <div class="kicker">Deliverables</div>
+        <h2>第一页不该只写“能力”，应该写清楚你能拿到什么。</h2>
+        <p>真正有用的是下面这些明确产物，而不是模糊词。</p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <strong>运营日报</strong>
+          <p>当天处理量、未结工单、异常项、风险案例、需要老板判断的事项，按固定结构回传。</p>
+        </article>
+        <article class="card">
+          <strong>统一处理面板</strong>
+          <p>把多平台消息、售后工单和升级项收口。第一页不是功能大全，而是让客服不再在五个平台之间来回切。</p>
+        </article>
+        <article class="card">
+          <strong>人工兜底规则</strong>
+          <p>哪些场景可以走模板和自动化，哪些必须人工确认，页面上就先写清楚边界。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="shell">
+      <div class="section-head">
+        <div class="kicker">FAQ</div>
+        <h2>不再假装有帮助中心页面，先把最关键的问题在这里答清楚。</h2>
+        <p>原页脚那些“定价方案、帮助中心、隐私政策、服务条款”都只是空链接。现在先去掉虚假成熟感，把实际会被问到的问题落在同一页。</p>
+      </div>
+      <div class="grid-2">
+        <article class="card"><strong>你们到底卖的是工具，还是代运营服务？</strong><p>更准确的说法是“运营交付系统”。它不是替你拍脑袋做决策的代运营，也不只是一个聊天工具，而是把客服、售后、升级和汇报流程收成一条可执行、可追踪、可复盘的工作流。</p></article>
+        <article class="card"><strong>是不是要把现有流程全部推翻？</strong><p>不是。试运行阶段只接最重复、最容易标准化、最容易看出差异的一类消息或一类工单。判断是否值得做试运行。</p></article>
+        <article class="card"><strong>如果我们 SOP 还不完整怎么办？</strong><p>那就先别追求大范围自动化。没有基础规则时，先补处理边界和升级路径，否则任何系统都会把混乱放大。</p></article>
+        <article class="card"><strong>适合与哪类团队开始？</strong><p>通常从最重复、最容易拖慢客服的一类消息开始，比如物流查询、标准售后说明、常见 FAQ 或日报摘要。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="shell">
+      <div class="section-head">
+        <div class="kicker">Contact</div>
+        <h2>想继续聊，给我一点真实上下文。不要只留一句“想了解”。</h2>
+        <p>这里不再放空按钮。你可以直接发邮件，也可以填下面这张表，页面会帮你组装一封预约演示邮件。</p>
+      </div>
+      <div class="contact">
+        <form class="panel card" id="demo-form">
+          <div class="badge">所有 CTA 都已接到真实动作</div>
+          <div class="field-grid" style="margin-top:18px">
+            <div class="field">
+              <label for="contact-name">联系人</label>
+              <input id="contact-name" name="name" type="text" placeholder="例如：Jason">
+            </div>
+            <div class="field">
+              <label for="contact-company">公司 / 店铺</label>
+              <input id="contact-company" name="company" type="text" placeholder="例如：某跨境店铺">
+            </div>
+            <div class="field">
+              <label for="contact-platform">主要平台</label>
+              <input id="contact-platform" name="platform" type="text" placeholder="Amazon / Shopify / TikTok Shop">
+            </div>
+            <div class="field">
+              <label for="contact-volume">每日大概消息量</label>
+              <select id="contact-volume" name="volume">
+                <option value="">请选择</option>
+                <option>少于 100 条</option>
+                <option>100 - 300 条</option>
+                <option>300 - 1000 条</option>
+                <option>1000 条以上</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="contact-pain">当前最痛的地方</label>
+              <textarea id="contact-pain" name="pain" placeholder="例如：售后工单分散、退款升级慢、日报靠人手汇总、客服反复切后台。"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">生成预约邮件</button>
+            <a class="btn btn-secondary" href="mailto:hello@crossflow.ai?subject=CrossFlow%20演示预约">直接发邮件</a>
+          </div>
+          <p class="helper">提交后会调用你的默认邮件客户端，不会把内容发到未知后端。</p>
+        </form>
+        <div style="display:grid;gap:18px">
+          <article class="card">
+            <strong>我更关心这些信息</strong>
+            <ul>
+              <li>你现在哪几个入口要处理，消息和工单分别从哪里进来。</li>
+              <li>哪些场景最消耗团队，哪些场景最容易出事故。</li>
+              <li>你是否愿意先从一个渠道或一类工单开始。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <strong>直接联系</strong>
+            <p><a href="mailto:hello@crossflow.ai">hello@crossflow.ai</a></p>
+            <p class="helper">邮件会比表单更快，因为很多跨境团队一开始就想把当前问题截图发过来。</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell footer-wrap">
+    CrossFlow 不是拿来展示“AI 很厉害”的首页范本，而是一张让跨境运营负责人快速判断值不值得继续聊的成交页。页面只保留真实可用的链接与动作。
+  </div>
+</footer>
+
+<script>
+const form = document.getElementById('demo-form');
+if (form) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = document.getElementById('contact-name').value.trim() || '未填写';
+    const company = document.getElementById('contact-company').value.trim() || '未填写';
+    const platform = document.getElementById('contact-platform').value.trim() || '未填写';
+    const volume = document.getElementById('contact-volume').value.trim() || '未填写';
+    const pain = document.getElementById('contact-pain').value.trim() || '未填写';
+    const subject = company === '未填写' ? 'CrossFlow 演示预约' : company + ' - CrossFlow 演示预约';
+    const body = [
+      '你好，',
+      '',
+      '我想聊一下 CrossFlow 的演示方案，当前情况如下：',
+      '',
+      '联系人: ' + name,
+      '公司 / 店铺: ' + company,
+      '主要平台: ' + platform,
+      '每日大概消息量: ' + volume,
+      '',
+      '当前最痛的地方:',
+      pain,
+      '',
+      '希望优先演示：',
+      '1. 哪些消息可自动处理',
+      '2. 哪些场景需要人工兜底',
+      '3. 日报、FAQ 和升级工单如何回写'
+    ].join('\n');
+    window.location.href = 'mailto:hello@crossflow.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+}
+</script>
+</body>
+</html>
