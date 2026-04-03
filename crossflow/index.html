@@ -3,1045 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CrossFlow | 14 天 TikTok Shop 退款与纠纷升级止血包</title>
-<meta name="description" content="CrossFlow 先用 14 天固定试运行，把 TikTok Shop 退款与纠纷升级收口、分流、人工兜底和日报回传跑顺。只看 4 个过线数字，过线再扩，不过线就停。">
+<title>CrossFlow | 跨境客服与售后运营交付页</title>
+<meta name="description" content="CrossFlow 帮跨境团队把客服、售后、升级和日报整理成一条可落地的运营流程。">
 <style>
 :root {
   --paper: #f6f1e8;
-  --paper-strong: #efe6d8;
   --surface: #fffdf8;
-  --surface-alt: #f7f2eb;
-  --ink: #1f1a17;
-  --ink-soft: #5b5047;
-  --ink-faint: #8c8075;
-  --line: rgba(31, 26, 23, 0.1);
-  --line-strong: rgba(31, 26, 23, 0.2);
-  --accent: #bf6d34;
-  --accent-strong: #9f5726;
-  --accent-soft: rgba(191, 109, 52, 0.12);
-  --success: #2f6b48;
-  --danger: #8a4230;
+  --ink: #1f1b17;
+  --ink-soft: #5a5148;
+  --line: rgba(31, 27, 23, 0.12);
+  --accent: #af6430;
+  --accent-deep: #8f4f24;
+  --success-bg: rgba(52, 102, 71, 0.1);
+  --success-ink: #346647;
+  --radius-lg: 28px;
+  --radius-md: 18px;
   --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 32px;
-  --shadow-sm: 0 8px 24px rgba(31, 26, 23, 0.06);
-  --shadow-md: 0 20px 60px rgba(31, 26, 23, 0.08);
-  --content-width: 1180px;
-  --nav-height: 76px;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(191, 109, 52, 0.08), transparent 32%),
-    radial-gradient(circle at top right, rgba(64, 117, 163, 0.08), transparent 30%),
-    var(--paper);
-  line-height: 1.65;
-}
-
-a {
-  color: inherit;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-.shell {
-  width: min(var(--content-width), calc(100vw - 40px));
-  margin: 0 auto;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(16px);
-  background: rgba(246, 241, 232, 0.88);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.site-header.scrolled {
-  border-bottom-color: var(--line);
-}
-
-.nav-row {
-  min-height: var(--nav-height);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.brand {
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.brand-mark {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 0 8px rgba(191, 109, 52, 0.12);
-}
-
-.desktop-nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.desktop-nav a,
-.mobile-nav a {
-  text-decoration: none;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.desktop-nav a:hover,
-.mobile-nav a:hover {
-  color: var(--ink);
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.menu-toggle {
-  display: none;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: 999px;
-  padding: 10px 14px;
-  color: var(--ink);
-}
-
-.mobile-nav {
-  display: none;
-  padding: 0 0 18px;
-  gap: 12px;
-  flex-direction: column;
-}
-
-.mobile-nav.open {
-  display: flex;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 253, 248, 0.84);
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-}
-
-.eyebrow::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--accent);
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 999px;
-  padding: 14px 22px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-
-.button:hover {
-  transform: translateY(-1px);
-}
-
-.button-primary {
-  background: var(--accent);
-  color: #fff;
-  border: 1px solid var(--accent);
-  box-shadow: 0 10px 24px rgba(191, 109, 52, 0.22);
-}
-
-.button-primary:hover {
-  background: var(--accent-strong);
-  border-color: var(--accent-strong);
-}
-
-.button-secondary {
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--line-strong);
-}
-
-.button-secondary:hover {
-  background: var(--surface);
-  border-color: var(--ink-soft);
-}
-
-.hero {
-  padding: 72px 0 64px;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-  gap: 42px;
-  align-items: start;
-}
-
-.hero-copy h1 {
-  margin: 22px 0 18px;
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  line-height: 1.02;
-  letter-spacing: -0.05em;
-}
-
-.hero-copy p {
-  margin: 0;
-  max-width: 720px;
-  font-size: 1.08rem;
-  color: var(--ink-soft);
-}
-
-.hero-copy strong {
-  color: var(--ink);
-}
-
-.hero-actions {
-  margin-top: 28px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.hero-notes {
-  margin-top: 22px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.hero-note {
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-}
-
-.hero-side {
-  display: grid;
-  gap: 18px;
-}
-
-.panel {
-  background: rgba(255, 253, 248, 0.92);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-}
-
-.pilot-card {
-  padding: 26px;
-}
-
-.panel-label {
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.pilot-title {
-  margin: 12px 0 10px;
-  font-size: 1.55rem;
-  line-height: 1.2;
-}
-
-.pilot-copy {
-  margin: 0 0 18px;
-  color: var(--ink-soft);
-}
-
-.pilot-meta {
-  list-style: none;
-  margin: 0 0 18px;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.pilot-meta li {
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
-  background: var(--surface-alt);
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-}
-
-.pilot-meta strong {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--ink);
-  font-size: 0.95rem;
-}
-
-.pilot-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 14px;
-}
-
-.pilot-list li {
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  gap: 12px;
-  align-items: start;
-}
-
-.pilot-step {
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-}
-
-.pilot-list strong {
-  display: block;
-  margin-bottom: 2px;
-}
-
-.pilot-list span {
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.metric-strip {
-  padding: 22px 26px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.metric {
-  padding: 16px;
-  border-radius: var(--radius-md);
-  background: var(--surface-alt);
-  border: 1px solid var(--line);
-}
-
-.metric strong {
-  display: block;
-  font-size: 1.5rem;
-  letter-spacing: -0.04em;
-}
-
-.metric span {
-  display: block;
-  margin-top: 5px;
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
-
-.safety-panel {
-  padding: 26px;
-}
-
-.safety-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.safety-item {
-  padding: 16px;
-  border-radius: var(--radius-md);
-  background: rgba(138, 66, 48, 0.06);
-  border: 1px solid rgba(138, 66, 48, 0.18);
-}
-
-.safety-item strong {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 1rem;
-}
-
-.safety-item p {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-}
-
-.safety-controls {
-  margin-top: 16px;
-  padding: 18px 20px;
-  border-radius: var(--radius-md);
-  background: var(--surface-alt);
-  border: 1px solid var(--line);
-}
-
-.safety-controls strong {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.safety-controls p {
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.section {
-  padding: 38px 0 84px;
-}
-
-.section-head {
-  margin-bottom: 30px;
-  max-width: 760px;
-}
-
-.section-head h2 {
-  margin: 14px 0 12px;
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 1.08;
-  letter-spacing: -0.04em;
-}
-
-.section-head p {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 1.05rem;
-}
-
-.proof-grid,
-.fit-grid,
-.deliverable-grid,
-.engagement-grid,
-.faq-grid,
-.footer-grid {
-  display: grid;
-  gap: 18px;
-}
-
-.proof-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.card {
-  background: rgba(255, 253, 248, 0.88);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-}
-
-.card h3 {
-  margin: 0 0 10px;
-  font-size: 1.2rem;
-  line-height: 1.25;
-}
-
-.card p {
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.card ul {
-  margin: 14px 0 0;
-  padding-left: 18px;
-  color: var(--ink-soft);
-}
-
-.card li + li {
-  margin-top: 8px;
-}
-
-.fit-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.fit-card {
-  padding: 28px;
-}
-
-.fit-card.good {
-  background: rgba(47, 107, 72, 0.08);
-  border-color: rgba(47, 107, 72, 0.18);
-}
-
-.fit-card.bad {
-  background: rgba(138, 66, 48, 0.08);
-  border-color: rgba(138, 66, 48, 0.18);
-}
-
-.fit-card h3 {
-  margin-bottom: 14px;
-}
-
-.fit-card ul {
-  margin: 0;
-  padding-left: 18px;
-}
-
-.fit-card li + li {
-  margin-top: 10px;
-}
-
-.workflow-board {
-  display: grid;
-  gap: 16px;
-}
-
-.workflow-step {
-  display: grid;
-  grid-template-columns: 120px minmax(0, 1fr) minmax(180px, 220px);
-  gap: 18px;
-  align-items: start;
-}
-
-.workflow-step .label {
-  font-size: 0.85rem;
-  color: var(--ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding-top: 6px;
-}
-
-.workflow-step .detail strong {
-  display: block;
-  font-size: 1.15rem;
-  margin-bottom: 6px;
-}
-
-.workflow-step .detail p {
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.workflow-step .output {
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
-  background: var(--surface-alt);
-  border: 1px solid var(--line);
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.deliverable-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.deliverable-card strong {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 1.05rem;
-}
-
-.deliverable-tag {
-  display: inline-flex;
-  margin-bottom: 14px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.engagement-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.engagement-card strong {
-  display: block;
-  font-size: 1.15rem;
-  margin-bottom: 8px;
-}
-
-.engagement-card p {
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.faq-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.faq-item strong {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1.05rem;
-}
-
-.faq-item p {
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.contact-wrap {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.7fr);
-  gap: 24px;
-}
-
-.contact-form {
-  padding: 28px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.field {
-  display: grid;
-  gap: 8px;
-}
-
-.field.full {
-  grid-column: 1 / -1;
-}
-
-.field label {
-  font-size: 0.92rem;
-  font-weight: 600;
-}
-
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  color: var(--ink);
-  border-radius: 16px;
-  padding: 14px 16px;
-  resize: vertical;
-}
-
-.field textarea {
-  min-height: 130px;
-}
-
-.form-actions {
-  margin-top: 18px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.helper {
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-}
-
-.contact-side {
-  display: grid;
-  gap: 18px;
-}
-
-.contact-card {
-  padding: 24px;
-}
-
-.contact-card strong {
-  display: block;
-  font-size: 1.12rem;
-  margin-bottom: 10px;
-}
-
-.contact-card p,
-.contact-card li {
-  color: var(--ink-soft);
-}
-
-.contact-card ul {
-  margin: 0;
-  padding-left: 18px;
-}
-
-.contact-card li + li {
-  margin-top: 8px;
-}
-
-.mail-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.contact-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.inline-button {
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  color: var(--ink);
-  border-radius: 999px;
-  padding: 10px 14px;
-}
-
-.site-footer {
-  padding: 34px 0 48px;
-}
-
-.footer-grid {
-  grid-template-columns: 1.2fr repeat(2, minmax(140px, 1fr));
-  align-items: start;
-}
-
-.footer-brand p,
-.footer-links a,
-.footer-note {
-  color: var(--ink-soft);
-}
-
-.footer-brand p {
-  max-width: 420px;
-}
-
-.footer-links {
-  display: grid;
-  gap: 10px;
-}
-
-.footer-links a {
-  text-decoration: none;
-}
-
-.footer-links a:hover {
-  color: var(--ink);
-}
-
-.footer-note {
-  margin-top: 28px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-  font-size: 0.92rem;
-}
-
-@media (max-width: 1080px) {
-  .hero-grid,
-  .contact-wrap,
-  .proof-grid,
-  .deliverable-grid,
-  .engagement-grid,
-  .faq-grid,
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .fit-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .safety-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .workflow-step {
-    grid-template-columns: 1fr;
-  }
-
-  .workflow-step .label {
-    padding-top: 0;
-  }
-}
-
-@media (max-width: 860px) {
-  .desktop-nav,
-  .nav-actions .button {
-    display: none;
-  }
-
-  .menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero {
-    padding-top: 42px;
-  }
-
-  .metric-strip,
-  .form-grid,
-  .pilot-meta {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .shell {
-    width: min(var(--content-width), calc(100vw - 24px));
-  }
-
-  .hero-copy h1 {
-    font-size: 2.45rem;
-  }
-
-  .safety-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section {
-    padding-bottom: 64px;
-  }
-
-  .card,
-  .fit-card,
-  .contact-form,
-  .contact-card,
-  .pilot-card {
-    padding: 20px;
-  }
-
-  .hero-actions,
-  .form-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .button,
-  .inline-button {
-    width: 100%;
-  }
-}
+  --shadow: 0 18px 44px rgba(31, 27, 23, 0.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:radial-gradient(circle at top left, rgba(175,100,48,.08), transparent 28%), radial-gradient(circle at top right, rgba(66,110,145,.08), transparent 30%), var(--paper);line-height:1.65}
+a{color:inherit}
+.shell{width:min(1160px,calc(100vw - 32px));margin:0 auto}
+.site-header{position:sticky;top:0;z-index:10;background:rgba(246,241,232,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;letter-spacing:-.03em}
+.brand::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px rgba(175,100,48,.12)}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--ink-soft);font-size:.95rem}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-weight:600}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 10px 24px rgba(175,100,48,.2)}
+.btn-primary:hover{background:var(--accent-deep)}
+.btn-secondary{background:var(--surface);border-color:var(--line)}
+.hero{padding:72px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,248,.85);color:var(--ink-soft);font-size:.86rem}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+h1{margin:18px 0 16px;font-size:clamp(2.6rem,6vw,4.8rem);line-height:1.02;letter-spacing:-.05em}
+.lead{margin:0;max-width:680px;font-size:1.08rem;color:var(--ink-soft)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0 20px}
+.hero-notes{display:flex;flex-wrap:wrap;gap:10px}
+.hero-notes span{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.9rem;color:var(--ink-soft)}
+.panel{background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow)}
+.preview{padding:24px}
+.preview h2{margin:10px 0 10px;font-size:1.45rem;line-height:1.25}
+.preview p{margin:0 0 18px;color:var(--ink-soft)}
+.preview-list{display:grid;gap:14px}
+.preview-item{padding:16px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--line)}
+.preview-item strong{display:block;margin-bottom:6px}
+.preview-item span{color:var(--ink-soft);font-size:.95rem}
+.section{padding:28px 0 72px}
+.section-head{max-width:760px;margin-bottom:26px}
+.kicker{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);font-weight:700}
+.section h2{margin:12px 0 12px;font-size:clamp(2rem,4vw,3.2rem);line-height:1.06;letter-spacing:-.04em}
+.section-head p{margin:0;color:var(--ink-soft);font-size:1.03rem}
+.grid-3,.grid-2{display:grid;gap:18px}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{padding:24px;background:rgba(255,253,248,.88);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(31,27,23,.04)}
+.card h3,.card strong{display:block;margin:0 0 10px;font-size:1.12rem;line-height:1.35}
+.card p,.card li{margin:0;color:var(--ink-soft)}
+.card ul{margin:0;padding-left:18px}
+.card li+li{margin-top:8px}
+.workflow{display:grid;gap:16px}
+.step{display:grid;grid-template-columns:120px 1fr 220px;gap:16px;align-items:start}
+.step .label{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#8b7f73;padding-top:4px}
+.step .detail strong{display:block;font-size:1.08rem;margin-bottom:6px}
+.step .detail p{margin:0;color:var(--ink-soft)}
+.step .result{padding:14px 16px;border-radius:var(--radius-md);background:#f0e7db;border:1px solid var(--line);color:var(--ink-soft);font-size:.94rem}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--success-bg);color:var(--success-ink);font-size:.9rem;font-weight:700}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--success-ink)}
+.contact{display:grid;grid-template-columns:1fr .9fr;gap:18px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:8px}
+.field.full{grid-column:1 / -1}
+.field label{font-size:.92rem;font-weight:600}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 16px;color:var(--ink)}
+.field textarea{min-height:130px;resize:vertical}
+.form-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.helper{margin:0;color:#867a70;font-size:.92rem}
+.footer{padding:24px 0 44px;color:var(--ink-soft);font-size:.92rem}
+.footer-wrap{padding-top:22px;border-top:1px solid var(--line)}
+@media (max-width: 980px){.hero-grid,.grid-3,.grid-2,.contact{grid-template-columns:1fr}.step{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}}
+@media (max-width: 760px){.nav{flex-direction:column;align-items:flex-start;padding:14px 0}.nav-links{flex-wrap:wrap}.hero{padding-top:36px}.hero-actions,.form-actions{flex-direction:column;align-items:stretch}.btn{width:100%}.shell{width:min(1160px,calc(100vw - 24px))}}
 </style>
 </head>
 <body>
-<header class="site-header" id="site-header">
-  <div class="shell nav-row">
-    <a href="#top" class="brand">
-      <span class="brand-mark"></span>
-      <span>CrossFlow</span>
-    </a>
-    <nav class="desktop-nav" aria-label="主导航">
-      <a href="#proof">为什么现在就做</a>
-      <a href="#fit">谁今天就该上</a>
-      <a href="#workflow">14 天如何判定</a>
-      <a href="#deliverables">过线标准</a>
-      <a href="#faq">事故防线</a>
+<header class="site-header">
+  <div class="shell nav">
+    <a href="#top" class="brand">CrossFlow</a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#proof">可验证点</a>
+      <a href="#fit">适合谁</a>
+      <a href="#workflow">怎么落地</a>
+      <a href="#deliverables">交付内容</a>
+      <a href="#faq">常见问题</a>
       <a href="#contact">联系</a>
     </nav>
-    <div class="nav-actions">
-      <a href="#deliverables" class="button button-primary">看过线标准</a>
-      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">菜单</button>
-    </div>
-  </div>
-  <div class="shell mobile-nav" id="mobile-nav" aria-label="移动导航">
-    <a href="#proof">为什么现在就做</a>
-    <a href="#fit">谁今天就该上</a>
-    <a href="#workflow">14 天如何判定</a>
-    <a href="#deliverables">过线标准</a>
-    <a href="#faq">事故防线</a>
-    <a href="#contact">联系</a>
-    <a href="#deliverables" class="button button-primary">看过线标准</a>
+    <a href="#contact" class="btn btn-primary">预约演示</a>
   </div>
 </header>
 
 <main id="top">
   <section class="hero">
     <div class="shell hero-grid">
-      <div class="hero-copy">
-        <div class="eyebrow">第一刀先切 TikTok Shop 退款与纠纷升级</div>
-        <h1>TikTok Shop 的退款和纠纷升级一旦堆住，掉的不是效率，是利润、评分和账号安全。</h1>
-        <p>
-          CrossFlow 先不卖“全平台自动化”。
-          <strong>第一阶段只收 TikTok Shop 的退款与纠纷升级，把收口、分流、人工兜底和日报回传跑顺。</strong>
-          先看漏放、积压、人工耗时和日报回传这 4 个数字有没有改善。过线再扩，不过线就停。
-        </p>
+      <div>
+        <div class="eyebrow">跨境客服与售后，不再靠多人手工切后台</div>
+        <h1>把跨境客服、售后和日报，收成一条真正能交付的运营流水线。</h1>
+        <p class="lead">CrossFlow 面向 Amazon、Shopify、TikTok Shop 和独立站团队。它负责统一收消息、按风险分流、生成可执行回复与工单动作，并把处理结果回写到日报、周报和 FAQ 更新里。</p>
         <div class="hero-actions">
-          <button class="button button-primary" id="download-scorecard" type="button">下载试运行验收表</button>
-          <a href="#contact" class="button button-secondary">先判断值不值得跑</a>
-          <a href="mailto:hello@crossflow.ai" class="button button-secondary">直接发邮件</a>
+          <a href="#contact" class="btn btn-primary">预约演示</a>
+          <a href="#proof" class="btn btn-secondary">先看怎么证明</a>
         </div>
         <div class="hero-notes">
-          <span class="hero-note">14 天固定止血包</span>
-          <span class="hero-note">只做退款 / 纠纷升级</span>
-          <span class="hero-note">高风险默认人工复核</span>
-          <span class="hero-note">不自动赔付，不自动处罚申诉</span>
+          <span>普通咨询自动处理</span>
+          <span>高风险售后人工兜底</span>
+          <span>日报、周报、知识沉淀一起交付</span>
         </div>
       </div>
-
-      <div class="hero-side">
-        <div class="panel pilot-card">
-          <div class="panel-label">固定试运行包</div>
-          <h2 class="pilot-title">14 天 TikTok Shop 退款与纠纷升级止血包</h2>
-          <p class="pilot-copy">你不需要先买整套系统，也不需要一上来切全平台。先用一个固定包证明，这一刀能不能把风险和人工成本打下来。</p>
-          <ul class="pilot-meta">
-            <li><strong>名称</strong>14 天退款 / 纠纷升级止血包</li>
-            <li><strong>范围</strong>1 个平台 + 1 类工单 + 1 个日报模板</li>
-            <li><strong>输入</strong>历史样本、人工边界、升级规则</li>
-            <li><strong>结论</strong>过线扩围，不过线停止</li>
-          </ul>
-          <ul class="pilot-list">
-            <li>
-              <div class="pilot-step">01</div>
-              <div>
-                <strong>先只接退款与纠纷升级</strong>
-                <span>先把 TikTok Shop 的退款与纠纷升级收进一个统一入口，不把物流异常、第二平台和更多 SOP 混进第一刀。</span>
-              </div>
-            </li>
-            <li>
-              <div class="pilot-step">02</div>
-              <div>
-                <strong>第一阶段只开低风险动作</strong>
-                <span>默认只开分类、草稿、升级和人工确认。退款、赔付、处罚、账号安全相关动作一律不自动执行。</span>
-              </div>
-            </li>
-            <li>
-              <div class="pilot-step">03</div>
-              <div>
-                <strong>每天回传真实结果</strong>
-                <span>异常项、升级原因、待处理风险和日报摘要每天可见，不靠口头同步和手工拼表。</span>
-              </div>
-            </li>
-            <li>
-              <div class="pilot-step">04</div>
-              <div>
-                <strong>第 14 天给出继续还是停止</strong>
-                <span>不是“再观察一阵”。达标才进入下一阶段扩围，达不到就不建议继续付费扩展。</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="panel metric-strip" aria-label="试运行建议过线标准">
-          <div class="metric">
-            <strong>高风险漏放</strong>
-            <span>建议目标：0 起</span>
+      <aside class="panel preview" aria-label="产品预览">
+        <div class="kicker">演示时会直接看到什么</div>
+        <h2>不再靠“AI 很厉害”成交，而是先看交付动作是否成立。</h2>
+        <p>页面不再放没证据的数字。更可信的做法，是拿真实消息样本、售后工单和日报需求，现场看它是否能跑通。</p>
+        <div class="preview-list">
+          <div class="preview-item">
+            <strong>统一收件箱</strong>
+            <span>先把 Amazon、Shopify、TikTok Shop、独立站消息收进一条队列，再决定自动处理还是升级人工。</span>
           </div>
-          <div class="metric">
-            <strong>退款 / 纠纷分拣</strong>
-            <span>建议下降 30%+</span>
+          <div class="preview-item">
+            <strong>风险分流</strong>
+            <span>普通咨询先自动处理，退款纠纷、差评风险、复杂售后直接升级给人。</span>
           </div>
-          <div class="metric">
-            <strong>积压 / 首响</strong>
-            <span>建议改善 20%+</span>
-          </div>
-          <div class="metric">
-            <strong>日报整理</strong>
-            <span>从手工拼表变自动回传</span>
+          <div class="preview-item">
+            <strong>结果回写</strong>
+            <span>日报、周报和 FAQ 更新跟着处理结果一起产生，而不是靠事后手工整理。</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="safety">
-    <div class="shell">
-      <div class="panel safety-panel">
-        <div class="section-head">
-          <div class="eyebrow">先把事故闸门写死</div>
-          <h2>第一阶段默认不开这些自动动作。</h2>
-          <p>先做分类、草稿、升级和人工确认，不先碰最终高风险动作。用户担心的不是功能不够多，而是会不会出一次把账号和利润打穿的事故。</p>
-        </div>
-
-        <div class="safety-grid">
-          <article class="safety-item">
-            <strong>不自动退款</strong>
-            <p>退款结果仍由人工确认，不让系统直接放款或关单。</p>
-          </article>
-          <article class="safety-item">
-            <strong>不自动赔付</strong>
-            <p>凡是涉及金额的动作，都留在人工批准节点里。</p>
-          </article>
-          <article class="safety-item">
-            <strong>不自动提交处罚申诉</strong>
-            <p>平台处罚、争议升级与账号相关动作不自动发出。</p>
-          </article>
-          <article class="safety-item">
-            <strong>不自动改店铺或账号设置</strong>
-            <p>店铺配置与账号安全相关设置不交给自动化直接修改。</p>
-          </article>
-          <article class="safety-item">
-            <strong>低置信度全部人工复核</strong>
-            <p>模型一旦不确定，就立刻回到人工队列，不赌运气。</p>
-          </article>
-        </div>
-
-        <div class="safety-controls">
-          <strong>真正降低恐惧的，不是“我们很谨慎”，而是有明确刹车件。</strong>
-          <p>第一阶段同时保留 5 个控制：高风险审批队列、低置信度回退人工、全量审计日志、一键暂停自动化、异常规则可回滚。出了问题可以立刻停、立刻追、立刻恢复。</p>
-        </div>
-      </div>
+      </aside>
     </div>
   </section>
 
   <section class="section" id="proof">
     <div class="shell">
       <div class="section-head">
-        <div class="eyebrow">为什么今天先止血</div>
-        <h2>先处理 TikTok Shop 退款与纠纷升级，不是因为它好讲，而是因为它最容易把利润和评分打穿。</h2>
-        <p>这类单直接碰利润、评级和账号安全，也是最容易算出 ROI 的第一刀。首刀不够疼，客户就不会急；首刀不够窄，团队就会一直停在演示阶段。</p>
+        <div class="kicker">Proof, not slogans</div>
+        <h2>如果你认真考虑要不要聊，最该看的不是大词，而是这四个可验证环节。</h2>
+        <p>没有客户 logo、没有公开案例、没有被证实的数据时，正确做法不是继续堆“行业领先”，而是把演示路径说清楚。</p>
       </div>
-
-      <div class="proof-grid">
+      <div class="grid-3">
         <article class="card">
-          <h3>这类单直接碰利润，不是一般咨询量</h3>
-          <p>退款、赔付和纠纷升级不会只拖慢客服效率，它们会直接吃掉利润，也更容易引发评分和店铺表现波动。</p>
+          <strong>1. 用真实消息样本，看它怎么归类和分流</strong>
+          <p>拿一条常见咨询、一条售后工单、一条高风险纠纷样本，当场看系统如何判断：能自动处理，还是必须升级人工。</p>
         </article>
         <article class="card">
-          <h3>这类单最容易升级、漏回和超时</h3>
-          <p>客服会在这类单里反复切后台、查规则、追升级，一旦漏掉关键节点，损失会从效率问题迅速变成经营问题。</p>
+          <strong>2. 用你的回复标准，看它给出的动作是否可执行</strong>
+          <p>不只看语气顺不顺。要看回复草稿是否贴近你的店铺政策、售后边界和升级规则，能不能减少返工。</p>
         </article>
         <article class="card">
-          <h3>这类单最容易算清楚值不值得买</h3>
-          <p>人工耗时、积压风险、漏放成本和日报回传都能量化。先把这一刀做成固定包，比先卖一套“大平台愿景”更容易成交。</p>
+          <strong>3. 用你的日报需求，看它能不能自动回写结果</strong>
+          <p>今天处理了什么、哪些平台压力最高、哪些工单需要老板关注、哪些话术该沉淀成 FAQ，都应该跟着流程一起出来。</p>
         </article>
       </div>
     </div>
@@ -1050,28 +172,27 @@ select {
   <section class="section" id="fit">
     <div class="shell">
       <div class="section-head">
-        <div class="eyebrow">谁今天就该上</div>
-        <h2>不是所有团队都该现在做，先上的是已经被退款与纠纷升级拖住的团队。</h2>
-        <p>页面越诚实，成交越快。合适的团队应该一眼就知道“这说的是我”，不合适的团队也应该尽快退出。</p>
+        <div class="kicker">Fit</div>
+        <h2>适合谁，不适合谁，直接写出来，比对所有人都说“适合”更有用。</h2>
+        <p>这也是去掉“AI 味”的关键。好的 B2B 首页不是拼命扩大受众，而是帮不合适的人尽早退出，让合适的人更快认出自己。</p>
       </div>
-
-      <div class="fit-grid">
-        <article class="card fit-card good">
-          <h3>更适合这类团队</h3>
+      <div class="grid-2">
+        <article class="card">
+          <strong>更适合这些团队</strong>
           <ul>
-            <li>TikTok Shop 的退款和纠纷升级已经每天稳定出现。</li>
-            <li>客服每天都要反复切后台、查规则、追升级。</li>
-            <li>老板已经开始因为积压、赔付或日报不清楚而焦躁。</li>
-            <li>愿意先从 1 个平台、1 类工单跑 14 天固定试运行。</li>
+            <li>多平台同时经营，客服消息和售后工单已经明显分散。</li>
+            <li>团队已有基础 SOP，希望把重复问题自动化，把人工集中在高风险案例上。</li>
+            <li>老板或运营负责人需要更稳定的日报、周报，而不是临时手工拼表。</li>
+            <li>希望把 FAQ 和客服经验沉淀下来，不再依赖某个熟手的脑内经验。</li>
           </ul>
         </article>
-        <article class="card fit-card bad">
-          <h3>不太适合这类情况</h3>
+        <article class="card">
+          <strong>暂时不适合这些情况</strong>
           <ul>
-            <li>退款和纠纷升级单量还不稳定，没有形成真实压力。</li>
-            <li>还没形成明确人工规则，希望系统先替你想清楚所有 SOP。</li>
-            <li>想一上来把所有平台、所有场景一起做掉。</li>
-            <li>不接受任何人工复核，希望高风险场景也完全自动处理。</li>
+            <li>你现在只需要翻译插件，或只想买一个客服聊天窗口。</li>
+            <li>团队还没有基本售后规则，希望系统替你决定全部政策边界。</li>
+            <li>你只想看炫技 demo，不准备拿真实流程和样本来验证效果。</li>
+            <li>你希望所有退款、纠纷和差评风险都完全自动化，不接受人工兜底。</li>
           </ul>
         </article>
       </div>
@@ -1081,46 +202,42 @@ select {
   <section class="section" id="workflow">
     <div class="shell">
       <div class="section-head">
-        <div class="eyebrow">14 天如何判定</div>
-        <h2>14 天后如果这 4 个数字没变，就别买。</h2>
-        <p>CrossFlow 不靠演示成交，靠这 14 天里能不能把这一刀打穿。流程不是展示能力，而是回答值不值得继续付费。</p>
+        <div class="kicker">Workflow</div>
+        <h2>交付流程很短，但每一步都要有明确产物。</h2>
+        <p>不需要先上大工程。我们先把入口、规则、人工兜底和日报这四件事跑通，再看是否继续深入。</p>
       </div>
-
-      <div class="workflow-board">
-        <article class="card workflow-step">
+      <div class="workflow">
+        <article class="card step">
           <div class="label">Step 01</div>
           <div class="detail">
-            <strong>先把范围和红线写死</strong>
-            <p>只接 1 个平台、1 类工单、1 个日报模板，外加写死的升级边界和人工兜底红线。不做开放式“先看看”。</p>
+            <strong>梳理入口和处理规则</strong>
+            <p>确认哪些平台、哪些消息类型、哪些售后工单会进入试运行范围，同时标出必须人工确认的高风险场景。</p>
           </div>
-          <div class="output">产物：试运行范围表、红线清单、日报字段表</div>
+          <div class="result">产物：试运行范围表、风险兜底规则、优先级清单</div>
         </article>
-
-        <article class="card workflow-step">
+        <article class="card step">
           <div class="label">Step 02</div>
           <div class="detail">
-            <strong>跑真实退款与纠纷升级，不跑假 demo</strong>
-            <p>把真实退款与纠纷升级单收口，分成可自动化部分和必须人工确认部分。所有动作保留审计记录，并且支持暂停与回滚。</p>
+            <strong>把消息和工单先收入口</strong>
+            <p>先把入口统一，再做自动标记、工单归类和分流。没有统一入口，后面所有自动化都只是局部效率。</p>
           </div>
-          <div class="output">产物：统一入口、分类规则、人工确认队列</div>
+          <div class="result">产物：统一消息面板、基础标签、升级队列</div>
         </article>
-
-        <article class="card workflow-step">
+        <article class="card step">
           <div class="label">Step 03</div>
           <div class="detail">
-            <strong>每天对四个过线数字</strong>
-            <p>盯住高风险漏放、人工分拣耗时、积压或首响、日报整理方式。页面不靠“感觉更顺了”来决定下一阶段。</p>
+            <strong>先自动化低风险，保留高风险兜底</strong>
+            <p>例如物流查询、模板化售后、FAQ 回答、日报摘要。高风险纠纷继续保留人工确认。</p>
           </div>
-          <div class="output">产物：每日验收表、异常记录、规则修正项</div>
+          <div class="result">产物：可自动处理的场景清单、人工确认清单</div>
         </article>
-
-        <article class="card workflow-step">
+        <article class="card step">
           <div class="label">Step 04</div>
           <div class="detail">
-            <strong>第 14 天只做 Go / No-Go</strong>
-            <p>达到 4 项里的 3 项以上，就进入付费扩围。达不到，就不建议继续付费。试运行不是无限续杯。</p>
+            <strong>日报回写和复盘</strong>
+            <p>每天看处理量、异常项和积压工单，每周看是否减少切后台、减少漏回、减少高风险事件。决定要不要继续扩大范围。</p>
           </div>
-          <div class="output">产物：扩围判定、下一阶段范围，或直接停止</div>
+          <div class="result">产物：日报模板、每周复盘项、是否扩围的判断依据</div>
         </article>
       </div>
     </div>
@@ -1129,56 +246,22 @@ select {
   <section class="section" id="deliverables">
     <div class="shell">
       <div class="section-head">
-        <div class="eyebrow">决定要不要付钱的 4 个数字</div>
-        <h2>这 4 项必须在开始前写死，否则试运行就会拖成无限 PoC。</h2>
-        <p>它们同时回答 3 个问题：风险有没有收住，人工有没有省下来，老板有没有真正看到结果。</p>
+        <div class="kicker">Deliverables</div>
+        <h2>第一页不该只写“能力”，应该写清楚你能拿到什么。</h2>
+        <p>真正有用的是下面这些明确产物，而不是模糊词。</p>
       </div>
-
-      <div class="deliverable-grid">
-        <article class="card deliverable-card">
-          <span class="deliverable-tag">风险</span>
-          <strong>高风险漏放为 0，且关键动作可暂停可追溯</strong>
-          <p>赔付、处罚、账号安全、低置信度判断都必须留在人工队列里。必要时可以一键暂停，并回滚到上一个稳定规则。</p>
+      <div class="grid-3">
+        <article class="card">
+          <strong>运营日报</strong>
+          <p>当天处理量、未结工单、异常项、风险案例、需要老板判断的事项，按固定结构回传。</p>
         </article>
-        <article class="card deliverable-card">
-          <span class="deliverable-tag">人力</span>
-          <strong>退款 / 纠纷分拣与切后台时间下降</strong>
-          <p>如果一个熟手客服每天 2 到 3 小时耗在重复查询、跨后台切换和分拣上，这套试运行的目标就是先把这部分时间拿回来。</p>
+        <article class="card">
+          <strong>统一处理面板</strong>
+          <p>把多平台消息、售后工单和升级项收口。第一页不是功能大全，而是让客服不再在五个平台之间来回切。</p>
         </article>
-        <article class="card deliverable-card">
-          <span class="deliverable-tag">响应</span>
-          <strong>退款 / 纠纷积压与首响明显改善</strong>
-          <p>客户不是为一个新后台付钱，而是为更少漏回、更少超时和更少升级失控付钱。</p>
-        </article>
-        <article class="card deliverable-card">
-          <span class="deliverable-tag">管理</span>
-          <strong>老板不再靠人工追日报</strong>
-          <p>日报回传稳定出现，才说明这不是一个只做前台动作的半成品，而是真的把经营信息从人工追表里解放出来。</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="engagement">
-    <div class="shell">
-      <div class="section-head">
-        <div class="eyebrow">第二阶段怎么扩</div>
-        <h2>这一页只卖第一刀，扩围发生在过线之后。</h2>
-        <p>先把 TikTok Shop 退款与纠纷升级打穿，再复制到物流异常，再复制到第二平台。每次扩围都沿用同一套红线和验收表。</p>
-      </div>
-
-      <div class="engagement-grid">
-        <article class="card engagement-card">
-          <strong>先复制到相邻工单</strong>
-          <p>第一阶段过线后，再把同一套分流和日报结构复制到物流异常，而不是重开一个大项目。</p>
-        </article>
-        <article class="card engagement-card">
-          <strong>再复制到第二平台</strong>
-          <p>等第一平台稳定后，再谈 Amazon 或 Shopify，不把首单做成“全平台一起上”的无限 PoC。</p>
-        </article>
-        <article class="card engagement-card">
-          <strong>每次扩围都沿用同一张验收表</strong>
-          <p>新增范围是在复制规则，不是在重做一轮顾问项目。只要验收标准没变，CrossFlow 才像产品。</p>
+        <article class="card">
+          <strong>人工兜底规则</strong>
+          <p>哪些场景可以走模板和自动化，哪些必须人工确认，页面上就先写清楚边界。</p>
         </article>
       </div>
     </div>
@@ -1187,28 +270,15 @@ select {
   <section class="section" id="faq">
     <div class="shell">
       <div class="section-head">
-        <div class="eyebrow">事故防线</div>
-        <h2>最容易把项目做死的风险，先把刹车方式写清楚。</h2>
-        <p>用户真正担心的不是“AI 够不够强”，而是出事时能不能立刻停、立刻追、立刻恢复。</p>
+        <div class="kicker">FAQ</div>
+        <h2>不再假装有帮助中心页面，先把最关键的问题在这里答清楚。</h2>
+        <p>原页脚那些“定价方案、帮助中心、隐私政策、服务条款”都只是空链接。现在先去掉虚假成熟感，把实际会被问到的问题落在同一页。</p>
       </div>
-
-      <div class="faq-grid">
-        <article class="card faq-item">
-          <strong>会不会一次误判就把店铺搞出事故？</strong>
-          <p>不会。第一阶段默认不开自动退款、自动赔付、自动处罚申诉和账号设置变更。高风险进入审批队列，低置信度回到人工，所有动作保留审计日志，必要时可以一键暂停并回滚到上一个稳定规则。</p>
-        </article>
-        <article class="card faq-item">
-          <strong>为什么不一上来接第二平台或更多场景？</strong>
-          <p>因为范围一宽，试运行就会变成无限 PoC。先把一个平台、一类工单做出确定性，扩围时才是在复制，而不是重做。</p>
-        </article>
-        <article class="card faq-item">
-          <strong>14 天结束后，什么时候值得继续付费？</strong>
-          <p>当高风险漏放为 0，退款 / 纠纷分拣与积压明显改善，老板不再靠人工追日报，而且新增范围只是复制规则时，才值得继续付费。</p>
-        </article>
-        <article class="card faq-item">
-          <strong>如果我们的规则还没写清楚怎么办？</strong>
-          <p>那就先别急着上。没有基础规则时，先补处理边界和升级路径，否则任何系统都会把混乱放大。</p>
-        </article>
+      <div class="grid-2">
+        <article class="card"><strong>你们到底卖的是工具，还是代运营服务？</strong><p>更准确的说法是“运营交付系统”。它不是替你拍脑袋做决策的代运营，也不只是一个聊天工具，而是把客服、售后、升级和汇报流程收成一条可执行、可追踪、可复盘的工作流。</p></article>
+        <article class="card"><strong>是不是要把现有流程全部推翻？</strong><p>不是。试运行阶段只接最重复、最容易标准化、最容易看出差异的一类消息或一类工单。判断是否值得做试运行。</p></article>
+        <article class="card"><strong>如果我们 SOP 还不完整怎么办？</strong><p>那就先别追求大范围自动化。没有基础规则时，先补处理边界和升级路径，否则任何系统都会把混乱放大。</p></article>
+        <article class="card"><strong>适合与哪类团队开始？</strong><p>通常从最重复、最容易拖慢客服的一类消息开始，比如物流查询、标准售后说明、常见 FAQ 或日报摘要。</p></article>
       </div>
     </div>
   </section>
@@ -1216,85 +286,60 @@ select {
   <section class="section" id="contact">
     <div class="shell">
       <div class="section-head">
-        <div class="eyebrow">联系</div>
-        <h2>只发平台、最痛工单和当前卡点，也够我们先判断值不值得跑这 14 天。</h2>
-        <p>这页是静态页，不会假装有神秘后端。姓名和公司都可以留空；先把平台、最痛工单和当前卡点发出来就够。</p>
+        <div class="kicker">Contact</div>
+        <h2>想继续聊，给我一点真实上下文。不要只留一句“想了解”。</h2>
+        <p>这里不再放空按钮。你可以直接发邮件，也可以填下面这张表，页面会帮你组装一封预约演示邮件。</p>
       </div>
-
-      <div class="contact-wrap">
-        <form class="panel contact-form" id="contact-form">
-          <div class="form-grid">
+      <div class="contact">
+        <form class="panel card" id="demo-form">
+          <div class="badge">所有 CTA 都已接到真实动作</div>
+          <div class="field-grid" style="margin-top:18px">
             <div class="field">
-              <label for="contact-name">联系人（可选）</label>
-              <input id="contact-name" name="name" type="text" placeholder="例如：王明">
+              <label for="contact-name">联系人</label>
+              <input id="contact-name" name="name" type="text" placeholder="例如：Jason">
             </div>
             <div class="field">
-              <label for="contact-company">公司 / 店铺（可选）</label>
+              <label for="contact-company">公司 / 店铺</label>
               <input id="contact-company" name="company" type="text" placeholder="例如：某跨境店铺">
             </div>
             <div class="field">
               <label for="contact-platform">主要平台</label>
-              <select id="contact-platform" name="platform">
-                <option value="">请选择</option>
-                <option value="TikTok Shop">TikTok Shop</option>
-                <option value="Amazon">Amazon</option>
-                <option value="Shopify">Shopify</option>
-                <option value="多个平台都有">多个平台都有</option>
-              </select>
+              <input id="contact-platform" name="platform" type="text" placeholder="Amazon / Shopify / TikTok Shop">
             </div>
             <div class="field">
               <label for="contact-volume">每日大概消息量</label>
               <select id="contact-volume" name="volume">
                 <option value="">请选择</option>
-                <option value="少于 100 条">少于 100 条</option>
-                <option value="100 - 300 条">100 - 300 条</option>
-                <option value="300 - 1000 条">300 - 1000 条</option>
-                <option value="1000 条以上">1000 条以上</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="contact-workstream">最想先止的工单</label>
-              <select id="contact-workstream" name="workstream">
-                <option value="">请选择</option>
-                <option value="退款 / 纠纷升级">退款 / 纠纷升级</option>
-                <option value="物流异常">物流异常</option>
-                <option value="标准售后说明">标准售后说明</option>
-                <option value="日报 / 异常汇总">日报 / 异常汇总</option>
+                <option>少于 100 条</option>
+                <option>100 - 300 条</option>
+                <option>300 - 1000 条</option>
+                <option>1000 条以上</option>
               </select>
             </div>
             <div class="field full">
-              <label for="contact-pain">当前最卡的地方</label>
-              <textarea id="contact-pain" name="pain" placeholder="例如：TikTok Shop 退款和纠纷升级散在多个入口里，客服每天反复切后台，老板还要手工追日报。"></textarea>
+              <label for="contact-pain">当前最痛的地方</label>
+              <textarea id="contact-pain" name="pain" placeholder="例如：售后工单分散、退款升级慢、日报靠人手汇总、客服反复切后台。"></textarea>
             </div>
           </div>
           <div class="form-actions">
-            <button type="submit" class="button button-primary">生成邮件草稿</button>
-            <a class="button button-secondary" href="mailto:hello@crossflow.ai?subject=CrossFlow%20%E6%AD%A2%E8%A1%80%E5%8C%85%E5%92%A8%E8%AF%A2">直接发邮件</a>
+            <button type="submit" class="btn btn-primary">生成预约邮件</button>
+            <a class="btn btn-secondary" href="mailto:hello@crossflow.ai?subject=CrossFlow%20演示预约">直接发邮件</a>
           </div>
-          <p class="helper">只填平台、工单和当前卡点也能发；姓名和公司可以留空。邮件会在你的默认客户端里生成，不会发到未知后端。</p>
+          <p class="helper">提交后会调用你的默认邮件客户端，不会把内容发到未知后端。</p>
         </form>
-
-        <div class="contact-side">
-          <article class="panel contact-card">
-            <strong>先发这三样就够</strong>
+        <div style="display:grid;gap:18px">
+          <article class="card">
+            <strong>我更关心这些信息</strong>
             <ul>
-              <li>你现在主要在哪个平台上被退款和纠纷升级拖住。</li>
-              <li>这类工单每天大概多少，谁在分拣，谁在兜底。</li>
-              <li>如果只先止一刀，你最想先解决哪一类单。</li>
+              <li>你现在哪几个入口要处理，消息和工单分别从哪里进来。</li>
+              <li>哪些场景最消耗团队，哪些场景最容易出事故。</li>
+              <li>你是否愿意先从一个渠道或一类工单开始。</li>
             </ul>
           </article>
-
-          <article class="panel contact-card">
-            <strong>低摩擦入口</strong>
-            <p>如果你还没准备好发完整邮件，可以先复制邮箱、复制首轮沟通提纲，或者先把验收表拿走。</p>
-            <div class="mail-row">
-              <a href="mailto:hello@crossflow.ai" id="direct-email">hello@crossflow.ai</a>
-              <button class="inline-button" type="button" id="copy-email">复制邮箱</button>
-            </div>
-            <div class="contact-tools">
-              <button class="button button-secondary" type="button" id="copy-intake">复制首轮沟通提纲</button>
-              <button class="button button-secondary" type="button" id="download-scorecard-contact">下载试运行验收表</button>
-            </div>
+          <article class="card">
+            <strong>直接联系</strong>
+            <p><a href="mailto:hello@crossflow.ai">hello@crossflow.ai</a></p>
+            <p class="helper">邮件会比表单更快，因为很多跨境团队一开始就想把当前问题截图发过来。</p>
           </article>
         </div>
       </div>
@@ -1302,179 +347,42 @@ select {
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="shell">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#top" class="brand">
-          <span class="brand-mark"></span>
-          <span>CrossFlow</span>
-        </a>
-        <p>CrossFlow 先卖一个 14 天 TikTok Shop 退款与纠纷升级止血包。先证明这刀能不能把风险和人工成本打下来，再谈第二平台和更多 SOP。</p>
-      </div>
-      <div class="footer-links">
-        <a href="#proof">为什么现在就做</a>
-        <a href="#fit">谁今天就该上</a>
-        <a href="#workflow">14 天如何判定</a>
-      </div>
-      <div class="footer-links">
-        <a href="#deliverables">过线标准</a>
-        <a href="#faq">事故防线</a>
-        <a href="mailto:hello@crossflow.ai">hello@crossflow.ai</a>
-      </div>
-    </div>
-    <div class="footer-note">© 2026 CrossFlow. 这页不再放假链接、假承诺和假社媒入口。</div>
+<footer class="footer">
+  <div class="shell footer-wrap">
+    CrossFlow 不是拿来展示“AI 很厉害”的首页范本，而是一张让跨境运营负责人快速判断值不值得继续聊的成交页。页面只保留真实可用的链接与动作。
   </div>
 </footer>
 
 <script>
-const siteHeader = document.getElementById("site-header");
-const menuToggle = document.getElementById("menu-toggle");
-const mobileNav = document.getElementById("mobile-nav");
-const contactForm = document.getElementById("contact-form");
-const copyEmailButton = document.getElementById("copy-email");
-const copyIntakeButton = document.getElementById("copy-intake");
-const downloadScorecardButton = document.getElementById("download-scorecard");
-const downloadScorecardContactButton = document.getElementById("download-scorecard-contact");
-
-window.addEventListener("scroll", () => {
-  siteHeader.classList.toggle("scrolled", window.scrollY > 8);
-});
-
-menuToggle.addEventListener("click", () => {
-  const isOpen = mobileNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-});
-
-mobileNav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mobileNav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-  });
-});
-
-contactForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const name = document.getElementById("contact-name").value.trim();
-  const company = document.getElementById("contact-company").value.trim();
-  const platform = document.getElementById("contact-platform").value.trim();
-  const volume = document.getElementById("contact-volume").value.trim();
-  const workstream = document.getElementById("contact-workstream").value.trim();
-  const pain = document.getElementById("contact-pain").value.trim();
-
-  const lines = [
-    "你好，",
-    "",
-    "我想了解 CrossFlow 的 14 天 TikTok Shop 退款与纠纷升级止血包，当前情况如下：",
-    "",
-    `联系人：${name || "未填写"}`,
-    `公司 / 店铺：${company || "未填写"}`,
-    `主要平台：${platform || "未填写"}`,
-    `每日消息量：${volume || "未填写"}`,
-    `最想先止的工单：${workstream || "未填写"}`,
-    "当前最卡的地方：",
-    pain || "未填写",
-    "",
-    "希望先沟通：",
-    "- 这是不是该先止的第一刀",
-    "- 这 14 天是否值得做",
-    "- 试运行范围应该怎么写死",
-    "- 哪些场景必须人工兜底",
-    "- 过线标准应该怎么定",
-    "",
-    "谢谢。"
-  ];
-
-  const subjectBase = company || platform || "CrossFlow";
-  const subject = `${subjectBase} | 退款与纠纷升级止血包咨询`;
-  const mailto = `mailto:hello@crossflow.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
-  window.location.href = mailto;
-});
-
-copyEmailButton.addEventListener("click", async () => {
-  const email = "hello@crossflow.ai";
-  try {
-    await navigator.clipboard.writeText(email);
-    copyEmailButton.textContent = "已复制";
-  } catch (error) {
-    copyEmailButton.textContent = email;
-  }
-
-  setTimeout(() => {
-    copyEmailButton.textContent = "复制邮箱";
-  }, 1600);
-});
-
-async function copyText(text, button, successLabel) {
-  const originalLabel = button.textContent;
-  try {
-    await navigator.clipboard.writeText(text);
-    button.textContent = successLabel;
-  } catch (error) {
-    button.textContent = "复制失败";
-  }
-
-  setTimeout(() => {
-    button.textContent = originalLabel;
-  }, 1600);
-}
-
-function downloadTextFile(filename, content) {
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-}
-
-const intakeTemplate = [
-  "CrossFlow 首轮沟通提纲",
-  "",
-  "1. 当前最痛的平台（优先 TikTok Shop）：",
-  "2. 最想先止住的一类工单（优先退款 / 纠纷升级）：",
-  "3. 每日大概消息量 / 工单量：",
-  "4. 谁在人工分拣，谁在高风险兜底：",
-  "5. 最担心的事故是什么：",
-  "6. 现在日报是怎么做的："
-].join("\n");
-
-const scorecardTemplate = [
-  "CrossFlow 14 天 TikTok Shop 退款与纠纷升级止血包验收表",
-  "",
-  "固定范围：1 个平台 + 1 类工单 + 1 个日报模板",
-  "第一阶段默认不开：自动退款、自动赔付、自动处罚申诉、店铺 / 账号设置变更",
-  "",
-  "建议过线标准：",
-  "1. 高风险消息 100% 进入人工确认队列",
-  "2. 目标场景人工分拣 / 切后台时间下降 30%+",
-  "3. 目标场景积压或首响改善 20%+",
-  "4. 日报 / 异常项从手工拼表改为自动回传",
-  "",
-  "判定规则：",
-  "达到 4 项里的 3 项以上，进入下一阶段扩围。",
-  "达不到，不建议继续付费扩展。"
-].join("\n");
-
-if (copyIntakeButton) {
-  copyIntakeButton.addEventListener("click", () => {
-    copyText(intakeTemplate, copyIntakeButton, "已复制提纲");
-  });
-}
-
-if (downloadScorecardButton) {
-  downloadScorecardButton.addEventListener("click", () => {
-    downloadTextFile("crossflow-trial-scorecard.txt", scorecardTemplate);
-  });
-}
-
-if (downloadScorecardContactButton) {
-  downloadScorecardContactButton.addEventListener("click", () => {
-    downloadTextFile("crossflow-trial-scorecard.txt", scorecardTemplate);
+const form = document.getElementById('demo-form');
+if (form) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = document.getElementById('contact-name').value.trim() || '未填写';
+    const company = document.getElementById('contact-company').value.trim() || '未填写';
+    const platform = document.getElementById('contact-platform').value.trim() || '未填写';
+    const volume = document.getElementById('contact-volume').value.trim() || '未填写';
+    const pain = document.getElementById('contact-pain').value.trim() || '未填写';
+    const subject = company === '未填写' ? 'CrossFlow 演示预约' : company + ' - CrossFlow 演示预约';
+    const body = [
+      '你好，',
+      '',
+      '我想聊一下 CrossFlow 的演示方案，当前情况如下：',
+      '',
+      '联系人: ' + name,
+      '公司 / 店铺: ' + company,
+      '主要平台: ' + platform,
+      '每日大概消息量: ' + volume,
+      '',
+      '当前最痛的地方:',
+      pain,
+      '',
+      '希望优先演示：',
+      '1. 哪些消息可自动处理',
+      '2. 哪些场景需要人工兜底',
+      '3. 日报、FAQ 和升级工单如何回写'
+    ].join('\n');
+    window.location.href = 'mailto:hello@crossflow.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   });
 }
 </script>
