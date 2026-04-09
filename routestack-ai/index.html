@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RouteStack AI HTML 预览 | 首页</title>
+    <link rel="stylesheet" href="./shared.css" />
+  </head>
+  <body>
+    <div class="preview-shell">
+      <div class="ambient-left"></div>
+      <div class="ambient-right"></div>
+
+      <header class="site-header" id="siteHeader">
+        <div class="container">
+          <div class="nav-bar">
+            <a class="brand" href="./index.html">
+              <div class="brand-mark">RS</div>
+              <div class="brand-copy">
+                <div class="brand-name">RouteStack AI</div>
+                <div class="brand-tagline">模型路由基础层</div>
+              </div>
+            </a>
+
+            <div class="search-shell">
+              <div class="search-copy">
+                <div class="search-icon">⌕</div>
+                <div class="search-meta">
+                  <div class="search-label">搜索</div>
+                  <div class="search-placeholder">搜索模型、文档、页面…</div>
+                </div>
+              </div>
+              <div class="kbd">Ctrl+K</div>
+            </div>
+
+            <nav class="nav-links">
+              <a class="nav-link" href="#router">Router</a>
+              <a class="nav-link" href="./models.html">模型</a>
+              <a class="nav-link" href="./playground.html">Playground</a>
+              <a class="nav-link" href="./models.html">排行榜</a>
+              <a class="nav-link" href="#apps">应用</a>
+              <a class="nav-link" href="#enterprise">企业版</a>
+              <a class="nav-link" href="#pricing">价格</a>
+              <a class="nav-link" href="./docs.html">文档</a>
+            </nav>
+
+            <div class="action-cluster">
+              <div class="lang-switch">
+                <button class="lang-btn active">EN</button>
+                <button class="lang-btn">中文</button>
+              </div>
+              <a class="btn btn-ghost" href="./index.html">登录</a>
+              <a class="btn btn-primary" href="./index.html">获取 API Key</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <div class="container">
+          <section class="hero-grid page-block">
+            <div>
+              <div class="pill">演示 / 示例 · 平台指标示例 · https://api.routestack.ai/v1/chat/completions</div>
+              <div class="eyebrow" style="margin-top:28px;">开发者优先的控制平面</div>
+              <h1 class="hero-title">统一接入 AI 模型的接口层</h1>
+              <div class="hero-subtitle">更聪明的路由，更稳定的可用性，更清晰的成本视图。</div>
+              <p class="hero-body">
+                RouteStack AI 为团队提供统一 API 入口，用于接入多家模型提供方，并集中管理路由策略、故障降级、成本可视化与工作区控制。
+              </p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;">
+                <a class="btn btn-primary" href="./index.html">获取 API Key</a>
+                <a class="btn btn-secondary" href="./models.html">浏览模型</a>
+              </div>
+
+              <div class="feature-grid" style="margin-top:26px;">
+                <div class="card card-soft card-pad">
+                  <div class="eyebrow">能力</div>
+                  <h3 style="margin:14px 0 0;font-size:18px;">智能路由</h3>
+                  <p class="muted-sm" style="margin-top:10px;line-height:1.7;">按速度、价格和质量目标，将每个请求分配到合适的策略路径。</p>
+                </div>
+                <div class="card card-soft card-pad">
+                  <div class="eyebrow">能力</div>
+                  <h3 style="margin:14px 0 0;font-size:18px;">高可用性</h3>
+                  <p class="muted-sm" style="margin-top:10px;line-height:1.7;">通过健康检查、重试与有序降级链保持流量稳定。</p>
+                </div>
+                <div class="card card-soft card-pad">
+                  <div class="eyebrow">能力</div>
+                  <h3 style="margin:14px 0 0;font-size:18px;">团队计费</h3>
+                  <p class="muted-sm" style="margin-top:10px;line-height:1.7;">按工作区、路由和产品面板追踪用量，无需离开控制平面。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div style="display:flex;align-items:start;justify-content:space-between;gap:14px;">
+                  <div>
+                    <h3 class="card-title">运营视图预览</h3>
+                    <p class="muted-sm" style="margin:10px 0 0;">展示示例路由健康、流量分布与策略配置。</p>
+                  </div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <span class="badge badge-success">99.96%</span>
+                    <span class="badge badge-accent">1.8T routed</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-pad">
+                <div class="info-grid three">
+                  <div class="mini-stat"><div class="mini-stat-label">当前路由</div><div class="mini-stat-value">balanced-global</div></div>
+                  <div class="mini-stat"><div class="mini-stat-label">降级链</div><div class="mini-stat-value">3 stages</div></div>
+                  <div class="mini-stat"><div class="mini-stat-label">策略</div><div class="mini-stat-value">strict</div></div>
+                </div>
+
+                <div class="card card-soft card-pad" style="margin-top:16px;">
+                  <div class="mini-stat-label">流量分配</div>
+                  <div style="margin-top:8px;font-size:18px;">按健康度与成本边界进行权重分流</div>
+                  <div class="surface-list" style="margin-top:16px;">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#d7dee8;margin-bottom:6px;"><span>GPT-5 mini</span><span>48%</span></div>
+                      <div class="traffic-bar"><span style="width:48%;"></span></div>
+                    </div>
+                    <div>
+                      <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#d7dee8;margin-bottom:6px;"><span>Gemini 2.5 Flash</span><span>22%</span></div>
+                      <div class="traffic-bar"><span style="width:22%;"></span></div>
+                    </div>
+                    <div>
+                      <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#d7dee8;margin-bottom:6px;"><span>Claude 4.5 Sonnet</span><span>17%</span></div>
+                      <div class="traffic-bar"><span style="width:17%;"></span></div>
+                    </div>
+                    <div>
+                      <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#d7dee8;margin-bottom:6px;"><span>DeepSeek V3.2</span><span>13%</span></div>
+                      <div class="traffic-bar"><span style="width:13%;"></span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="code-block" style="margin-top:16px;">
+                  <div class="code-head"><span>policy.json</span><span>preview</span></div>
+                  <div class="code-body"><pre>{
+  "route": "balanced-global",
+  "primary_model": "gpt-5-mini",
+  "fallback_chain": ["claude-4-5-sonnet", "deepseek-v3-2"],
+  "budget_cap_usd": 1200,
+  "health_policy": "strict"
+}</pre></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-block">
+            <div class="card">
+              <div class="stats-grid">
+                <div class="card-pad" style="border-right:1px solid var(--border);">
+                  <div class="mini-stat-label">月度路由 tokens</div>
+                  <div style="display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:12px;">
+                    <div style="font-size:34px;font-weight:700;letter-spacing:-0.04em;">72T</div>
+                    <span class="badge">演示</span>
+                  </div>
+                </div>
+                <div class="card-pad" style="border-right:1px solid var(--border);">
+                  <div class="mini-stat-label">全球用户</div>
+                  <div style="display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:12px;">
+                    <div style="font-size:34px;font-weight:700;letter-spacing:-0.04em;">5M+</div>
+                    <span class="badge">演示</span>
+                  </div>
+                </div>
+                <div class="card-pad" style="border-right:1px solid var(--border);">
+                  <div class="mini-stat-label">活跃提供方</div>
+                  <div style="display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:12px;">
+                    <div style="font-size:34px;font-weight:700;letter-spacing:-0.04em;">60+</div>
+                    <span class="badge">演示</span>
+                  </div>
+                </div>
+                <div class="card-pad">
+                  <div class="mini-stat-label">模型配置</div>
+                  <div style="display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:12px;">
+                    <div style="font-size:34px;font-weight:700;letter-spacing:-0.04em;">320+</div>
+                    <span class="badge">演示</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="split-grid page-block" style="grid-template-columns:0.92fr 1.08fr;" id="router">
+            <div>
+              <div class="eyebrow">演示 / 示例</div>
+              <h2 class="section-title" style="font-size:40px;">提供方生态</h2>
+              <p class="section-body">通过同一接口接入商业、开源和自托管模型路径。下方可视化仅展示示例路由关系。</p>
+
+              <div class="card card-soft card-pad" style="margin-top:18px;">
+                <div class="mini-stat-label">Providers</div>
+                <div class="surface-list" style="margin-top:14px;">
+                  <div class="surface-row">
+                    <div>
+                      <h4 style="font-size:15px;margin:0;">OpenAI</h4>
+                      <p class="muted-sm">适合 Agent 与生产流量的均衡前沿模型。</p>
+                    </div>
+                    <div style="text-align:right;">
+                      <div class="badge badge-success">99.97%</div>
+                      <div class="muted-sm" style="margin-top:8px;">23% routed</div>
+                    </div>
+                  </div>
+                  <div class="surface-row">
+                    <div>
+                      <h4 style="font-size:15px;margin:0;">Anthropic</h4>
+                      <p class="muted-sm">适合审查、规划与编码的高推理模型。</p>
+                    </div>
+                    <div style="text-align:right;">
+                      <div class="badge badge-success">99.94%</div>
+                      <div class="muted-sm" style="margin-top:8px;">18% routed</div>
+                    </div>
+                  </div>
+                  <div class="surface-row">
+                    <div>
+                      <h4 style="font-size:15px;margin:0;">Google</h4>
+                      <p class="muted-sm">具备大上下文与高吞吐能力的多模态模型。</p>
+                    </div>
+                    <div style="text-align:right;">
+                      <div class="badge badge-accent">99.91%</div>
+                      <div class="muted-sm" style="margin-top:8px;">15% routed</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">模型路由样例</h3>
+                <p class="muted-sm" style="margin:10px 0 0;">更像基础设施控制台，而不是营销截图。</p>
+              </div>
+              <div class="card-pad">
+                <div class="surface-row">
+                  <div><h4 style="margin:0;font-size:16px;">GPT-5 mini</h4><p class="muted-sm">OpenAI</p></div>
+                  <div style="text-align:right;"><div class="mini-stat-label">Lane 1</div><div style="margin-top:8px;font-size:14px;">99.98%</div></div>
+                </div>
+                <div class="surface-row" style="margin-top:12px;">
+                  <div><h4 style="margin:0;font-size:16px;">Gemini 2.5 Flash</h4><p class="muted-sm">Google</p></div>
+                  <div style="text-align:right;"><div class="mini-stat-label">Lane 2</div><div style="margin-top:8px;font-size:14px;">99.90%</div></div>
+                </div>
+                <div class="surface-row" style="margin-top:12px;">
+                  <div><h4 style="margin:0;font-size:16px;">Claude 4.5 Sonnet</h4><p class="muted-sm">Anthropic</p></div>
+                  <div style="text-align:right;"><div class="mini-stat-label">Lane 3</div><div style="margin-top:8px;font-size:14px;">99.95%</div></div>
+                </div>
+                <div class="surface-row" style="margin-top:12px;">
+                  <div><h4 style="margin:0;font-size:16px;">DeepSeek V3.2</h4><p class="muted-sm">DeepSeek</p></div>
+                  <div style="text-align:right;"><div class="mini-stat-label">Lane 4</div><div style="margin-top:8px;font-size:14px;">99.87%</div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-block" id="enterprise">
+            <div class="split-grid" style="grid-template-columns:0.82fr 1.18fr;">
+              <div>
+                <h2 class="section-title" style="font-size:40px;">控制台级预览</h2>
+                <p class="section-body">界面重点放在路由健康、成本边界、流量分配和运营控制，而不是纯营销截图。</p>
+              </div>
+              <div class="feature-grid">
+                <div class="card card-soft card-pad">
+                  <div class="mini-stat-label">01</div>
+                  <h3 style="margin:12px 0 0;font-size:20px;">策略化路由</h3>
+                  <p class="muted-sm" style="margin-top:10px;line-height:1.7;">先定义延迟优先、预算优先或质量优先策略，再在多个产品中复用。</p>
+                </div>
+                <div class="card card-soft card-pad">
+                  <div class="mini-stat-label">02</div>
+                  <h3 style="margin:12px 0 0;font-size:20px;">可用性控制</h3>
+                  <p class="muted-sm" style="margin-top:10px;line-height:1.7;">统一查看路由健康度、提供方漂移、降级触发与人工干预。</p>
+                </div>
+                <div class="card card-soft card-pad">
+                  <div class="mini-stat-label">03</div>
+                  <h3 style="margin:12px 0 0;font-size:20px;">成本视图</h3>
+                  <p class="muted-sm" style="margin-top:10px;line-height:1.7;">在上线前预测 token 成本，并为财务提供同一套汇总视图。</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-block" id="pricing">
+            <div class="card">
+              <div class="card-pad">
+                <div class="feature-grid">
+                  <div class="card card-soft card-pad">
+                    <div class="eyebrow">套餐</div>
+                    <h3 style="margin:12px 0 0;font-size:24px;">Starter</h3>
+                    <div style="margin-top:12px;font-size:30px;font-weight:700;letter-spacing:-0.04em;">$49</div>
+                    <p class="muted-sm" style="margin-top:12px;">每月 250k 路由请求</p>
+                  </div>
+                  <div class="card card-soft card-pad">
+                    <div class="eyebrow">套餐</div>
+                    <h3 style="margin:12px 0 0;font-size:24px;">Growth</h3>
+                    <div style="margin-top:12px;font-size:30px;font-weight:700;letter-spacing:-0.04em;">$299</div>
+                    <p class="muted-sm" style="margin-top:12px;">每月 5M 路由请求</p>
+                  </div>
+                  <div class="card card-soft card-pad">
+                    <div class="eyebrow">套餐</div>
+                    <h3 style="margin:12px 0 0;font-size:24px;">Enterprise</h3>
+                    <div style="margin-top:12px;font-size:30px;font-weight:700;letter-spacing:-0.04em;">联系销售</div>
+                    <p class="muted-sm" style="margin-top:12px;">自定义请求上限</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-block" id="apps">
+            <div class="card">
+              <div class="card-pad" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
+                <div>
+                  <div class="eyebrow">演示 / 示例</div>
+                  <h2 class="section-title" style="font-size:36px;">在一个入口中管理多模型流量</h2>
+                  <p class="section-body">创建示例工作区，查看 API 流程，并了解策略调整如何影响成本与稳定性。</p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                  <a class="btn btn-primary" href="./index.html">获取 API Key</a>
+                  <a class="btn btn-secondary" href="./docs.html">文档</a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="card footer-card">
+            <div class="footer-grid">
+              <div>
+                <div class="brand">
+                  <div class="brand-mark">RS</div>
+                  <div class="brand-copy">
+                    <div class="brand-name">RouteStack AI</div>
+                    <div class="brand-tagline">模型路由基础层</div>
+                  </div>
+                </div>
+                <p class="page-body" style="max-width:440px;margin-top:18px;">为多模型团队提供统一路由、降级和可观测性。</p>
+                <p class="muted-sm" style="margin-top:16px;">这是一组用于看视觉方向的独立 HTML 预览页。</p>
+              </div>
+              <div class="footer-links">
+                <div>
+                  <div class="sidebar-label">产品</div>
+                  <div class="footer-column-links">
+                    <a href="#router">Router</a>
+                    <a href="./models.html">模型</a>
+                    <a href="./playground.html">Playground</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="sidebar-label">平台</div>
+                  <div class="footer-column-links">
+                    <a href="./docs.html">文档</a>
+                    <a href="#enterprise">企业版</a>
+                    <a href="#pricing">价格</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="sidebar-label">公司</div>
+                  <div class="footer-column-links">
+                    <a href="./index.html">登录</a>
+                    <a href="./index.html">获取 API Key</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const header = document.getElementById("siteHeader");
+      const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 18);
+      syncHeader();
+      window.addEventListener("scroll", syncHeader, { passive: true });
+    </script>
+  </body>
+</html>
