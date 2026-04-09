@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RouteStack AI HTML 预览 | 模型目录</title>
+    <link rel="stylesheet" href="./shared.css" />
+  </head>
+  <body>
+    <div class="preview-shell">
+      <div class="ambient-left"></div>
+      <div class="ambient-right"></div>
+
+      <header class="site-header" id="siteHeader">
+        <div class="container">
+          <div class="nav-bar">
+            <a class="brand" href="./index.html">
+              <div class="brand-mark">RS</div>
+              <div class="brand-copy">
+                <div class="brand-name">RouteStack AI</div>
+                <div class="brand-tagline">模型路由基础层</div>
+              </div>
+            </a>
+            <div class="search-shell">
+              <div class="search-copy">
+                <div class="search-icon">⌕</div>
+                <div class="search-meta">
+                  <div class="search-label">搜索</div>
+                  <div class="search-placeholder">搜索模型、文档、页面…</div>
+                </div>
+              </div>
+              <div class="kbd">Ctrl+K</div>
+            </div>
+            <nav class="nav-links">
+              <a class="nav-link" href="./index.html#router">Router</a>
+              <a class="nav-link active" href="./models.html">模型</a>
+              <a class="nav-link" href="./playground.html">Playground</a>
+              <a class="nav-link" href="./models.html">排行榜</a>
+              <a class="nav-link" href="./index.html#apps">应用</a>
+              <a class="nav-link" href="./index.html#enterprise">企业版</a>
+              <a class="nav-link" href="./index.html#pricing">价格</a>
+              <a class="nav-link" href="./docs.html">文档</a>
+            </nav>
+            <div class="action-cluster">
+              <div class="lang-switch">
+                <button class="lang-btn active">EN</button>
+                <button class="lang-btn">中文</button>
+              </div>
+              <a class="btn btn-ghost" href="./index.html">登录</a>
+              <a class="btn btn-primary" href="./index.html">获取 API Key</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <div class="container">
+          <section class="page-block">
+            <div class="eyebrow">发现型目录</div>
+            <h1 class="page-title">模型目录</h1>
+            <p class="page-body">按价格、延迟、能力与路由适配度比较示例模型配置。页面中的所有数值均为演示数据。</p>
+            <div style="margin-top:18px;" class="pill">演示 / 示例 · 下方所有数值均为示例或 mock 数据。</div>
+          </section>
+
+          <section class="catalog-grid page-block">
+            <div class="card sidebar">
+              <div class="card-header">
+                <div style="display:flex;align-items:start;justify-content:space-between;gap:14px;">
+                  <div>
+                    <h3 class="card-title">筛选</h3>
+                    <p class="muted-sm" style="margin:8px 0 0;">6 已启用筛选</p>
+                  </div>
+                  <span class="badge">重置</span>
+                </div>
+              </div>
+              <div class="sidebar-body">
+                <div class="sidebar-group">
+                  <p class="sidebar-label">提供方</p>
+                  <div class="chip-list">
+                    <div class="chip active"><span>OpenAI</span><span>23%</span></div>
+                    <div class="chip active"><span>Anthropic</span><span>18%</span></div>
+                    <div class="chip active"><span>Google</span><span>15%</span></div>
+                    <div class="chip"><span>DeepSeek</span><span>12%</span></div>
+                    <div class="chip"><span>Qwen</span><span>11%</span></div>
+                    <div class="chip"><span>Meta</span><span>9%</span></div>
+                  </div>
+                </div>
+                <div class="sidebar-group">
+                  <p class="sidebar-label">输入价格上限</p>
+                  <div class="chip"><span>Up to $0.50 / 1M</span></div>
+                </div>
+                <div class="sidebar-group">
+                  <p class="sidebar-label">输出价格上限</p>
+                  <div class="chip"><span>Up to $3.00 / 1M</span></div>
+                </div>
+                <div class="sidebar-group">
+                  <p class="sidebar-label">最小上下文窗口</p>
+                  <div class="chip"><span>128k+</span></div>
+                </div>
+                <div class="sidebar-group">
+                  <div class="toggle-list">
+                    <div class="toggle-row"><span>支持工具</span><span class="switch on"></span></div>
+                    <div class="toggle-row"><span>多模态</span><span class="switch on"></span></div>
+                    <div class="toggle-row"><span>推理</span><span class="switch on"></span></div>
+                  </div>
+                </div>
+                <div class="sidebar-group">
+                  <p class="sidebar-label">开源 / 闭源</p>
+                  <div class="chip-list">
+                    <div class="chip active"><span>闭源</span><span>6</span></div>
+                    <div class="chip"><span>开源</span><span>2</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="toolbar">
+                <input class="input" value="搜索模型、文档、页面…" readonly />
+                <div class="select">排序: 最受欢迎</div>
+              </div>
+              <div style="display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 0;color:#8b96a5;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;">
+                <span>结果: 8</span>
+                <span>已启用筛选: 6</span>
+                <span>下方所有数值均为示例或 mock 数据。</span>
+              </div>
+
+              <div class="model-grid" style="margin-top:18px;">
+                <div class="card model-card">
+                  <div class="card-header">
+                    <div style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
+                      <div><div class="mini-stat-label">OpenAI</div><h3 style="margin:12px 0 0;font-size:20px;">GPT-5 mini</h3></div>
+                      <span class="badge badge-success">99.98%</span>
+                    </div>
+                    <p class="muted-sm" style="margin:12px 0 0;line-height:1.7;">适合作为默认生产路径，兼顾工具调用、质量与交互速度。</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+                      <span class="badge">工具</span><span class="badge">多模态</span><span class="badge">推理</span><span class="badge">高速</span>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="model-meta-grid">
+                      <div class="mini-stat"><div class="mini-stat-label">Context</div><div class="mini-stat-value">128k</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Latency</div><div class="mini-stat-value">640 ms</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Input</div><div class="mini-stat-value">$0.45</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Output</div><div class="mini-stat-value">$1.80</div></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                      <div class="muted-sm">Availability 99.98%</div>
+                      <a class="btn btn-secondary" href="./models.html">查看详情</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card model-card">
+                  <div class="card-header">
+                    <div style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
+                      <div><div class="mini-stat-label">Anthropic</div><h3 style="margin:12px 0 0;font-size:20px;">Claude 4.5 Sonnet</h3></div>
+                      <span class="badge badge-success">99.95%</span>
+                    </div>
+                    <p class="muted-sm" style="margin:12px 0 0;line-height:1.7;">适合高级编码、审查与 Agent 编排的高信任路径。</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+                      <span class="badge">工具</span><span class="badge">推理</span><span class="badge">高质量</span><span class="badge">长上下文</span>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="model-meta-grid">
+                      <div class="mini-stat"><div class="mini-stat-label">Context</div><div class="mini-stat-value">200k</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Latency</div><div class="mini-stat-value">980 ms</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Input</div><div class="mini-stat-value">$3.00</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Output</div><div class="mini-stat-value">$15.00</div></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                      <div class="muted-sm">Availability 99.95%</div>
+                      <a class="btn btn-secondary" href="./models.html">查看详情</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card model-card">
+                  <div class="card-header">
+                    <div style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
+                      <div><div class="mini-stat-label">Google</div><h3 style="margin:12px 0 0;font-size:20px;">Gemini 2.5 Flash</h3></div>
+                      <span class="badge badge-accent">99.90%</span>
+                    </div>
+                    <p class="muted-sm" style="margin:12px 0 0;line-height:1.7;">偏低延迟的多模态选项，适合摄入、预览与高吞吐任务。</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+                      <span class="badge">工具</span><span class="badge">多模态</span><span class="badge">高速</span><span class="badge">低成本</span>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="model-meta-grid">
+                      <div class="mini-stat"><div class="mini-stat-label">Context</div><div class="mini-stat-value">1M</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Latency</div><div class="mini-stat-value">410 ms</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Input</div><div class="mini-stat-value">$0.18</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Output</div><div class="mini-stat-value">$0.70</div></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                      <div class="muted-sm">Availability 99.90%</div>
+                      <a class="btn btn-secondary" href="./models.html">查看详情</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card model-card">
+                  <div class="card-header">
+                    <div style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
+                      <div><div class="mini-stat-label">DeepSeek</div><h3 style="margin:12px 0 0;font-size:20px;">DeepSeek V3.2</h3></div>
+                      <span class="badge badge-accent">99.87%</span>
+                    </div>
+                    <p class="muted-sm" style="margin:12px 0 0;line-height:1.7;">偏推理的示例路由，成本控制好，降级行为稳定。</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+                      <span class="badge">工具</span><span class="badge">推理</span><span class="badge">低成本</span><span class="badge">降级档</span>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="model-meta-grid">
+                      <div class="mini-stat"><div class="mini-stat-label">Context</div><div class="mini-stat-value">128k</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Latency</div><div class="mini-stat-value">720 ms</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Input</div><div class="mini-stat-value">$0.24</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Output</div><div class="mini-stat-value">$0.92</div></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                      <div class="muted-sm">Availability 99.87%</div>
+                      <a class="btn btn-secondary" href="./models.html">查看详情</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card model-card">
+                  <div class="card-header">
+                    <div style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
+                      <div><div class="mini-stat-label">Qwen</div><h3 style="margin:12px 0 0;font-size:20px;">Qwen 3</h3></div>
+                      <span class="badge badge-accent">99.84%</span>
+                    </div>
+                    <p class="muted-sm" style="margin:12px 0 0;line-height:1.7;">面向多语言研究与长文综合的广上下文模型配置。</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+                      <span class="badge">工具</span><span class="badge">推理</span><span class="badge">多模态</span><span class="badge">长上下文</span>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="model-meta-grid">
+                      <div class="mini-stat"><div class="mini-stat-label">Context</div><div class="mini-stat-value">256k</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Latency</div><div class="mini-stat-value">760 ms</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Input</div><div class="mini-stat-value">$0.30</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Output</div><div class="mini-stat-value">$1.10</div></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                      <div class="muted-sm">Availability 99.84%</div>
+                      <a class="btn btn-secondary" href="./models.html">查看详情</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card model-card">
+                  <div class="card-header">
+                    <div style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
+                      <div><div class="mini-stat-label">Meta</div><h3 style="margin:12px 0 0;font-size:20px;">Llama 4 Scout</h3></div>
+                      <span class="badge">99.72%</span>
+                    </div>
+                    <p class="muted-sm" style="margin:12px 0 0;line-height:1.7;">面向私有化与大上下文任务的开源部署配置。</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+                      <span class="badge">开源</span><span class="badge">多模态</span><span class="badge">低成本</span><span class="badge">长上下文</span>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="model-meta-grid">
+                      <div class="mini-stat"><div class="mini-stat-label">Context</div><div class="mini-stat-value">1M</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Latency</div><div class="mini-stat-value">680 ms</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Input</div><div class="mini-stat-value">$0.16</div></div>
+                      <div class="mini-stat"><div class="mini-stat-label">Output</div><div class="mini-stat-value">$0.60</div></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                      <div class="muted-sm">Availability 99.72%</div>
+                      <a class="btn btn-secondary" href="./models.html">查看详情</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="card footer-card">
+            <div class="footer-grid">
+              <div>
+                <div class="brand">
+                  <div class="brand-mark">RS</div>
+                  <div class="brand-copy">
+                    <div class="brand-name">RouteStack AI</div>
+                    <div class="brand-tagline">模型路由基础层</div>
+                  </div>
+                </div>
+                <p class="page-body" style="max-width:440px;margin-top:18px;">为多模型团队提供统一路由、降级和可观测性。</p>
+                <p class="muted-sm" style="margin-top:16px;">HTML 预览页，用来先审视觉方向。</p>
+              </div>
+              <div class="footer-links">
+                <div>
+                  <div class="sidebar-label">产品</div>
+                  <div class="footer-column-links">
+                    <a href="./index.html#router">Router</a>
+                    <a href="./models.html">模型</a>
+                    <a href="./playground.html">Playground</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="sidebar-label">平台</div>
+                  <div class="footer-column-links">
+                    <a href="./docs.html">文档</a>
+                    <a href="./index.html#enterprise">企业版</a>
+                    <a href="./index.html#pricing">价格</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="sidebar-label">公司</div>
+                  <div class="footer-column-links">
+                    <a href="./index.html">登录</a>
+                    <a href="./index.html">获取 API Key</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <script>
+        const header = document.getElementById("siteHeader");
+        const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 18);
+        syncHeader();
+        window.addEventListener("scroll", syncHeader, { passive: true });
+      </script>
+    </div>
+  </body>
+</html>
