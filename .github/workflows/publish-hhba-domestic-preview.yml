@@ -52,6 +52,7 @@ jobs:
           HHBA_GITHUB_PAGES: '1'
           HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-unified-preview/'
           VITE_HHBA_VERIFIED_SNAPSHOT: '1'
+          VITE_HHBA_DOMESTIC_STATIC_ONLY: '1'
         run: npm run build --prefix hhba-source/apps/web
       - name: Stage public bundle without source, secrets or node_modules
         run: |
