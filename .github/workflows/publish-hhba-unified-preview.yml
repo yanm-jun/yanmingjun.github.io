@@ -1,3 +1,4 @@
+# Static-only rebuild using current isolated HHBA branch; no Railway writes.
 name: Publish HHBA Unified React Static Preview
 on:
   push:
