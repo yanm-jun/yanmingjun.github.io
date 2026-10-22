@@ -1,0 +1,56 @@
+name: HHBA Domestic JD Public Smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/hhba-domestic-jd-public-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify published static + React sites and 301 sourced descriptions
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {setTimeout as sleep} from 'node:timers/promises';
+          const prefix='https://yanm-jun.github.io/yanmingjun.github.io';
+          const endpoints=[
+            ['/hhba-domestic-preview/',false],
+            ['/hhba-domestic-preview/data/jobs.json',true],
+            ['/hhba-unified-preview/',false],
+            ['/hhba-unified-preview/data/domestic-jobs.json',true],
+            ['/hhba-unified-preview/data/domestic-jd-summaries.json',true]
+          ];
+          for(const [path,json] of endpoints){
+            let response=null;
+            for(let attempt=0;attempt<8;attempt++){
+              try {response=await fetch(prefix+path,{signal:AbortSignal.timeout(12000)});}catch{}
+              if(response?.ok)break;
+              await sleep(2000);
+            }
+            assert.equal(response?.status,200,path+' must be publicly reachable');
+            if(json){
+              const body=await response.json();
+              assert.equal(body.total,301,path+' must expose 301 jobs');
+              if(path.includes('summaries')){
+                assert.equal(body.kind,'HHBA_DOMESTIC_HISTORICAL_SUMMARIES_V1');
+                const match=body.jobs.find(j=>j.id==='domestic-xiaomi-7536168291875094637');
+                assert.ok(match&&match.responsibilities?.includes('整车物流')&&match.requirements?.includes('物流'));
+              }else{
+                const match=body.jobs.find(j=>j.id==='domestic-xiaomi-7536168291875094637');
+                assert.ok(match&&match.title.includes('整车物流'));
+              }
+            }else{
+              const html=await response.text();
+              assert.match(html,/<html/i);
+            }
+            console.log('PUBLIC_OK',path,response.status);
+          }
+          NODE
