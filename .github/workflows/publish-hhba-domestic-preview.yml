@@ -67,3 +67,45 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Install headless browser for independent UI acceptance
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Browser-test unified HHBA market, Chinese search and job detail
+        run: |
+          node - <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage({locale:'zh-CN',viewport:{width:1360,height:900}});
+            const site='https://yanm-jun.github.io/yanmingjun.github.io/hhba-unified-preview/';
+            try{
+              let response=await page.goto(site,{waitUntil:'domcontentloaded',timeout:60000});
+              assert.equal(response.status(),200,'GitHub Pages HTTP response');
+              await page.locator('.unified-job-card').first().waitFor({timeout:45000});
+              assert.ok((await page.locator('.unified-job-card').count())>0,'no historical cards');
+              const search=page.getByRole('textbox',{name:'自然语言搜索岗位'});
+              await search.fill('小米');
+              await page.locator('.unified-job-card').first().waitFor({timeout:15000});
+              await page.screenshot({path:'hhba-domestic-list.png',fullPage:true});
+              await page.locator('.unified-job-card a[href*="/candidate/jobs/"]').first().click();
+              await page.locator('.unified-detail-card').waitFor({timeout:30000});
+              assert.match(await page.locator('.unified-detail-card').innerText(),/历史收录|历史岗位|历史记录/);
+              const apply=page.locator('.unified-detail-card a[href^="https://xiaomi.jobs.f.mioffice.cn/"]');
+              assert.ok((await apply.count())>0,'missing official apply/source URL');
+              await page.screenshot({path:'hhba-domestic-detail.png',fullPage:true});
+              console.log('PASSED: Github Pages React market, Xiaomi Chinese search, real historical detail and official link');
+            } finally {await browser.close();}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Attach browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hhba-domestic-github-pages-browser-proof
+          path: |
+            hhba-domestic-list.png
+            hhba-domestic-detail.png
+          if-no-files-found: warn
+          retention-days: 14
