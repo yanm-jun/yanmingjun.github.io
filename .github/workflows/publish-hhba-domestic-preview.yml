@@ -26,7 +26,7 @@ jobs:
           node - <<'NODE'
           const fs=require('node:fs');
           const data=JSON.parse(fs.readFileSync('hhba-domestic-preview/data/jobs.json','utf8'));
-          if(data.kind!=='HHBA_DOMESTIC_SNAPSHOT_V1'||data.jobs.length!==297||data.total!==297)process.exit(1);
+          if(data.kind!=='HHBA_DOMESTIC_SNAPSHOT_V1'||data.jobs.length!==301||data.total!==301)process.exit(1);
           if(data.jobs.some(j=>!j.domestic||j.currentApplicationVerified!==false||!/^https:\/\/xiaomi\.jobs\.f\.mioffice\.cn\//.test(j.url)))process.exit(2);
           if(!fs.existsSync('hhba-domestic-preview/index.html'))process.exit(3);
           console.log('Validated',data.total,'source-linked archival postings');
