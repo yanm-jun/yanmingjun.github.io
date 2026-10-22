@@ -6,23 +6,20 @@ on:
       - '.github/workflows/publish-hhba-unified-preview.yml'
   workflow_dispatch:
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 concurrency:
-  group: github-pages-static
+  group: hhba-unified-react-static-commit
   cancel-in-progress: false
 jobs:
-  publish:
+  build-and-commit:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Check out existing static site (keep all existing paths)
+      - name: Check out static Pages source
         uses: actions/checkout@v4
-      - name: Read isolated HHBA UI feature branch
+        with:
+          persist-credentials: true
+      - name: Check out isolated HHBA frontend branch
         uses: actions/checkout@v4
         with:
           repository: yanm-jun/hhba-talent
@@ -34,9 +31,12 @@ jobs:
           node-version: '22'
           cache: npm
           cache-dependency-path: _hhba_source/apps/web/package-lock.json
-      - name: Test real archived Xiaomi listing data
-        run: cd _hhba_source && node --test apps/web/scripts/domestic-preview.test.mjs
-      - name: Build same HHBA React frontend, domestic-cache-only preview mode
+      - name: Validate source-linked archived Xiaomi summaries and frontend
+        run: |
+          cd _hhba_source
+          node --test apps/web/scripts/domestic-preview.test.mjs
+          node --test apps/web/scripts/featured-fastload.contract.test.mjs
+      - name: Build same unified HHBA UI under independent Pages URL
         env:
           HHBA_GITHUB_PAGES: '1'
           HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-unified-preview/'
@@ -44,26 +44,33 @@ jobs:
         run: |
           npm ci --prefix _hhba_source/apps/web
           npm run build --prefix _hhba_source/apps/web
-      - name: Stage under separate Pages directory (no Railway and no production overwrite)
+      - name: Verify static output and stage separately
         run: |
           set -euo pipefail
           mkdir -p hhba-unified-preview
           cp -a _hhba_source/apps/web/dist/. hhba-unified-preview/
           cp hhba-unified-preview/index.html hhba-unified-preview/404.html
-          rm -rf _hhba_source
           node - <<'NODE'
-          const fs=require('node:fs'), path=require('node:path');
+          const fs=require('node:fs');
           const root='hhba-unified-preview';
-          const j=JSON.parse(fs.readFileSync(path.join(root,'data','domestic-jobs.json'),'utf8'));
-          if(j.kind!=='HHBA_DOMESTIC_SNAPSHOT_V1'||j.total!==301||j.jobs.length!==301)throw Error('bad snapshot');
-          const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-          if(!html.includes('/yanmingjun.github.io/hhba-unified-preview/assets/'))throw Error('incorrect public asset base');
-          if(!fs.existsSync('hhba-domestic-preview/index.html'))throw Error('prior preview missing');
-          console.log('HHBA_UNIFIED_STATIC_READY',j.total);
+          const data=JSON.parse(fs.readFileSync(root+'/data/domestic-jobs.json','utf8'));
+          const jd=JSON.parse(fs.readFileSync(root+'/data/domestic-jd-summaries.json','utf8'));
+          if(data.total!==301 || jd.total!==301 || data.jobs.length!==301 || jd.jobs.length!==301)throw Error('missing real domestic data');
+          const html=fs.readFileSync(root+'/index.html','utf8');
+          if(!html.includes('/yanmingjun.github.io/hhba-unified-preview/assets/'))throw Error('incorrect Vite asset base');
+          if(!fs.existsSync('hhba-domestic-preview/index.html'))throw Error('old static preview missing');
+          console.log('HHBA_UNIFIED_PREVIEW_ACCEPTED',data.total,jd.total);
           NODE
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          rm -rf _hhba_source
+      - name: Persist versioned build in dedicated static directory
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f hhba-unified-preview
+          if git diff --cached --quiet; then
+            echo 'Current unified static preview is already up to date'
+          else
+            git commit -m "build: publish verified 301 Xiaomi historical jobs with JD summaries [skip ci]"
+            git push origin HEAD:main
+          fi
