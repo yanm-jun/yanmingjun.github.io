@@ -31,6 +31,35 @@ jobs:
           if(!fs.existsSync('hhba-domestic-preview/index.html'))process.exit(3);
           console.log('Validated',data.total,'source-linked archival postings');
           NODE
+      - name: Check out HHBA unified React source (read-only)
+        uses: actions/checkout@v4
+        with:
+          repository: yanm-jun/hhba-talent
+          ref: feat/domestic-weekly-cache-pages-20261022
+          path: hhba-source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hhba-source/apps/web/package-lock.json
+      - name: Validate 301 historical records in unified React source
+        run: cd hhba-source && node --test apps/web/scripts/domestic-preview.test.mjs
+      - name: Install React build dependencies
+        run: npm ci --prefix hhba-source/apps/web
+      - name: Build the original HHBA React UI for project subpath
+        env:
+          HHBA_GITHUB_PAGES: '1'
+          HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-unified-preview/'
+          VITE_HHBA_VERIFIED_SNAPSHOT: '1'
+        run: npm run build --prefix hhba-source/apps/web
+      - name: Stage public bundle without source, secrets or node_modules
+        run: |
+          mkdir -p hhba-unified-preview
+          cp -R hhba-source/apps/web/dist/. hhba-unified-preview/
+          test -f hhba-unified-preview/index.html
+          node -e "let x=require('./hhba-unified-preview/data/domestic-jobs.json');if(x.total!==301)process.exit(1)"
+          rm -rf hhba-source
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
