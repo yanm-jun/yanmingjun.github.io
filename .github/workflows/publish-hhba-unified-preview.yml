@@ -56,6 +56,9 @@ jobs:
           const data=JSON.parse(fs.readFileSync(root+'/data/domestic-jobs.json','utf8'));
           const jd=JSON.parse(fs.readFileSync(root+'/data/domestic-jd-summaries.json','utf8'));
           if(data.total!==301 || jd.total!==301 || data.jobs.length!==301 || jd.jobs.length!==301)throw Error('missing real domestic data');
+          const logistics=jd.jobs.find(x=>x.id==='domestic-xiaomi-7536168291875094637');
+          if(!logistics?.responsibilities.includes('整车物流')||!logistics?.requirements.includes('物流'))throw Error('Logistics detail duties/requirements missing');
+          if(!fs.readFileSync('hhba-unified-preview/index.html','utf8').includes('/hhba-unified-preview/'))throw Error('Invalid static preview base');
           const html=fs.readFileSync(root+'/index.html','utf8');
           if(!html.includes('/yanmingjun.github.io/hhba-unified-preview/assets/'))throw Error('incorrect Vite asset base');
           if(!fs.existsSync('hhba-domestic-preview/index.html'))throw Error('old static preview missing');
