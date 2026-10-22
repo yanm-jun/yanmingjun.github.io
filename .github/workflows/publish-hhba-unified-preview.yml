@@ -1,0 +1,69 @@
+name: Publish HHBA Unified React Static Preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-hhba-unified-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages-static
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out existing static site (keep all existing paths)
+        uses: actions/checkout@v4
+      - name: Read isolated HHBA UI feature branch
+        uses: actions/checkout@v4
+        with:
+          repository: yanm-jun/hhba-talent
+          ref: feat/domestic-weekly-cache-pages-20261022
+          path: _hhba_source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: _hhba_source/apps/web/package-lock.json
+      - name: Test real archived Xiaomi listing data
+        run: cd _hhba_source && node --test apps/web/scripts/domestic-preview.test.mjs
+      - name: Build same HHBA React frontend, domestic-cache-only preview mode
+        env:
+          HHBA_GITHUB_PAGES: '1'
+          HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-unified-preview/'
+          VITE_HHBA_DOMESTIC_STATIC_ONLY: '1'
+        run: |
+          npm ci --prefix _hhba_source/apps/web
+          npm run build --prefix _hhba_source/apps/web
+      - name: Stage under separate Pages directory (no Railway and no production overwrite)
+        run: |
+          set -euo pipefail
+          mkdir -p hhba-unified-preview
+          cp -a _hhba_source/apps/web/dist/. hhba-unified-preview/
+          cp hhba-unified-preview/index.html hhba-unified-preview/404.html
+          rm -rf _hhba_source
+          node - <<'NODE'
+          const fs=require('node:fs'), path=require('node:path');
+          const root='hhba-unified-preview';
+          const j=JSON.parse(fs.readFileSync(path.join(root,'data','domestic-jobs.json'),'utf8'));
+          if(j.kind!=='HHBA_DOMESTIC_SNAPSHOT_V1'||j.total!==301||j.jobs.length!==301)throw Error('bad snapshot');
+          const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+          if(!html.includes('/yanmingjun.github.io/hhba-unified-preview/assets/'))throw Error('incorrect public asset base');
+          if(!fs.existsSync('hhba-domestic-preview/index.html'))throw Error('prior preview missing');
+          console.log('HHBA_UNIFIED_STATIC_READY',j.total);
+          NODE
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
