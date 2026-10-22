@@ -1,0 +1,39 @@
+name: Publish HHBA Domestic Static Preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'hhba-domestic-preview/**'
+      - '.github/workflows/publish-hhba-domestic-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages-static
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify snapshot and public-only content
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const data=JSON.parse(fs.readFileSync('hhba-domestic-preview/data/jobs.json','utf8'));
+          if(data.kind!=='HHBA_DOMESTIC_SNAPSHOT_V1'||data.jobs.length!==297||data.total!==297)process.exit(1);
+          if(data.jobs.some(j=>!j.domestic||j.currentApplicationVerified!==false||!/^https:\/\/xiaomi\.jobs\.f\.mioffice\.cn\//.test(j.url)))process.exit(2);
+          if(!fs.existsSync('hhba-domestic-preview/index.html'))process.exit(3);
+          console.log('Validated',data.total,'source-linked archival postings');
+          NODE
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
