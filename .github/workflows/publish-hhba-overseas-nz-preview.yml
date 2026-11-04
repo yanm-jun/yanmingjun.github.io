@@ -185,7 +185,7 @@ jobs:
               assert.equal(mresponse.status(),200);
               await mobile.locator('[data-overseas-guide-v2="nz-green-tier1"]').waitFor({timeout:25000});
               await mobile.locator('.hhba-guide-v2-mobile-toc summary').click();
-              assert.equal(await mobile.locator('.hhba-guide-v2-mobile-toc a').count(),10);
+              assert.equal(await mobile.locator('.hhba-guide-v2-mobile-toc a').count(),11,'10 chapters plus inline occupation-directory jump');
               const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
               assert.ok(overflow<=2,'NZ mobile article must not overflow horizontally: '+overflow);
               await mobile.screenshot({path:'hhba-overseas-nz-mobile-article.png',fullPage:true});
