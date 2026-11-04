@@ -55,7 +55,12 @@ jobs:
           mkdir -p hhba-overseas-nz-preview
           cp -a _hhba_nz_source/apps/web/dist/. hhba-overseas-nz-preview/
           cp hhba-overseas-nz-preview/index.html hhba-overseas-nz-preview/404.html
-          grep -q '/yanmingjun.github.io/hhba-overseas-nz-preview/assets/' hhba-overseas-nz-preview/index.html
+          for route in study-abroad study-abroad/country/new-zealand study-abroad/match study-abroad/saved study-abroad/compare study-abroad/legacy study-abroad/pathway/nz-aewv study-abroad/pathway/nz-green-tier1 study-abroad/pathway/nz-green-tier2 study-abroad/pathway/nz-smc study-abroad/pathway/nz-student study-abroad/pathway/nz-poststudy study-abroad/pathway/nz-china-whv; do
+            mkdir -p "hhba-overseas-nz-preview/$route"
+            cp hhba-overseas-nz-preview/404.html "hhba-overseas-nz-preview/$route/index.html"
+          done
+          printf '%s\n' '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/yanmingjun.github.io/hhba-overseas-nz-preview/study-abroad/"><title>HHBA 海外发展 · 新西兰</title></head><body><p><a href="/yanmingjun.github.io/hhba-overseas-nz-preview/study-abroad/">进入 HHBA 海外发展新西兰预览</a></p></body></html>' > hhba-overseas-nz-preview/index.html
+          grep -q '/yanmingjun.github.io/hhba-overseas-nz-preview/assets/' hhba-overseas-nz-preview/study-abroad/index.html
           test -f index.html
           test -f hhba-domestic-preview/index.html
           test -f hhba-unified-preview/index.html
@@ -85,6 +90,9 @@ jobs:
           test -f hhba-unified-preview/index.html
           test -f hhba-overseas-nz-preview/index.html
           test -f hhba-overseas-nz-preview/404.html
+          test -f hhba-overseas-nz-preview/study-abroad/index.html
+          test -f hhba-overseas-nz-preview/study-abroad/country/new-zealand/index.html
+          test -f hhba-overseas-nz-preview/study-abroad/pathway/nz-aewv/index.html
       - uses: actions/configure-pages@v5
         with:
           enablement: true
@@ -100,7 +108,7 @@ jobs:
           target='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-nz-preview/'
           ok=0
           for i in $(seq 1 12); do
-            if curl -fsSL --max-time 20 "$target?check=$GITHUB_SHA&try=$i" | grep -q '/yanmingjun.github.io/hhba-overseas-nz-preview/assets/'; then ok=1; break; fi
+            if curl -fsSL --max-time 20 "$target?check=$GITHUB_SHA&try=$i" | grep -q '/hhba-overseas-nz-preview/study-abroad/' && curl -fsSL --max-time 20 "$target""study-abroad/?check=$GITHUB_SHA&try=$i" | grep -q '/yanmingjun.github.io/hhba-overseas-nz-preview/assets/'; then ok=1; break; fi
             sleep 8
           done
           if [ "$ok" -ne 1 ]; then echo "Preview not accessible: $target"; exit 1; fi
