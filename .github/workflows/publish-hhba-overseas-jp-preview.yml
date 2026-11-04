@@ -174,8 +174,15 @@ jobs:
             }
             try{
               const page=await browser.newPage({locale:'zh-CN',viewport:{width:1365,height:900}});
-              await visit(page,'study-abroad/','[data-hhba-overseas="home"]');
-              assert.ok((await page.locator('a[href*="/country/japan"]').count())>=1,'global Japan card route missing');
+              let japanHomeReady=false;
+              for(let attempt=0;attempt<12;attempt++){
+                try{
+                  await visit(page,'study-abroad/','[data-hhba-overseas="home"]');
+                  if(await page.locator('a[href*="/country/japan"]').count()>0){japanHomeReady=true;break}
+                }catch(e){console.log('JAPAN_HOME_WAIT',attempt,String(e).slice(0,160))}
+                await new Promise(resolve=>setTimeout(resolve,4000));
+              }
+              assert.ok(japanHomeReady,'New published global home must show Japan country card');
               await visit(page,'study-abroad/country/japan/','[data-hhba-overseas-jp="country"]');
               assert.equal(await page.locator('.hhba-overseas-path-card').count(),9,'Japan needs 9 detailed legal statuses');
               await page.screenshot({path:'hhba-japan-country.png',fullPage:true});
