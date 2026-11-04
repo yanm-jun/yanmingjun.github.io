@@ -43,6 +43,7 @@ jobs:
           node --experimental-strip-types --test scripts/overseas-australia.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-nz-v2-detail.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-v2-16-paths.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-occupation.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
           node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
           node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
@@ -61,6 +62,15 @@ jobs:
           for route in study-abroad study-abroad/legacy study-abroad/country/australia study-abroad/country/new-zealand study-abroad/australia/saved study-abroad/australia/compare study-abroad/australia/match study-abroad/australia/pathway/au-482 study-abroad/australia/pathway/au-186 study-abroad/australia/pathway/au-494 study-abroad/australia/pathway/au-189 study-abroad/australia/pathway/au-190 study-abroad/australia/pathway/au-491 study-abroad/australia/pathway/au-500 study-abroad/australia/pathway/au-485 study-abroad/australia/pathway/au-462-china study-abroad/match study-abroad/saved study-abroad/compare study-abroad/pathway/nz-aewv study-abroad/pathway/nz-green-tier1 study-abroad/pathway/nz-green-tier2 study-abroad/pathway/nz-smc study-abroad/pathway/nz-student study-abroad/pathway/nz-poststudy study-abroad/pathway/nz-china-whv; do
             mkdir -p "hhba-overseas-au-preview/$route"
             cp hhba-overseas-au-preview/404.html "hhba-overseas-au-preview/$route/index.html"
+          done
+          # Materialize deep links on GitHub Pages. A SPA fallback alone would 404 on direct refresh.
+          for id in nz-civil-engineer nz-mechanical-engineer nz-electrical-engineer nz-electronics-engineer nz-structural-engineer nz-construction-manager nz-quantity-surveyor nz-software-engineer nz-analyst-programmer nz-systems-administrator nz-registered-nurse-medical nz-registered-nurse-critical nz-physiotherapist nz-external-auditor nz-secondary-teacher; do
+            mkdir -p "hhba-overseas-au-preview/study-abroad/nz/occupation/$id"
+            cp hhba-overseas-au-preview/404.html "hhba-overseas-au-preview/study-abroad/nz/occupation/$id/index.html"
+          done
+          for id in au-civil-engineer au-mechanical-engineer au-electrical-engineer au-software-engineer au-registered-nurse-medical au-secondary-teacher; do
+            mkdir -p "hhba-overseas-au-preview/study-abroad/australia/occupation/$id"
+            cp hhba-overseas-au-preview/404.html "hhba-overseas-au-preview/study-abroad/australia/occupation/$id/index.html"
           done
           printf '%s\n' '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/yanmingjun.github.io/hhba-overseas-au-preview/study-abroad/"><title>HHBA 海外发展 · 澳大利亚</title></head><body><p><a href="/yanmingjun.github.io/hhba-overseas-au-preview/study-abroad/">进入 HHBA 海外发展澳大利亚预览</a></p></body></html>' > hhba-overseas-au-preview/index.html
           grep -q '/yanmingjun.github.io/hhba-overseas-au-preview/assets/' hhba-overseas-au-preview/study-abroad/index.html
@@ -98,6 +108,8 @@ jobs:
           test -f hhba-overseas-au-preview/study-abroad/index.html
           test -f hhba-overseas-au-preview/study-abroad/country/australia/index.html
           test -f hhba-overseas-au-preview/study-abroad/australia/pathway/au-482/index.html
+          test -f hhba-overseas-au-preview/study-abroad/australia/occupation/au-mechanical-engineer/index.html
+          test -f hhba-overseas-au-preview/study-abroad/nz/occupation/nz-civil-engineer/index.html
       - uses: actions/configure-pages@v5
         with:
           enablement: true
@@ -186,6 +198,20 @@ jobs:
               const horizontalOverflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
               assert.ok(horizontalOverflow<=2,'Mobile article must not overflow horizontally: '+horizontalOverflow);
               await mobile.screenshot({path:'hhba-overseas-au-mobile-article.png',fullPage:true});
+              const search=mobile.getByRole('textbox',{name:'搜索澳大利亚具体职业'});
+              await search.fill('机械');
+              assert.equal(await mobile.locator('.hhba-occupation-result').count(),1,'mechanical search must narrow to one verified occupation');
+              await mobile.locator('.hhba-occupation-result').first().click();
+              await mobile.locator('.hhba-occupation-detail-header h1').getByText('机械工程师').waitFor({timeout:20000});
+              assert.match(await mobile.locator('.hhba-occupation-detail-article').innerText(),/Engineers Australia/);
+              assert.ok((await mobile.locator('.hhba-occupation-official-list a').count())>=4,'profession detail must cite government and assessing authority');
+              await mobile.reload({waitUntil:'domcontentloaded'});
+              await mobile.locator('.hhba-occupation-detail-header h1').getByText('机械工程师').waitFor({timeout:15000});
+              const occupationOverflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+              assert.ok(occupationOverflow<=2,'occupation details must fit mobile viewport: '+occupationOverflow);
+              await mobile.screenshot({path:'hhba-overseas-au-occupation.png',fullPage:true});
+              await openStable(page,'study-abroad/nz/occupation/nz-civil-engineer/','.hhba-occupation-detail-header');
+              assert.match(await page.locator('.hhba-occupation-detail-header').innerText(),/233211/);
               console.log('AU_BROWSER_ACCEPTANCE_OK',base);
             }finally{await browser.close();}
           })().catch(error=>{console.error(error);process.exit(1)});
@@ -202,5 +228,6 @@ jobs:
             hhba-overseas-au-462.png
             hhba-overseas-au-mobile.png
             hhba-overseas-au-mobile-article.png
+            hhba-overseas-au-occupation.png
           if-no-files-found: ignore
           retention-days: 14
