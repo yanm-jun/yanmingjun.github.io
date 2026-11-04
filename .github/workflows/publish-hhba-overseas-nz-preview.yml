@@ -1,4 +1,6 @@
 # HHBA product main remains unchanged. Publishes only a new subfolder of existing preview repo.
+# V2 acceptance: redeploy all 7 expanded ten-chapter NZ guides after the AU preview has finished.
+# Publish to hhba-overseas-nz-preview only; never merge the product main branch.
 name: HHBA Overseas NZ V1 separate GitHub Pages preview
 on:
   push:
