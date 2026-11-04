@@ -178,14 +178,16 @@ jobs:
               for(let attempt=0;attempt<12;attempt++){
                 try{
                   await visit(page,'study-abroad/','[data-hhba-overseas="home"]');
-                  if(await page.locator('a[href*="/country/japan"]').count()>0){japanHomeReady=true;break}
+                  if(await page.locator('a[href$="/country/japan"]').count()===1&&await page.locator('a[href$="/country/australia"]').count()===1){japanHomeReady=true;break}
                 }catch(e){console.log('JAPAN_HOME_WAIT',attempt,String(e).slice(0,160))}
                 await new Promise(resolve=>setTimeout(resolve,4000));
               }
               console.log('JAPAN_HOME_LINK_DEBUG',await page.locator('.hhba-overseas-country-grid a').evaluateAll(nodes=>nodes.map(n=>({text:n.textContent,href:n.getAttribute('href')}))));
               console.log('JAPAN_HOME_CARD_DEBUG',(await page.locator('.hhba-overseas-country-grid').innerText()).slice(0,1800));
               await page.screenshot({path:'hhba-japan-global.png',fullPage:true});
-              if(!japanHomeReady)console.warn('Japan home link not detected; continue testing deep country routes and diagnose separately');
+              assert.ok(japanHomeReady,'Global home must have working Australia and Japan route links, not ISO code URLs');
+              await page.locator('a[href$="/country/japan"]').first().click();
+              await page.locator('[data-hhba-overseas-jp="country"]').waitFor({timeout:20000});
               await visit(page,'study-abroad/country/japan/','[data-hhba-overseas-jp="country"]');
               assert.equal(await page.locator('.hhba-overseas-path-card').count(),9,'Japan needs 9 detailed legal statuses');
               await page.screenshot({path:'hhba-japan-country.png',fullPage:true});
