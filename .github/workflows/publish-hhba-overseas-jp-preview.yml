@@ -24,11 +24,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Checkout unmerged Japan feature source
+      - name: Checkout unmerged Japan + real country photos feature source
         uses: actions/checkout@v4
         with:
           repository: yanm-jun/hhba-talent
-          ref: feature/overseas-japan-v1
+          ref: feature/overseas-country-real-photos-20261104
           path: _hhba_jp_source
           persist-credentials: false
       - uses: actions/setup-node@v4
@@ -40,6 +40,7 @@ jobs:
         working-directory: _hhba_jp_source/apps/web
         run: |
           npm ci --no-audit --no-fund
+          node --experimental-strip-types --test scripts/overseas-real-country-photos.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-japan.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-australia.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-nz-v2-detail.contract.test.mjs
@@ -124,6 +125,9 @@ jobs:
           test -f hhba-overseas-jp-preview/study-abroad/australia/pathway/au-482/index.html
           test -f hhba-overseas-jp-preview/study-abroad/australia/occupation/au-mechanical-engineer/index.html
           test -f hhba-overseas-jp-preview/study-abroad/country/japan/index.html
+          for photo in nz au jp de ca uk sg us; do
+            test -s "hhba-overseas-jp-preview/overseas/countries/$photo.webp"
+          done
           test -f hhba-overseas-jp-preview/study-abroad/japan/pathway/jp-ssw1/index.html
           test -f hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw1/jp-nursing-care/index.html
           test -f hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw2/jp-construction/index.html
@@ -184,6 +188,40 @@ jobs:
               }
               console.log('JAPAN_HOME_LINK_DEBUG',await page.locator('.hhba-overseas-country-grid a').evaluateAll(nodes=>nodes.map(n=>({text:n.textContent,href:n.getAttribute('href')}))));
               console.log('JAPAN_HOME_CARD_DEBUG',(await page.locator('.hhba-overseas-country-grid').innerText()).slice(0,1800));
+
+              // Browser acceptance of the actual self-hosted (not AI/placeholder or hotlinked) images.
+              let allRealPhotosReady=false;
+              for(let attempt=0;attempt<15;attempt++){
+                const photos=page.locator('.hhba-overseas-country-grid img.hhba-overseas-country-photo');
+                if(await photos.count()===8){
+                  try{
+                    await page.waitForFunction(()=>{
+                      const imgs=[...document.querySelectorAll('.hhba-overseas-country-grid img.hhba-overseas-country-photo')];
+                      return imgs.length===8&&imgs.every(x=>x.complete&&x.naturalWidth>0&&x.naturalHeight>0);
+                    },null,{timeout:9000});
+                    allRealPhotosReady=true;break;
+                  }catch(error){console.log('PHOTO_IMAGE_LOAD_RETRY',attempt,String(error).slice(0,150))}
+                }
+                await page.goto(base+'study-abroad/?real-photos='+Date.now()+'-'+attempt,{waitUntil:'domcontentloaded',timeout:30000});
+                await new Promise(r=>setTimeout(r,3500));
+              }
+              assert.ok(allRealPhotosReady,'all eight real self-hosted images must appear on the public country cards');
+              assert.equal(await page.locator('.hhba-overseas-banner-flag').count(),0,'old alphabet placeholders must disappear');
+              assert.equal(await page.locator('.hhba-overseas-photo-attribution').count(),8,'each photo must retain source and licence');
+              const photoRows=await page.locator('.hhba-overseas-country-grid img.hhba-overseas-country-photo').evaluateAll(imgs=>imgs.map(i=>({src:i.currentSrc,naturalWidth:i.naturalWidth,naturalHeight:i.naturalHeight,alt:i.alt,fit:getComputedStyle(i).objectFit})));
+              assert.equal(photoRows.length,8);
+              for(const [index,code] of ['nz','au','jp','de','ca','uk','sg','us'].entries()){
+                const row=photoRows[index];
+                assert.ok(row.src.endsWith('/overseas/countries/'+code+'.webp'),'wrong country local photo: '+code+' '+row.src);
+                assert.ok(row.naturalWidth>=900&&row.naturalHeight>=380,'image must have real photographic pixels: '+code);
+                assert.equal(row.fit,'cover','image must fill banner without distortion');
+                const imgResponse=await page.request.get(row.src);
+                assert.equal(imgResponse.status(),200,'photo must be served by HHBA static preview '+code);
+                const bytes=await imgResponse.body();
+                assert.equal(bytes.toString('ascii',8,12),'WEBP','actual file must be photographic WebP '+code);
+              }
+              await page.screenshot({path:'hhba-eight-real-photos-desktop.png',fullPage:true});
+              console.log('EIGHT_REAL_COUNTRY_WEBP_PHOTOS_LOADED',photoRows);
               await page.screenshot({path:'hhba-japan-global.png',fullPage:true});
               assert.ok(japanHomeReady,'Global home must have working Australia and Japan route links, not ISO code URLs');
               await page.locator('.hhba-overseas-country-grid a[href$="/country/japan"]').first().click();
@@ -224,6 +262,13 @@ jobs:
               await visit(page,'study-abroad/country/new-zealand/','[data-hhba-overseas="country"]');
               await visit(page,'study-abroad/country/australia/','[data-hhba-overseas-au="country"]');
               const mobile=await browser.newPage({locale:'zh-CN',viewport:{width:390,height:844},isMobile:true});
+              await visit(mobile,'study-abroad/','.hhba-overseas-country-grid');
+              await mobile.waitForFunction(()=>{const imgs=[...document.querySelectorAll('.hhba-overseas-country-grid img.hhba-overseas-country-photo')];return imgs.length===8&&imgs.every(i=>i.complete&&i.naturalWidth>0)},null,{timeout:25000});
+              assert.equal(await mobile.locator('.hhba-overseas-country-grid img.hhba-overseas-country-photo').count(),8);
+              assert.ok((await mobile.locator('.hhba-overseas-country-grid .hhba-overseas-country-status').allTextContents()).filter(x=>x==='国家方案已收录').length>=3);
+              const overflowPhotos=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+              assert.ok(overflowPhotos<=2,'country photo cards must not create mobile horizontal overflow: '+overflowPhotos);
+              await mobile.screenshot({path:'hhba-eight-real-photos-mobile.png',fullPage:true});
               await visit(mobile,'study-abroad/country/japan/','[data-hhba-overseas-jp="country"]');
               assert.equal(await mobile.locator('.hhba-overseas-path-card').count(),9);
               await mobile.screenshot({path:'hhba-japan-mobile-country.png',fullPage:true});
@@ -246,6 +291,8 @@ jobs:
           name: hhba-japan-v1-live-browser-proof
           path: |
             hhba-japan-global.png
+            hhba-eight-real-photos-desktop.png
+            hhba-eight-real-photos-mobile.png
             hhba-japan-country.png
             hhba-japan-ssw1.png
             hhba-japan-occupation.png
