@@ -1,0 +1,304 @@
+# HHBA product main remains unchanged. Publishes only a new subfolder of existing preview repo.
+name: HHBA Overseas Canada V1 independent GitHub Pages preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-hhba-overseas-ca-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages-static
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout existing preview repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Checkout independent unmerged Canada feature source (inherits real photos)
+        uses: actions/checkout@v4
+        with:
+          repository: yanm-jun/hhba-talent
+          ref: feature/overseas-canada-v1
+          path: _hhba_ca_source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: _hhba_ca_source/apps/web/package-lock.json
+      - name: Validate Canada and all Japan, Australia, New Zealand and university paths
+        working-directory: _hhba_ca_source/apps/web
+        run: |
+          npm ci --no-audit --no-fund
+          node --experimental-strip-types --test scripts/overseas-real-country-photos.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-canada.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-germany.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-japan.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-australia.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-nz-v2-detail.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-v2-16-paths.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-occupation.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
+      - name: Build React site with independently scoped asset base
+        working-directory: _hhba_ca_source/apps/web
+        env:
+          HHBA_GITHUB_PAGES: '1'
+          HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-overseas-ca-preview/'
+        run: npm run build
+      - name: Stage only new preview subfolder, preserve old previews
+        run: |
+          set -euo pipefail
+          mkdir -p hhba-overseas-ca-preview
+          cp -a _hhba_ca_source/apps/web/dist/. hhba-overseas-ca-preview/
+          cp hhba-overseas-ca-preview/index.html hhba-overseas-ca-preview/404.html
+          for route in study-abroad study-abroad/legacy study-abroad/country/australia study-abroad/country/new-zealand study-abroad/australia/saved study-abroad/australia/compare study-abroad/australia/match study-abroad/australia/pathway/au-482 study-abroad/australia/pathway/au-186 study-abroad/australia/pathway/au-494 study-abroad/australia/pathway/au-189 study-abroad/australia/pathway/au-190 study-abroad/australia/pathway/au-491 study-abroad/australia/pathway/au-500 study-abroad/australia/pathway/au-485 study-abroad/australia/pathway/au-462-china study-abroad/match study-abroad/saved study-abroad/compare study-abroad/pathway/nz-aewv study-abroad/pathway/nz-green-tier1 study-abroad/pathway/nz-green-tier2 study-abroad/pathway/nz-smc study-abroad/pathway/nz-student study-abroad/pathway/nz-poststudy study-abroad/pathway/nz-china-whv study-abroad/country/japan study-abroad/japan/saved study-abroad/japan/compare study-abroad/japan/match study-abroad/japan/pathway/jp-ssw1 study-abroad/japan/pathway/jp-ssw2 study-abroad/japan/pathway/jp-engineer study-abroad/japan/pathway/jp-hsp study-abroad/japan/pathway/jp-jskip study-abroad/japan/pathway/jp-jfind study-abroad/japan/pathway/jp-student study-abroad/japan/pathway/jp-gradjob study-abroad/japan/pathway/jp-designated46 study-abroad/country/germany study-abroad/germany/saved study-abroad/germany/compare study-abroad/germany/match study-abroad/germany/pathway/de-opportunity study-abroad/germany/pathway/de-blue-card study-abroad/germany/pathway/de-skilled study-abroad/germany/pathway/de-experience study-abroad/germany/pathway/de-recognition study-abroad/germany/pathway/de-training study-abroad/germany/pathway/de-training-search study-abroad/germany/pathway/de-student study-abroad/germany/pathway/de-graduate study-abroad/country/canada study-abroad/canada/saved study-abroad/canada/compare study-abroad/canada/match study-abroad/canada/pathway/ca-fsw study-abroad/canada/pathway/ca-cec study-abroad/canada/pathway/ca-fst study-abroad/canada/pathway/ca-express-categories study-abroad/canada/pathway/ca-pnp-express study-abroad/canada/pathway/ca-pnp-base study-abroad/canada/pathway/ca-atlantic study-abroad/canada/pathway/ca-rcip study-abroad/canada/pathway/ca-fcip study-abroad/canada/pathway/ca-employer-work study-abroad/canada/pathway/ca-francophone-mobility study-abroad/canada/pathway/ca-student study-abroad/canada/pathway/ca-pgwp study-abroad/canada/pathway/ca-quebec-pstq; do
+            mkdir -p "hhba-overseas-ca-preview/$route"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/$route/index.html"
+          done
+          # Materialize deep links on GitHub Pages. A SPA fallback alone would 404 on direct refresh.
+          for id in nz-civil-engineer nz-mechanical-engineer nz-electrical-engineer nz-electronics-engineer nz-structural-engineer nz-construction-manager nz-quantity-surveyor nz-software-engineer nz-analyst-programmer nz-systems-administrator nz-registered-nurse-medical nz-registered-nurse-critical nz-physiotherapist nz-external-auditor nz-secondary-teacher; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/nz/occupation/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/nz/occupation/$id/index.html"
+          done
+          for id in au-civil-engineer au-mechanical-engineer au-electrical-engineer au-software-engineer au-registered-nurse-medical au-secondary-teacher; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/australia/occupation/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/australia/occupation/$id/index.html"
+          done
+          # 19 first-SW industries, 11 second-SW industries and 9 technical professional samples.
+          for id in jp-nursing-care jp-building-cleaning jp-construction jp-manufacturing jp-shipbuilding jp-car-repair jp-aviation jp-accommodation jp-automobile-transport jp-railway jp-agriculture jp-fishery jp-food-manufacturing jp-food-service jp-forestry jp-wood jp-resource-recycling jp-linen jp-logistics-warehouse; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-ssw1/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-ssw1/$id/index.html"
+          done
+          for id in jp-building-cleaning jp-construction jp-manufacturing jp-shipbuilding jp-car-repair jp-aviation jp-accommodation jp-agriculture jp-fishery jp-food-manufacturing jp-food-service; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-ssw2/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-ssw2/$id/index.html"
+          done
+          for id in jp-pro-software jp-pro-mechanical jp-pro-electrical jp-pro-data jp-pro-trading jp-pro-marketing jp-pro-translation jp-pro-product jp-pro-accounting; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-engineer/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-engineer/$id/index.html"
+          done
+          # Canada independent direct routes: 12 Blue Card profession examples + 8 Ausbildung training professions
+          for id in de-blue-software de-blue-it-manager de-blue-electrical de-blue-mechanical de-blue-civil de-blue-scientist de-blue-architect de-blue-doctor de-blue-nurse de-blue-teacher de-blue-pharmacist de-blue-education-manager; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/germany/occupation/blue/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/germany/occupation/blue/$id/index.html"
+          done
+          for id in de-training-mechatronics de-training-electronics de-training-industrial-mechanic de-training-automotive de-training-it de-training-logistics de-training-hospitality de-training-nursing; do
+            mkdir -p "hhba-overseas-ca-preview/study-abroad/germany/occupation/training/$id"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/study-abroad/germany/occupation/training/$id/index.html"
+          done
+          # Materialize every verified 2026 Canada NOC/category route plus 11 province routes.
+          # Keep 5-digit NOC notation, including leading zeros such as 00012.
+          node --experimental-strip-types --input-type=module <<'NODE' > /tmp/hhba-canada-deep-routes.txt
+          import {caOfficialNoc2026,caProvinceEntries} from './_hhba_ca_source/apps/web/src/data/overseasCanadaOccupations.ts';
+          for (const item of caOfficialNoc2026) console.log('study-abroad/canada/occupation/express/'+item.group+'-'+item.code);
+          for (const item of caProvinceEntries) console.log('study-abroad/canada/occupation/pnp/'+item.id);
+          NODE
+          while IFS= read -r route; do
+            [ -n "$route" ] || continue
+            mkdir -p "hhba-overseas-ca-preview/$route"
+            cp hhba-overseas-ca-preview/404.html "hhba-overseas-ca-preview/$route/index.html"
+          done < /tmp/hhba-canada-deep-routes.txt
+          echo "Canada direct career routes: $(wc -l < /tmp/hhba-canada-deep-routes.txt)"
+          printf '%s\n' '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/yanmingjun.github.io/hhba-overseas-ca-preview/study-abroad/"><title>HHBA 海外发展 · 德国</title></head><body><p><a href="/yanmingjun.github.io/hhba-overseas-ca-preview/study-abroad/">进入 HHBA 海外发展德国预览</a></p></body></html>' > hhba-overseas-ca-preview/index.html
+          grep -q '/yanmingjun.github.io/hhba-overseas-ca-preview/assets/' hhba-overseas-ca-preview/study-abroad/index.html
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          rm -rf _hhba_ca_source
+      - name: Save isolated preview directory on separate GitHub repository
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f hhba-overseas-ca-preview
+          if git diff --cached --quiet; then
+            echo 'Preview already matches feature source'
+          else
+            git commit -m 'build: publish Canada V1 independent acceptance site [skip ci]'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Read the new committed GitHub Pages source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          clean: true
+      - name: Check all existing previews remain intact
+        run: |
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          test -f hhba-overseas-ca-preview/index.html
+          test -f hhba-overseas-ca-preview/404.html
+          test -f hhba-overseas-ca-preview/study-abroad/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/country/australia/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/australia/pathway/au-482/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/australia/occupation/au-mechanical-engineer/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/country/japan/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/country/germany/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/country/canada/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/canada/pathway/ca-fsw/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/canada/pathway/ca-express-categories/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/canada/occupation/express/stem-21301/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/canada/occupation/pnp/on/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/canada/occupation/express/executive-00012/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/germany/pathway/de-opportunity/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/germany/pathway/de-blue-card/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/germany/occupation/blue/de-blue-mechanical/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/germany/occupation/training/de-training-mechatronics/index.html
+          for photo in nz au jp de ca uk sg us; do
+            test -s "hhba-overseas-ca-preview/overseas/countries/$photo.webp"
+          done
+          test -f hhba-overseas-ca-preview/study-abroad/japan/pathway/jp-ssw1/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-ssw1/jp-nursing-care/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-ssw2/jp-construction/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/japan/occupation/jp-engineer/jp-pro-software/index.html
+          test -f hhba-overseas-ca-preview/study-abroad/nz/occupation/nz-civil-engineer/index.html
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Publish isolated GitHub Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify deployed link responds with expected asset base
+        run: |
+          set -euo pipefail
+          target='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-ca-preview/'
+          ok=0
+          for i in $(seq 1 12); do
+            if curl -fsSL --max-time 20 "$target?check=$GITHUB_SHA&try=$i" | grep -q '/hhba-overseas-ca-preview/study-abroad/' && curl -fsSL --max-time 20 "$target""study-abroad/?check=$GITHUB_SHA&try=$i" | grep -q '/yanmingjun.github.io/hhba-overseas-ca-preview/assets/'; then ok=1; break; fi
+            sleep 8
+          done
+          if [ "$ok" -ne 1 ]; then echo "Preview not accessible: $target"; exit 1; fi
+          echo "OVERSEAS_CA_GITHUB_PAGES_LIVE $target"
+      - name: Live Chromium verify Canada 14 detailed pathways, real NOC and 11 PNP provinces on desktop and mobile
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const base='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-ca-preview/';
+            async function visit(page,path,selector){
+              let reason='';
+              for(let i=0;i<12;i++){
+                try{
+                  const res=await page.goto(base+path+'?version='+Date.now()+'-'+i,{waitUntil:'domcontentloaded',timeout:30000});
+                  reason='HTTP '+res?.status();
+                  if(res?.status()===200){await page.locator(selector).waitFor({timeout:12000});return}
+                }catch(e){reason=String(e).slice(0,140)}
+                console.log('CA_WAIT',path,i,reason);
+                await new Promise(r=>setTimeout(r,4000));
+              }
+              throw new Error('Canada preview not ready '+path+' '+reason);
+            }
+            try{
+              const page=await browser.newPage({locale:'zh-CN',viewport:{width:1366,height:900}});
+              await visit(page,'study-abroad/','.hhba-overseas-country-grid');
+              let ready=false;
+              for(let k=0;k<12;k++){
+                if(await page.locator('.hhba-overseas-country-ca a[href$="/country/canada"]').count()===1){ready=true;break}
+                await page.goto(base+'study-abroad/?cache='+Date.now()+'-'+k,{waitUntil:'domcontentloaded'});
+                await new Promise(r=>setTimeout(r,3500));
+              }
+              assert.ok(ready,'Canada global country link must be live');
+              for(const code of ['nz','au','jp','de','ca','uk','sg','us']){
+                const image=page.locator('.hhba-overseas-country-'+code+' img.hhba-overseas-country-photo');
+                await image.waitFor({timeout:12000});
+                await image.evaluate(async i=>{if(i.complete&&i.naturalWidth>0)return;await new Promise((resolve,reject)=>{i.onload=resolve;i.onerror=reject})});
+                assert.equal(await image.evaluate(i=>i.naturalWidth>=900),true,'Canada preview must retain real photo '+code);
+              }
+              await page.screenshot({path:'hhba-ca-eight-country-photos.png',fullPage:true});
+              await visit(page,'study-abroad/country/canada/','[data-hhba-overseas-ca="country"]');
+              assert.equal(await page.locator('.hhba-overseas-path-card').count(),14,'Canada 14 distinct routes');
+              await page.screenshot({path:'hhba-ca-country.png',fullPage:true});
+              await visit(page,'study-abroad/canada/pathway/ca-fsw/','[data-overseas-guide-v2="ca-fsw"]');
+              assert.equal(await page.locator('.hhba-guide-v2-section').count(),10);
+              assert.match(await page.locator('.hhba-guide-v2-article').innerText(),/2026-11-03/);
+              await page.screenshot({path:'hhba-ca-fsw.png',fullPage:true});
+              await visit(page,'study-abroad/canada/pathway/ca-express-categories/','[data-overseas-guide-v2="ca-express-categories"]');
+              assert.ok((await page.locator('.hhba-canada-occupation-browser .hhba-occupation-result').count())>=65,'actual IRCC NOC directory');
+              await page.getByRole('textbox',{name:'搜索加拿大NOC职业'}).fill('21301');
+              assert.equal(await page.locator('.hhba-canada-occupation-browser .hhba-occupation-result').count(),1,'search exact NOC');
+              await page.locator('.hhba-canada-occupation-browser .hhba-occupation-result').first().click();
+              await page.locator('.hhba-occupation-detail-header h1').getByText('机械工程师').waitFor({timeout:15000});
+              assert.ok((await page.locator('.hhba-occupation-official-list a').count())>=3);
+              await page.reload({waitUntil:'domcontentloaded'});
+              await page.locator('.hhba-occupation-detail-header h1').getByText('机械工程师').waitFor();
+              await page.screenshot({path:'hhba-ca-noc-mechanical.png',fullPage:true});
+              await visit(page,'study-abroad/canada/pathway/ca-pnp-express/','[data-overseas-guide-v2="ca-pnp-express"]');
+              assert.equal(await page.locator('.hhba-canada-occupation-browser .hhba-occupation-result').count(),11);
+              await page.getByRole('textbox',{name:'搜索加拿大PNP省份'}).fill('安大略');
+              assert.equal(await page.locator('.hhba-canada-occupation-browser .hhba-occupation-result').count(),1);
+              await page.locator('.hhba-canada-occupation-browser .hhba-occupation-result').first().click();
+              await page.locator('.hhba-occupation-detail-header h1').getByText('安大略省 Ontario').waitFor();
+              await page.reload({waitUntil:'domcontentloaded'});
+              await page.locator('.hhba-occupation-detail-header h1').getByText('安大略省 Ontario').waitFor();
+              await page.screenshot({path:'hhba-ca-pnp-ontario.png',fullPage:true});
+              await visit(page,'study-abroad/canada/pathway/ca-student/','[data-overseas-guide-v2="ca-student"]');
+              assert.match(await page.locator('.hhba-guide-v2-article').innerText(),/23,448/);
+              assert.match(await page.locator('.hhba-guide-v2-article').innerText(),/PAL/);
+              await page.screenshot({path:'hhba-ca-study.png',fullPage:true});
+              await visit(page,'study-abroad/canada/pathway/ca-pgwp/','[data-overseas-guide-v2="ca-pgwp"]');
+              assert.match(await page.locator('.hhba-guide-v2-article').innerText(),/180天/);
+              await page.getByRole('button',{name:'收藏加拿大方案'}).click();
+              await page.reload({waitUntil:'domcontentloaded'});
+              await page.locator('[data-overseas-guide-v2="ca-pgwp"]').waitFor();
+              await page.getByRole('button',{name:'取消收藏加拿大方案'}).waitFor();
+              await visit(page,'study-abroad/canada/pathway/ca-quebec-pstq/','[data-overseas-guide-v2="ca-quebec-pstq"]');
+              assert.match(await page.locator('.hhba-guide-v2-article').innerText(),/10-31/);
+              await visit(page,'study-abroad/country/germany/','[data-hhba-overseas-de="country"]');
+              await visit(page,'study-abroad/country/japan/','[data-hhba-overseas-jp="country"]');
+              await visit(page,'study-abroad/country/australia/','[data-hhba-overseas-au="country"]');
+              const mobile=await browser.newPage({locale:'zh-CN',viewport:{width:390,height:844},isMobile:true});
+              await visit(mobile,'study-abroad/country/canada/','[data-hhba-overseas-ca="country"]');
+              assert.equal(await mobile.locator('.hhba-overseas-path-card').count(),14);
+              await mobile.screenshot({path:'hhba-ca-mobile-country.png',fullPage:true});
+              await visit(mobile,'study-abroad/canada/pathway/ca-express-categories/','[data-overseas-guide-v2="ca-express-categories"]');
+              await mobile.locator('.hhba-guide-v2-mobile-toc summary').click();
+              assert.ok((await mobile.locator('.hhba-guide-v2-mobile-toc a').count())>=11);
+              await mobile.screenshot({path:'hhba-ca-mobile-noc.png',fullPage:true});
+              await visit(mobile,'study-abroad/canada/occupation/express/executive-00012/','.hhba-occupation-detail-header');
+              const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+              assert.ok(overflow<=2,'mobile NOC detail horizontal overflow '+overflow);
+              await mobile.screenshot({path:'hhba-ca-mobile-occupation.png',fullPage:true});
+              console.log('CANADA_BROWSER_ACCEPTANCE_COMPLETE',base);
+            }finally{await browser.close()}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Save Canada desktop and mobile live screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hhba-canada-v1-live-browser-proof
+          path: |
+            hhba-ca-eight-country-photos.png
+            hhba-ca-country.png
+            hhba-ca-fsw.png
+            hhba-ca-noc-mechanical.png
+            hhba-ca-pnp-ontario.png
+            hhba-ca-study.png
+            hhba-ca-mobile-country.png
+            hhba-ca-mobile-noc.png
+            hhba-ca-mobile-occupation.png
+          retention-days: 14
+          if-no-files-found: ignore
