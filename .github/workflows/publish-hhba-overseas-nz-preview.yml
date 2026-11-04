@@ -158,10 +158,19 @@ jobs:
 
               assert.ok((await page.locator('a[href^="https://www.immigration.govt.nz/"]').count())>0);
               await page.screenshot({path:'hhba-overseas-nz-detail.png',fullPage:true});
-              const responseTier1=await page.goto(url+'study-abroad/pathway/nz-green-tier1/',{waitUntil:'domcontentloaded',timeout:60000});
-              assert.equal(responseTier1.status(),200);
+              let nzOccupationReady=false;
+              for(let attempt=0;attempt<9;attempt++){
+                try{
+                  const responseTier1=await page.goto(url+'study-abroad/pathway/nz-green-tier1/?occupationVerified='+Date.now()+'-'+attempt,{waitUntil:'domcontentloaded',timeout:30000});
+                  if(responseTier1.status()===200){
+                    await page.locator('.hhba-occupation-result').first().waitFor({timeout:7500});
+                    if(await page.locator('.hhba-occupation-result').count()===15){nzOccupationReady=true;break;}
+                  }
+                }catch(error){console.log('NZ_PAGES_CDN_RETRY',attempt,String(error).slice(0,150))}
+                await new Promise(resolve=>setTimeout(resolve,3500));
+              }
+              assert.ok(nzOccupationReady,'published NZ Tier1 page must contain the 15 newly verified occupation records');
               await page.locator('[data-overseas-guide-v2="nz-green-tier1"]').waitFor({timeout:25000});
-              assert.equal(await page.locator('.hhba-occupation-result').count(),15);
               const search=page.getByRole('textbox',{name:'搜索新西兰具体职业'});
               await search.fill('软件');
               assert.equal(await page.locator('.hhba-occupation-result').count(),1);
