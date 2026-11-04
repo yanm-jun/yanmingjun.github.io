@@ -41,6 +41,7 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-nz-v2-detail.contract.test.mjs
           node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
           node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
       - name: Build React site with independently scoped asset base
@@ -135,6 +136,13 @@ jobs:
               await page.screenshot({path:'hhba-overseas-nz-country.png',fullPage:true});
               await page.getByRole('link',{name:/查看完整方案/}).first().click();
               await page.locator('[data-hhba-overseas="pathway"]').waitFor({timeout:20000});
+              await page.locator('[data-overseas-guide-v2="nz-aewv"]').waitFor({timeout:20000});
+              assert.equal(await page.locator('.hhba-guide-v2-section').count(),10,'guide must have 10 explanatory chapters');
+              assert.ok((await page.locator('.hhba-guide-v2-point').count())>=24,'detailed action points missing');
+              await page.locator('.hhba-guide-v2-termgrid summary').first().click();
+              assert.ok((await page.locator('.hhba-guide-v2-termgrid details[open]').count())>0,'glossary must expand');
+              assert.ok((await page.locator('.hhba-guide-v2-faq details').count())>=4,'FAQ must be actionable');
+
               assert.ok((await page.locator('a[href^="https://www.immigration.govt.nz/"]').count())>0);
               await page.screenshot({path:'hhba-overseas-nz-detail.png',fullPage:true});
               console.log('NZ_BROWSER_ACCEPTANCE_OK');
