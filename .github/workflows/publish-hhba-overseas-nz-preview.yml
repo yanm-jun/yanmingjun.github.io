@@ -1,0 +1,146 @@
+# HHBA product main remains unchanged. Publishes only a new subfolder of existing preview repo.
+name: HHBA Overseas NZ V1 separate GitHub Pages preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-hhba-overseas-nz-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages-static
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout existing preview repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Checkout unmerged NZ feature source
+        uses: actions/checkout@v4
+        with:
+          repository: yanm-jun/hhba-talent
+          ref: feature/overseas-new-zealand-v1
+          path: _hhba_nz_source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: _hhba_nz_source/apps/web/package-lock.json
+      - name: Validate new NZ pathways and old university support
+        working-directory: _hhba_nz_source/apps/web
+        run: |
+          npm ci --no-audit --no-fund
+          node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
+      - name: Build React site with independently scoped asset base
+        working-directory: _hhba_nz_source/apps/web
+        env:
+          HHBA_GITHUB_PAGES: '1'
+          HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-overseas-nz-preview/'
+        run: npm run build
+      - name: Stage only new preview subfolder, preserve old previews
+        run: |
+          set -euo pipefail
+          mkdir -p hhba-overseas-nz-preview
+          cp -a _hhba_nz_source/apps/web/dist/. hhba-overseas-nz-preview/
+          cp hhba-overseas-nz-preview/index.html hhba-overseas-nz-preview/404.html
+          grep -q '/yanmingjun.github.io/hhba-overseas-nz-preview/assets/' hhba-overseas-nz-preview/index.html
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          rm -rf _hhba_nz_source
+      - name: Save isolated preview directory on separate GitHub repository
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f hhba-overseas-nz-preview
+          if git diff --cached --quiet; then
+            echo 'Preview already matches feature source'
+          else
+            git commit -m 'build: publish NZ V1 independent acceptance site [skip ci]'
+            git push origin HEAD:main
+          fi
+      - name: Read the new committed GitHub Pages source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          clean: true
+      - name: Check all existing previews remain intact
+        run: |
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          test -f hhba-overseas-nz-preview/index.html
+          test -f hhba-overseas-nz-preview/404.html
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Publish isolated GitHub Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify deployed link responds with expected asset base
+        run: |
+          set -euo pipefail
+          target='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-nz-preview/'
+          ok=0
+          for i in $(seq 1 12); do
+            if curl -fsSL --max-time 20 "$target?check=$GITHUB_SHA&try=$i" | grep -q '/yanmingjun.github.io/hhba-overseas-nz-preview/assets/'; then ok=1; break; fi
+            sleep 8
+          done
+          if [ "$ok" -ne 1 ]; then echo "Preview not accessible: $target"; exit 1; fi
+          echo "OVERSEAS_NZ_GITHUB_PAGES_LIVE $target"
+      - name: Browser test country and pathway interactions
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            try {
+              const page=await browser.newPage({locale:'zh-CN',viewport:{width:1365,height:900}});
+              const url='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-nz-preview/';
+              const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:60000});
+              assert.equal(response.status(),200);
+              await page.locator('[data-hhba-overseas="home"]').waitFor({timeout:35000});
+              await page.screenshot({path:'hhba-overseas-nz-home.png',fullPage:true});
+              await page.getByRole('link',{name:/从新西兰开始探索/}).click();
+              await page.locator('[data-hhba-overseas="country"]').waitFor({timeout:20000});
+              assert.equal(await page.locator('.hhba-overseas-path-card').count(),7);
+              await page.screenshot({path:'hhba-overseas-nz-country.png',fullPage:true});
+              await page.getByRole('link',{name:/查看完整方案/}).first().click();
+              await page.locator('[data-hhba-overseas="pathway"]').waitFor({timeout:20000});
+              assert.ok((await page.locator('a[href^="https://www.immigration.govt.nz/"]').count())>0);
+              await page.screenshot({path:'hhba-overseas-nz-detail.png',fullPage:true});
+              console.log('NZ_BROWSER_ACCEPTANCE_OK');
+            } finally {await browser.close();}
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hhba-overseas-nz-live-browser-proof
+          path: |
+            hhba-overseas-nz-home.png
+            hhba-overseas-nz-country.png
+            hhba-overseas-nz-detail.png
+          if-no-files-found: ignore
+          retention-days: 14
