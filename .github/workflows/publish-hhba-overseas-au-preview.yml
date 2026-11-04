@@ -1,0 +1,172 @@
+# HHBA product main remains unchanged. Publishes only a new subfolder of existing preview repo.
+name: HHBA Overseas Australia V1 separate GitHub Pages preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-hhba-overseas-au-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages-static
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout existing preview repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Checkout unmerged Australia feature source
+        uses: actions/checkout@v4
+        with:
+          repository: yanm-jun/hhba-talent
+          ref: feature/overseas-australia-v1
+          path: _hhba_au_source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: _hhba_au_source/apps/web/package-lock.json
+      - name: Validate new Australia pathways and old university support
+        working-directory: _hhba_au_source/apps/web
+        run: |
+          npm ci --no-audit --no-fund
+          node --experimental-strip-types --test scripts/overseas-australia.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
+      - name: Build React site with independently scoped asset base
+        working-directory: _hhba_au_source/apps/web
+        env:
+          HHBA_GITHUB_PAGES: '1'
+          HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-overseas-au-preview/'
+        run: npm run build
+      - name: Stage only new preview subfolder, preserve old previews
+        run: |
+          set -euo pipefail
+          mkdir -p hhba-overseas-au-preview
+          cp -a _hhba_au_source/apps/web/dist/. hhba-overseas-au-preview/
+          cp hhba-overseas-au-preview/index.html hhba-overseas-au-preview/404.html
+          for route in study-abroad study-abroad/legacy study-abroad/country/australia study-abroad/country/new-zealand study-abroad/australia/saved study-abroad/australia/compare study-abroad/australia/match study-abroad/australia/pathway/au-482 study-abroad/australia/pathway/au-186 study-abroad/australia/pathway/au-494 study-abroad/australia/pathway/au-189 study-abroad/australia/pathway/au-190 study-abroad/australia/pathway/au-491 study-abroad/australia/pathway/au-500 study-abroad/australia/pathway/au-485 study-abroad/australia/pathway/au-462-china study-abroad/match study-abroad/saved study-abroad/compare study-abroad/pathway/nz-aewv study-abroad/pathway/nz-green-tier1 study-abroad/pathway/nz-green-tier2 study-abroad/pathway/nz-smc study-abroad/pathway/nz-student study-abroad/pathway/nz-poststudy study-abroad/pathway/nz-china-whv; do
+            mkdir -p "hhba-overseas-au-preview/$route"
+            cp hhba-overseas-au-preview/404.html "hhba-overseas-au-preview/$route/index.html"
+          done
+          printf '%s\n' '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/yanmingjun.github.io/hhba-overseas-au-preview/study-abroad/"><title>HHBA 海外发展 · 澳大利亚</title></head><body><p><a href="/yanmingjun.github.io/hhba-overseas-au-preview/study-abroad/">进入 HHBA 海外发展澳大利亚预览</a></p></body></html>' > hhba-overseas-au-preview/index.html
+          grep -q '/yanmingjun.github.io/hhba-overseas-au-preview/assets/' hhba-overseas-au-preview/study-abroad/index.html
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          rm -rf _hhba_au_source
+      - name: Save isolated preview directory on separate GitHub repository
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f hhba-overseas-au-preview
+          if git diff --cached --quiet; then
+            echo 'Preview already matches feature source'
+          else
+            git commit -m 'build: publish Australia V1 independent acceptance site [skip ci]'
+            git push origin HEAD:main
+          fi
+      - name: Read the new committed GitHub Pages source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          clean: true
+      - name: Check all existing previews remain intact
+        run: |
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          test -f hhba-overseas-au-preview/index.html
+          test -f hhba-overseas-au-preview/404.html
+          test -f hhba-overseas-au-preview/study-abroad/index.html
+          test -f hhba-overseas-au-preview/study-abroad/country/australia/index.html
+          test -f hhba-overseas-au-preview/study-abroad/australia/pathway/au-482/index.html
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Publish isolated GitHub Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify deployed link responds with expected asset base
+        run: |
+          set -euo pipefail
+          target='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-au-preview/'
+          ok=0
+          for i in $(seq 1 12); do
+            if curl -fsSL --max-time 20 "$target?check=$GITHUB_SHA&try=$i" | grep -q '/hhba-overseas-au-preview/study-abroad/' && curl -fsSL --max-time 20 "$target""study-abroad/?check=$GITHUB_SHA&try=$i" | grep -q '/yanmingjun.github.io/hhba-overseas-au-preview/assets/'; then ok=1; break; fi
+            sleep 8
+          done
+          if [ "$ok" -ne 1 ]; then echo "Preview not accessible: $target"; exit 1; fi
+          echo "OVERSEAS_AU_GITHUB_PAGES_LIVE $target"
+      - name: Browser-test Australian global entry, nine visas, official source and 462 closure
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            try{
+              const page=await browser.newPage({locale:'zh-CN',viewport:{width:1365,height:900}});
+              const base='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-au-preview/';
+              const r=await page.goto(base,{waitUntil:'domcontentloaded',timeout:60000});
+              assert.equal(r.status(),200);
+              await page.locator('[data-hhba-overseas="home"]').waitFor({timeout:45000});
+              await page.screenshot({path:'hhba-overseas-au-home.png',fullPage:true});
+              await page.getByRole('link',{name:/探索澳大利亚/}).first().click();
+              await page.locator('[data-hhba-overseas-au="country"]').waitFor({timeout:25000});
+              assert.equal(await page.locator('.hhba-overseas-path-card').count(),9);
+              await page.screenshot({path:'hhba-overseas-au-country.png',fullPage:true});
+              await page.getByRole('link',{name:/查看完整方案/}).first().click();
+              await page.locator('[data-hhba-overseas-au="pathway"]').waitFor({timeout:25000});
+              assert.ok((await page.locator('a[href^="https://immi.homeaffairs.gov.au/"]').count())>0);
+              await page.screenshot({path:'hhba-overseas-au-detail.png',fullPage:true});
+              const ballot=await page.goto(base+'study-abroad/australia/pathway/au-462-china/',{waitUntil:'domcontentloaded',timeout:60000});
+              assert.equal(ballot.status(),200);
+              await page.locator('[data-hhba-overseas-au="pathway"]').waitFor({timeout:25000});
+              assert.match(await page.locator('main').innerText(),/2026-06-25|2026—27/);
+              assert.match(await page.locator('main').innerText(),/关闭/);
+              await page.getByRole('button',{name:'收藏此签证路径'}).click();
+              await page.reload({waitUntil:'domcontentloaded'});
+              await page.locator('[data-hhba-overseas-au="pathway"]').waitFor({timeout:25000});
+              await page.getByRole('button',{name:/已收藏/}).waitFor();
+              await page.screenshot({path:'hhba-overseas-au-462.png',fullPage:true});
+              const mobile=await browser.newPage({locale:'zh-CN',viewport:{width:390,height:844},isMobile:true});
+              await mobile.goto(base+'study-abroad/country/australia/',{waitUntil:'domcontentloaded',timeout:60000});
+              await mobile.locator('[data-hhba-overseas-au="country"]').waitFor({timeout:25000});
+              assert.equal(await mobile.locator('.hhba-overseas-path-card').count(),9);
+              await mobile.screenshot({path:'hhba-overseas-au-mobile.png',fullPage:true});
+              console.log('AU_BROWSER_ACCEPTANCE_OK',base);
+            }finally{await browser.close();}
+          })().catch(err=>{console.error(err);process.exit(1)});
+          NODE
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hhba-overseas-au-live-browser-proof
+          path: |
+            hhba-overseas-au-home.png
+            hhba-overseas-au-country.png
+            hhba-overseas-au-detail.png
+            hhba-overseas-au-462.png
+            hhba-overseas-au-mobile.png
+          if-no-files-found: ignore
+          retention-days: 14
