@@ -154,8 +154,8 @@ jobs:
               assert.ok((await page.locator('a[href^="https://immi.homeaffairs.gov.au/"]').count())>0);
               await page.screenshot({path:'hhba-overseas-au-detail.png',fullPage:true});
               await openStable(page,'study-abroad/australia/pathway/au-462-china/','[data-hhba-overseas-au="pathway"]');
-              assert.match(await page.locator('main').innerText(),/2026-06-25|2026—27/);
-              assert.match(await page.locator('main').innerText(),/关闭/);
+              assert.match(await page.locator('[data-hhba-overseas-au="pathway"] main').innerText(),/2026-06-25|2026—27/);
+              assert.match(await page.locator('[data-hhba-overseas-au="pathway"] main').innerText(),/关闭/);
               await page.getByRole('button',{name:'收藏此签证路径'}).click();
               await page.reload({waitUntil:'domcontentloaded'});
               await page.locator('[data-hhba-overseas-au="pathway"]').waitFor({timeout:25000});
