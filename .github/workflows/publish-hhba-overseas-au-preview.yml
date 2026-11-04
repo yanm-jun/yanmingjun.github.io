@@ -158,9 +158,12 @@ jobs:
               await page.locator('[data-overseas-guide-v2="au-482"]').waitFor({timeout:25000});
               assert.equal(await page.locator('.hhba-guide-v2-section').count(),10,'AU detail requires ten real chapters');
               assert.ok((await page.locator('.hhba-guide-v2-point').count())>=24,'AU full action points missing');
-              await page.locator('.hhba-guide-v2-termgrid summary').first().click();
-              assert.ok((await page.locator('.hhba-guide-v2-termgrid details[open]').count())>0,'terms cannot be empty');
-              assert.ok((await page.locator('.hhba-guide-v2-faq details').count())>=4,'AU FAQ insufficient');
+              await page.locator('.hhba-guide-v2-toc a').first().waitFor();
+              await page.locator('.hhba-guide-inline-term').first().click();
+              assert.ok((await page.locator('.hhba-guide-inline-term-note').count())>0,'inline glossary must explain term');
+              assert.ok((await page.locator('.hhba-guide-v2-faq dt').count())>=4,'AU FAQ must read as normal prose');
+              assert.equal(await page.locator('.hhba-overseas-aside-card').count(),0,'old crowded sidebar must be absent');
+              assert.equal(await page.locator('.hhba-guide-v2-point input[type="checkbox"]').count(),0,'old checklist clutter must be absent');
 
               assert.ok((await page.locator('a[href^="https://immi.homeaffairs.gov.au/"]').count())>0);
               await page.screenshot({path:'hhba-overseas-au-detail.png',fullPage:true});
@@ -170,12 +173,19 @@ jobs:
               await page.getByRole('button',{name:'收藏此签证路径'}).click();
               await page.reload({waitUntil:'domcontentloaded'});
               await page.locator('[data-hhba-overseas-au="pathway"]').waitFor({timeout:25000});
-              await page.getByRole('button',{name:/已收藏/}).waitFor();
+              await page.getByRole('button',{name:'取消收藏此签证路径'}).waitFor();
               await page.screenshot({path:'hhba-overseas-au-462.png',fullPage:true});
               const mobile=await browser.newPage({locale:'zh-CN',viewport:{width:390,height:844},isMobile:true});
               await openStable(mobile,'study-abroad/country/australia/','[data-hhba-overseas-au="country"]');
               assert.equal(await mobile.locator('.hhba-overseas-path-card').count(),9);
               await mobile.screenshot({path:'hhba-overseas-au-mobile.png',fullPage:true});
+              await openStable(mobile,'study-abroad/australia/pathway/au-189/','[data-overseas-guide-v2="au-189"]');
+              assert.equal(await mobile.locator('.hhba-guide-v2-section').count(),10);
+              await mobile.locator('.hhba-guide-v2-mobile-toc summary').click();
+              assert.ok((await mobile.locator('.hhba-guide-v2-mobile-toc a').count())>=10);
+              const horizontalOverflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+              assert.ok(horizontalOverflow<=2,'Mobile article must not overflow horizontally: '+horizontalOverflow);
+              await mobile.screenshot({path:'hhba-overseas-au-mobile-article.png',fullPage:true});
               console.log('AU_BROWSER_ACCEPTANCE_OK',base);
             }finally{await browser.close();}
           })().catch(error=>{console.error(error);process.exit(1)});
@@ -191,5 +201,6 @@ jobs:
             hhba-overseas-au-detail.png
             hhba-overseas-au-462.png
             hhba-overseas-au-mobile.png
+            hhba-overseas-au-mobile-article.png
           if-no-files-found: ignore
           retention-days: 14
