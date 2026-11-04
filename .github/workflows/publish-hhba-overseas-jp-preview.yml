@@ -1,0 +1,244 @@
+# HHBA product main remains unchanged. Publishes only a new subfolder of existing preview repo.
+name: HHBA Overseas Japan V1 independent GitHub Pages preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-hhba-overseas-jp-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages-static
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout existing preview repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Checkout unmerged Japan feature source
+        uses: actions/checkout@v4
+        with:
+          repository: yanm-jun/hhba-talent
+          ref: feature/overseas-japan-v1
+          path: _hhba_jp_source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: _hhba_jp_source/apps/web/package-lock.json
+      - name: Validate Japan and preserved Australia, New Zealand and university paths
+        working-directory: _hhba_jp_source/apps/web
+        run: |
+          npm ci --no-audit --no-fund
+          node --experimental-strip-types --test scripts/overseas-japan.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-australia.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-nz-v2-detail.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-v2-16-paths.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-occupation.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
+          node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
+      - name: Build React site with independently scoped asset base
+        working-directory: _hhba_jp_source/apps/web
+        env:
+          HHBA_GITHUB_PAGES: '1'
+          HHBA_PAGES_BASE: '/yanmingjun.github.io/hhba-overseas-jp-preview/'
+        run: npm run build
+      - name: Stage only new preview subfolder, preserve old previews
+        run: |
+          set -euo pipefail
+          mkdir -p hhba-overseas-jp-preview
+          cp -a _hhba_jp_source/apps/web/dist/. hhba-overseas-jp-preview/
+          cp hhba-overseas-jp-preview/index.html hhba-overseas-jp-preview/404.html
+          for route in study-abroad study-abroad/legacy study-abroad/country/australia study-abroad/country/new-zealand study-abroad/australia/saved study-abroad/australia/compare study-abroad/australia/match study-abroad/australia/pathway/au-482 study-abroad/australia/pathway/au-186 study-abroad/australia/pathway/au-494 study-abroad/australia/pathway/au-189 study-abroad/australia/pathway/au-190 study-abroad/australia/pathway/au-491 study-abroad/australia/pathway/au-500 study-abroad/australia/pathway/au-485 study-abroad/australia/pathway/au-462-china study-abroad/match study-abroad/saved study-abroad/compare study-abroad/pathway/nz-aewv study-abroad/pathway/nz-green-tier1 study-abroad/pathway/nz-green-tier2 study-abroad/pathway/nz-smc study-abroad/pathway/nz-student study-abroad/pathway/nz-poststudy study-abroad/pathway/nz-china-whv study-abroad/country/japan study-abroad/japan/saved study-abroad/japan/compare study-abroad/japan/match study-abroad/japan/pathway/jp-ssw1 study-abroad/japan/pathway/jp-ssw2 study-abroad/japan/pathway/jp-engineer study-abroad/japan/pathway/jp-hsp study-abroad/japan/pathway/jp-jskip study-abroad/japan/pathway/jp-jfind study-abroad/japan/pathway/jp-student study-abroad/japan/pathway/jp-gradjob study-abroad/japan/pathway/jp-designated46; do
+            mkdir -p "hhba-overseas-jp-preview/$route"
+            cp hhba-overseas-jp-preview/404.html "hhba-overseas-jp-preview/$route/index.html"
+          done
+          # Materialize deep links on GitHub Pages. A SPA fallback alone would 404 on direct refresh.
+          for id in nz-civil-engineer nz-mechanical-engineer nz-electrical-engineer nz-electronics-engineer nz-structural-engineer nz-construction-manager nz-quantity-surveyor nz-software-engineer nz-analyst-programmer nz-systems-administrator nz-registered-nurse-medical nz-registered-nurse-critical nz-physiotherapist nz-external-auditor nz-secondary-teacher; do
+            mkdir -p "hhba-overseas-jp-preview/study-abroad/nz/occupation/$id"
+            cp hhba-overseas-jp-preview/404.html "hhba-overseas-jp-preview/study-abroad/nz/occupation/$id/index.html"
+          done
+          for id in au-civil-engineer au-mechanical-engineer au-electrical-engineer au-software-engineer au-registered-nurse-medical au-secondary-teacher; do
+            mkdir -p "hhba-overseas-jp-preview/study-abroad/australia/occupation/$id"
+            cp hhba-overseas-jp-preview/404.html "hhba-overseas-jp-preview/study-abroad/australia/occupation/$id/index.html"
+          done
+          # 19 first-SW industries, 11 second-SW industries and 9 technical professional samples.
+          for id in jp-nursing-care jp-building-cleaning jp-construction jp-manufacturing jp-shipbuilding jp-car-repair jp-aviation jp-accommodation jp-automobile-transport jp-railway jp-agriculture jp-fishery jp-food-manufacturing jp-food-service jp-forestry jp-wood jp-resource-recycling jp-linen jp-logistics-warehouse; do
+            mkdir -p "hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw1/$id"
+            cp hhba-overseas-jp-preview/404.html "hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw1/$id/index.html"
+          done
+          for id in jp-building-cleaning jp-construction jp-manufacturing jp-shipbuilding jp-car-repair jp-aviation jp-accommodation jp-agriculture jp-fishery jp-food-manufacturing jp-food-service; do
+            mkdir -p "hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw2/$id"
+            cp hhba-overseas-jp-preview/404.html "hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw2/$id/index.html"
+          done
+          for id in jp-pro-software jp-pro-mechanical jp-pro-electrical jp-pro-data jp-pro-trading jp-pro-marketing jp-pro-translation jp-pro-product jp-pro-accounting; do
+            mkdir -p "hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-engineer/$id"
+            cp hhba-overseas-jp-preview/404.html "hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-engineer/$id/index.html"
+          done
+          printf '%s\n' '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/yanmingjun.github.io/hhba-overseas-jp-preview/study-abroad/"><title>HHBA 海外发展 · 日本</title></head><body><p><a href="/yanmingjun.github.io/hhba-overseas-jp-preview/study-abroad/">进入 HHBA 海外发展日本预览</a></p></body></html>' > hhba-overseas-jp-preview/index.html
+          grep -q '/yanmingjun.github.io/hhba-overseas-jp-preview/assets/' hhba-overseas-jp-preview/study-abroad/index.html
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          rm -rf _hhba_jp_source
+      - name: Save isolated preview directory on separate GitHub repository
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f hhba-overseas-jp-preview
+          if git diff --cached --quiet; then
+            echo 'Preview already matches feature source'
+          else
+            git commit -m 'build: publish Japan V1 independent acceptance site [skip ci]'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Read the new committed GitHub Pages source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+          clean: true
+      - name: Check all existing previews remain intact
+        run: |
+          test -f index.html
+          test -f hhba-domestic-preview/index.html
+          test -f hhba-unified-preview/index.html
+          test -f hhba-overseas-jp-preview/index.html
+          test -f hhba-overseas-jp-preview/404.html
+          test -f hhba-overseas-jp-preview/study-abroad/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/country/australia/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/australia/pathway/au-482/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/australia/occupation/au-mechanical-engineer/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/country/japan/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/japan/pathway/jp-ssw1/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw1/jp-nursing-care/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-ssw2/jp-construction/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/japan/occupation/jp-engineer/jp-pro-software/index.html
+          test -f hhba-overseas-jp-preview/study-abroad/nz/occupation/nz-civil-engineer/index.html
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Publish isolated GitHub Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify deployed link responds with expected asset base
+        run: |
+          set -euo pipefail
+          target='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-jp-preview/'
+          ok=0
+          for i in $(seq 1 12); do
+            if curl -fsSL --max-time 20 "$target?check=$GITHUB_SHA&try=$i" | grep -q '/hhba-overseas-jp-preview/study-abroad/' && curl -fsSL --max-time 20 "$target""study-abroad/?check=$GITHUB_SHA&try=$i" | grep -q '/yanmingjun.github.io/hhba-overseas-jp-preview/assets/'; then ok=1; break; fi
+            sleep 8
+          done
+          if [ "$ok" -ne 1 ]; then echo "Preview not accessible: $target"; exit 1; fi
+          echo "OVERSEAS_JP_GITHUB_PAGES_LIVE $target"
+      - name: Live Chromium acceptance for Japan nine statuses, 19/11 SSW, nine professional activities and mobile
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node <<'NODE'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const base='https://yanm-jun.github.io/yanmingjun.github.io/hhba-overseas-jp-preview/';
+            async function visit(page,path,selector){
+              let last='';
+              for(let i=0;i<12;i++){
+                try{
+                  const res=await page.goto(base+path+'?version='+Date.now()+'-'+i,{waitUntil:'domcontentloaded',timeout:30000});
+                  last='HTTP '+res?.status();
+                  if(res?.status()===200){await page.locator(selector).waitFor({timeout:10000});return}
+                }catch(e){last=String(e).slice(0,220)}
+                console.log('JP_PREVIEW_WAIT',path,i,last);
+                await new Promise(r=>setTimeout(r,4000));
+              }
+              throw new Error('Preview route not ready: '+path+' '+last);
+            }
+            try{
+              const page=await browser.newPage({locale:'zh-CN',viewport:{width:1365,height:900}});
+              await visit(page,'study-abroad/','[data-hhba-overseas="home"]');
+              assert.ok((await page.locator('a[href*="/country/japan"]').count())>=1,'global Japan card route missing');
+              await visit(page,'study-abroad/country/japan/','[data-hhba-overseas-jp="country"]');
+              assert.equal(await page.locator('.hhba-overseas-path-card').count(),9,'Japan needs 9 detailed legal statuses');
+              await page.screenshot({path:'hhba-japan-country.png',fullPage:true});
+              await visit(page,'study-abroad/japan/pathway/jp-ssw1/','[data-overseas-guide-v2="jp-ssw1"]');
+              assert.equal(await page.locator('.hhba-guide-v2-section').count(),10);
+              assert.equal(await page.locator('.hhba-japan-occupation-browser .hhba-occupation-result').count(),19);
+              assert.match(await page.locator('.hhba-japan-occupation-browser').innerText(),/外食|新COE暂停/);
+              await page.screenshot({path:'hhba-japan-ssw1.png',fullPage:true});
+              const search=page.getByRole('textbox',{name:'搜索日本特定技能1号职业'});
+              await search.fill('汽车维修');
+              assert.equal(await page.locator('.hhba-occupation-result').count(),1);
+              await page.locator('.hhba-occupation-result').first().click();
+              await page.locator('.hhba-occupation-detail-header h1').getByText('汽车维修').waitFor();
+              assert.ok((await page.locator('.hhba-occupation-official-list a').count())>=3);
+              await page.reload({waitUntil:'domcontentloaded'});
+              await page.locator('.hhba-occupation-detail-header h1').getByText('汽车维修').waitFor();
+              await page.screenshot({path:'hhba-japan-occupation.png',fullPage:true});
+              await visit(page,'study-abroad/japan/pathway/jp-ssw2/','[data-overseas-guide-v2="jp-ssw2"]');
+              assert.equal(await page.locator('.hhba-occupation-result').count(),11);
+              await visit(page,'study-abroad/japan/pathway/jp-engineer/','[data-overseas-guide-v2="jp-engineer"]');
+              assert.equal(await page.locator('.hhba-occupation-result').count(),9);
+              await page.getByRole('textbox',{name:'搜索日本技术·人文知识·国际业务职业'}).fill('翻译');
+              assert.equal(await page.locator('.hhba-occupation-result').count(),1);
+              await page.locator('.hhba-occupation-result').first().click();
+              await page.locator('.hhba-occupation-detail-header h1').getByText('翻译与口译').waitFor();
+              await page.screenshot({path:'hhba-japan-professional.png',fullPage:true});
+              await visit(page,'study-abroad/japan/pathway/jp-jfind/','[data-overseas-guide-v2="jp-jfind"]');
+              assert.match(await page.locator('[data-overseas-guide-v2="jp-jfind"]').innerText(),/20万日元/);
+              assert.match(await page.locator('[data-overseas-guide-v2="jp-jfind"]').innerText(),/5年/);
+              await page.getByRole('button',{name:'收藏日本方案'}).click();
+              await page.reload({waitUntil:'domcontentloaded'});
+              await page.locator('[data-overseas-guide-v2="jp-jfind"]').waitFor();
+              await page.getByRole('button',{name:'取消收藏日本方案'}).waitFor();
+              await visit(page,'study-abroad/country/new-zealand/','[data-hhba-overseas="country"]');
+              await visit(page,'study-abroad/country/australia/','[data-hhba-overseas-au="country"]');
+              const mobile=await browser.newPage({locale:'zh-CN',viewport:{width:390,height:844},isMobile:true});
+              await visit(mobile,'study-abroad/country/japan/','[data-hhba-overseas-jp="country"]');
+              assert.equal(await mobile.locator('.hhba-overseas-path-card').count(),9);
+              await mobile.screenshot({path:'hhba-japan-mobile-country.png',fullPage:true});
+              await visit(mobile,'study-abroad/japan/pathway/jp-ssw1/','[data-overseas-guide-v2="jp-ssw1"]');
+              await mobile.locator('.hhba-guide-v2-mobile-toc summary').click();
+              assert.ok((await mobile.locator('.hhba-guide-v2-mobile-toc a').count())>=11);
+              await mobile.screenshot({path:'hhba-japan-mobile-guide.png',fullPage:true});
+              await visit(mobile,'study-abroad/japan/occupation/jp-ssw2/jp-construction/','.hhba-occupation-detail-header');
+              const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+              assert.ok(overflow<=2,'Japan occupation detail mobile overflow: '+overflow);
+              await mobile.screenshot({path:'hhba-japan-mobile-occupation.png',fullPage:true});
+              console.log('JAPAN_BROWSER_ACCEPTANCE_OK',base);
+            }finally{await browser.close();}
+          })().catch(error=>{console.error(error);process.exit(1)});
+          NODE
+      - name: Store independent Japan screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hhba-japan-v1-live-browser-proof
+          path: |
+            hhba-japan-country.png
+            hhba-japan-ssw1.png
+            hhba-japan-occupation.png
+            hhba-japan-professional.png
+            hhba-japan-mobile-country.png
+            hhba-japan-mobile-guide.png
+            hhba-japan-mobile-occupation.png
+          retention-days: 14
+          if-no-files-found: ignore
