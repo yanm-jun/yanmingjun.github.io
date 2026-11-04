@@ -78,6 +78,8 @@ jobs:
             echo 'Preview already matches feature source'
           else
             git commit -m 'build: publish Australia V1 independent acceptance site [skip ci]'
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
       - name: Read the new committed GitHub Pages source
