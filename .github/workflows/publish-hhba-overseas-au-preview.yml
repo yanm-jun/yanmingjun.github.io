@@ -41,6 +41,8 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           node --experimental-strip-types --test scripts/overseas-australia.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-nz-v2-detail.contract.test.mjs
+          node --experimental-strip-types --test scripts/overseas-v2-16-paths.contract.test.mjs
           node --experimental-strip-types --test scripts/overseas-new-zealand.contract.test.mjs
           node --experimental-strip-types --test scripts/study-abroad.contract.test.mjs
           node --experimental-strip-types --test scripts/study-universities.contract.test.mjs
@@ -151,6 +153,13 @@ jobs:
               await page.screenshot({path:'hhba-overseas-au-country.png',fullPage:true});
               await page.getByRole('link',{name:/查看完整方案/}).first().click();
               await page.locator('[data-hhba-overseas-au="pathway"]').waitFor({timeout:25000});
+              await page.locator('[data-overseas-guide-v2="au-482"]').waitFor({timeout:25000});
+              assert.equal(await page.locator('.hhba-guide-v2-section').count(),10,'AU detail requires ten real chapters');
+              assert.ok((await page.locator('.hhba-guide-v2-point').count())>=24,'AU full action points missing');
+              await page.locator('.hhba-guide-v2-termgrid summary').first().click();
+              assert.ok((await page.locator('.hhba-guide-v2-termgrid details[open]').count())>0,'terms cannot be empty');
+              assert.ok((await page.locator('.hhba-guide-v2-faq details').count())>=4,'AU FAQ insufficient');
+
               assert.ok((await page.locator('a[href^="https://immi.homeaffairs.gov.au/"]').count())>0);
               await page.screenshot({path:'hhba-overseas-au-detail.png',fullPage:true});
               await openStable(page,'study-abroad/australia/pathway/au-462-china/','[data-hhba-overseas-au="pathway"]');
